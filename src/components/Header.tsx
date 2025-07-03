@@ -1,7 +1,6 @@
 import React from "react";
 import { FcMoneyTransfer } from "react-icons/fc";
-import { FiPlus } from "react-icons/fi";
-import { Button } from "./ui/button";
+import { AddExpenseDrawer } from "./Drawer";
 const Header = () => {
   return (
     <header className="w-full border-gray-300  px-6 py-1 flex items-center justify-between">
@@ -23,8 +22,9 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <AddExpenseDrawer />
 
-      <div>
+      {/* <div>
         <Button className="bg-gradient-to-r from-blue-600 to-indigo-400 flex py-5">
           <div>
             <FiPlus size={25} className="font-semibold shrink-0" />
@@ -35,7 +35,7 @@ const Header = () => {
             </h1>
           </div>
         </Button>
-      </div>
+      </div> */}
     </header>
   );
 };
