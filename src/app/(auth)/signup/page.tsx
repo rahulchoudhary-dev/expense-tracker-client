@@ -1,8 +1,8 @@
 "use client";
 
-import InputFiled from "@/components/InputFiled";
-import useSignUp from "@/query/useSignUp";
-import validationSchema from "@/validations/signup.validation";
+import InputFiled from "../../../components/InputFiled";
+import useSignUp from "../../../query/useSignUp";
+import validationSchema from "../../../validations/signup.validation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 

@@ -7,7 +7,7 @@ interface iInputFiledProps {
   name: string;
   placeholder: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // ✅ Required
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   onError?: string | boolean;
 }
@@ -24,7 +24,7 @@ const InputFiled = (props: iInputFiledProps) => {
         name={name}
         placeholder={placeholder}
         value={value}
-        onChange={onChange} // ✅ FIXED: this was missing
+        onChange={onChange}
         className={className}
       />
       {onError && <p className="text-red-500 text-sm ml-2">{onError}</p>}
