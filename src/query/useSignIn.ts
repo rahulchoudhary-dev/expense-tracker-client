@@ -7,7 +7,7 @@ interface iSignIn {
 }
 
 const signInHandler = async (data: iSignIn) => {
-  const resp = axiosConfig.post(endpoints.sigIn, data);
+  const resp = await axiosConfig.post(endpoints.sigIn, data);
   return resp;
 };
 

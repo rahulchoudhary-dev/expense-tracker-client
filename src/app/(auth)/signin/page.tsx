@@ -10,9 +10,13 @@ import { storage } from "@/utils/storageUtils";
 import { useRouter } from "next/navigation";
 import { STORAGE_KEYS } from "../../../constant"; // optional enum for key safety
 import ROUTES from "@/routes";
+import { toast } from "sonner";
+import { useShowError, useShowSuccess } from "@/app/toastProvider";
 
 const SignIn = () => {
   const router = useRouter();
+  const showSuccess = useShowSuccess();
+  const showError = useShowError();
 
   const [initialValues] = useState({
     email: "alice.smith@example.com",
@@ -31,11 +35,16 @@ const SignIn = () => {
     onSubmit: (values, { resetForm }) => {
       mutate(values, {
         onSuccess: (data: any) => {
-          const { access_token, refresh_token } = data.data;
+          const { access_token, refresh_token } = data?.data;
           storage.set(STORAGE_KEYS.ACCESS_TOKEN, access_token);
           storage.set(STORAGE_KEYS.REFRESH_TOKEN, refresh_token);
+          showSuccess("Sign In Successfully");
           router.push(ROUTES.DASHBOARD);
           resetForm();
+        },
+        onError: (err) => {
+          console.log(err.message);
+          showError(err.message);
         },
       });
     },
