@@ -15,7 +15,6 @@ interface iInputFiledProps {
 const InputFiled = (props: iInputFiledProps) => {
   const { type, name, placeholder, value, onChange, className, onError } =
     props;
-  console.log(onError);
 
   return (
     <div className="mb-4">

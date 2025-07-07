@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import InputFiled from "../../../components/InputFiled";
 import useSignUp from "../../../query/useSignUp";
 import validationSchema from "../../../validations/signup.validation";
@@ -99,7 +100,10 @@ const SignUp = () => {
 
       {/* Right - Image */}
       <div className="hidden md:block h-screen">
-        <img
+        <Image
+          width={100}
+          height={100}
+          loading="lazy"
           src="https://images.unsplash.com/photo-1709534486708-fb8f94150d0a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Signup Visual"
           className="w-full h-full object-cover"
