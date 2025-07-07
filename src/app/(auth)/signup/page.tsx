@@ -6,17 +6,22 @@ import useSignUp from "../../../query/useSignUp";
 import validationSchema from "../../../validations/signup.validation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-
+import { useShowError, useShowSuccess } from "@/app/toastProvider";
+import { useRouter } from "next/navigation";
+import ROUTES from "@/routes";
 const SignUp = () => {
+  const router = useRouter();
+  const showSuccess = useShowSuccess();
+  const showError = useShowError();
   const [initialValues] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    firstName: "Travise",
+    lastName: "Head",
+    email: "@gmail.com",
+    password: "Pass@1234",
+    confirmPassword: "Pass@1234",
   });
 
-  const mutation = useSignUp();
+  const { mutate, isPending } = useSignUp();
 
   const formik = useFormik({
     initialValues,
@@ -26,8 +31,14 @@ const SignUp = () => {
     validateOnMount: true,
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      mutation.mutate(values, {
-        onSuccess: () => resetForm(),
+      mutate(values, {
+        onSuccess: () => {
+          showSuccess("User Successfully Registed");
+          router.push(ROUTES.SIGN_IN);
+        },
+        onError: (err) => {
+          showError(err?.message);
+        },
       });
     },
   });
@@ -90,9 +101,10 @@ const SignUp = () => {
             />
             <button
               type="submit"
-              className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 cursor-pointer rounded-lg w-full mt-4 font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
+              disabled={isPending}
+              className="disabled:bg-gray-300 bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 cursor-pointer rounded-lg w-full mt-4 font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
             >
-              Sign Up
+              {isPending ? <div>Loading...</div> : "Sign Up"}
             </button>
           </form>
         </div>

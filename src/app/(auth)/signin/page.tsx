@@ -35,11 +35,13 @@ const SignIn = () => {
     onSubmit: (values, { resetForm }) => {
       mutate(values, {
         onSuccess: (data: any) => {
+          router.push(ROUTES.DASHBOARD);
+          showSuccess("Sign In Successfully");
+
           const { access_token, refresh_token } = data?.data;
           storage.set(STORAGE_KEYS.ACCESS_TOKEN, access_token);
           storage.set(STORAGE_KEYS.REFRESH_TOKEN, refresh_token);
-          showSuccess("Sign In Successfully");
-          router.push(ROUTES.DASHBOARD);
+
           resetForm();
         },
         onError: (err) => {
