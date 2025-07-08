@@ -6,15 +6,16 @@ import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
+import { Button } from "./ui/button";
 
 const Logout = () => {
   const showSuccessToast = useShowSuccess();
   const router = useRouter();
 
   const logoutAction = () => {
-    storage.clear();
     router.push(ROUTES.SIGN_IN);
     showSuccessToast("Logged out successfully");
+    storage.clear();
   };
 
   const handleLogout = () => {
@@ -23,13 +24,15 @@ const Logout = () => {
       duration: 10000,
       description: (
         <div className="flex gap-4 justify-center mt-2">
-          <button
+          <Button
+            variant="outline"
             className="text-sm text-blue-600 cursor-pointer hover:underline"
             onClick={() => toast.dismiss(toastId)}
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="outline"
             className="text-sm text-red-600 cursor-pointer hover:underline"
             onClick={() => {
               toast.dismiss(toastId);
@@ -37,19 +40,21 @@ const Logout = () => {
             }}
           >
             Confirm
-          </button>
+          </Button>
         </div>
       ),
     });
   };
 
   return (
-    <button
+    <Button
+      size={"icon"}
+      variant="outline"
       onClick={handleLogout}
       className="bg-white cursor-pointer hover:scale-125 rounded-full w-10 h-10 flex items-center justify-center"
     >
       <LogOut color="red" />
-    </button>
+    </Button>
   );
 };
 

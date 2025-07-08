@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ClientProvider from "./ClientProvider";
-import { Theme } from "@radix-ui/themes";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "next-themes";
 
 // ...
 
@@ -28,14 +28,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ClientProvider>
           <Toaster richColors position="top-center" duration={3000} />
 
-          <Theme>{children}</Theme>
+          <ThemeProvider defaultTheme="dark" attribute="class" enableSystem>
+            {children}
+          </ThemeProvider>
         </ClientProvider>
       </body>
     </html>

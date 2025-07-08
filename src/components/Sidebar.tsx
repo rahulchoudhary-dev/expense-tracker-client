@@ -74,22 +74,22 @@ export function AppSidebar() {
             </div>
           </div>
         </div>
-        <SidebarContent>
+        <SidebarContent className="">
           <SidebarGroup>
             <SidebarGroupLabel className="text-base font-bold tracking-wide">
               Main Menu
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu className="ml-4">
+              <SidebarMenu className="ml-4 ">
                 {mainMenuItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
                       <a
                         href={item.url}
-                        className="flex items-center gap-3 text-sm text-gray-700 hover:text-primary"
+                        className="flex items-center gap-3 text-sm text-muted hover:text-primary"
                       >
                         <item.icon size={18} />
-                        <span>{item.title}</span>
+                        <span className="">{item.title}</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -107,7 +107,7 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild>
                       <a
                         href={item.url}
-                        className="flex items-center gap-3 text-sm text-gray-700 hover:text-primary"
+                        className="flex items-center gap-3 text-sm text-muted hover:text-primary"
                       >
                         <item.icon size={18} />
                         <span>{item.title}</span>
