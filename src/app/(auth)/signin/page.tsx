@@ -1,17 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import InputFiled from "../../../components/InputFiled";
-import validationSchema from "../../../validations/signup.validation";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import useSignIn from "@/query/useSignIn";
 import { storage } from "@/utils/storageUtils";
 import { useRouter } from "next/navigation";
-import { STORAGE_KEYS } from "../../../constant"; // optional enum for key safety
 import ROUTES from "@/routes";
-import { toast } from "sonner";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
+import SignInDto from "@/validations/signin.validation";
+import { STORAGE_KEYS } from "@/constant";
+import InputFiled from "@/components/InputFiled";
 
 const SignIn = () => {
   const router = useRouter();
@@ -31,21 +30,18 @@ const SignIn = () => {
     validateOnBlur: true,
     validateOnChange: true,
     validateOnMount: true,
-    validationSchema: false,
+    validationSchema: SignInDto,
     onSubmit: (values, { resetForm }) => {
       mutate(values, {
         onSuccess: (data: any) => {
-          router.push(ROUTES.DASHBOARD);
-          showSuccess("Sign In Successfully");
-
           const { access_token, refresh_token } = data?.data;
           storage.set(STORAGE_KEYS.ACCESS_TOKEN, access_token);
+          router.push(ROUTES.DASHBOARD);
+          showSuccess("Sign In Successfully");
           storage.set(STORAGE_KEYS.REFRESH_TOKEN, refresh_token);
-
           resetForm();
         },
         onError: (err) => {
-          console.log(err.message);
           showError(err.message);
         },
       });
@@ -56,8 +52,8 @@ const SignIn = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 font-sans">
       {/* Left - Form */}
       <div className="flex p-12 justify-center items-center h-screen">
-        <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8">
-          <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">
+        <div className="w-full max-w-md bg-primary rounded-3xl shadow-2xl p-8">
+          <h2 className="text-3xl font-bold text-center text-muted mb-6">
             SigIn To Your Account
           </h2>
           <form onSubmit={formik.handleSubmit}>
