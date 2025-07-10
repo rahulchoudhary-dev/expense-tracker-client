@@ -29,8 +29,10 @@ export const endpoints = {
   sigIn: "/auth/signIn",
   signUp: "/auth/signUp",
   getExpenses: "/expenses",
-  addExpense: "/expenses/add",
-  deleteExpense: "/expenses/delete",
-  updateExpense: "/expenses/update",
+  addExpense: "/expense",
+  deleteExpense: "/expenses/:id",
+  updateExpense: "/expenses/:id",
+  getCategories: "/categories",
+  getPaymentMethods: "payment-methods",
 };
 export default axiosConfig;

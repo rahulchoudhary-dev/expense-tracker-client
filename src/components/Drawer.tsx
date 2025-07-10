@@ -1,20 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { CalendarIcon, DollarSign, Minus, Plus } from "lucide-react";
-// import { Bar, BarChart, ResponsiveContainer } from "recharts";
+import { CalendarIcon, DollarSign } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Label } from "./ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
@@ -29,77 +19,61 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useFormik } from "formik";
+import useGetCategory from "@/query/useGetCategory";
+import usePaymentMethods from "@/query/useGetPaymentMethod";
+import useAddExpenseMutation from "@/query/useAddExpense";
+import { useShowError, useShowSuccess } from "@/app/toastProvider";
+import ExpenseDrawerHeader from "./ExpenseDrawerHeader";
+import OpenExpenseDrawerButton from "./OpenExpenseDrawerButton";
+import { iExpenseFormData } from "@/interfaces/expense";
+import useBootUser from "@/query/useBootUser";
 
 export function AddExpenseDrawer() {
-  const [goal, setGoal] = useState(350);
-  const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date>(new Date());
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  function onClick(adjustment: number) {
-    setGoal(Math.max(200, Math.min(400, goal + adjustment)));
-  }
+  const showSuccessToast = useShowSuccess();
+  const showErrorToast = useShowError();
+  const [isExpenseModalOpen, setIsExpenseModalOpen] = useState<boolean>(false);
 
-  const categories = [
-    "Food",
-    "Transportation",
-    "Entertainment",
-    "Shopping",
-    "Utilities",
-    "Healthcare",
-    "Other",
-  ];
-
-  const paymentMethods = [
-    "Credit Card",
-    "Debit Card",
-    "Cash",
-    "Bank Transfer",
-    "Digital Wallet",
-  ];
-
-  const [initialValues, setInitialValues] = useState({
-    amount: "",
-    date: "",
+  const [expenseForm, setExpenseForm] = useState<iExpenseFormData>({
+    date: new Date(),
     description: "",
-    category: "",
-    paymentMethod: "",
+    amount: "1000",
+    categoryId: "0",
+    paymentMethodId: "8",
   });
+  const { id: userId } = useBootUser();
+
+  const { data: categories } = useGetCategory();
+  const { data: paymentMethods } = usePaymentMethods();
+  const { mutate } = useAddExpenseMutation();
 
   const formik = useFormik({
-    initialValues,
+    initialValues: expenseForm,
     enableReinitialize: true,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: (values, { resetForm }) => {
+      mutate(
+        { ...values, userId },
+        {
+          onSuccess: () => {
+            showSuccessToast("Expense Added SuccessFully");
+            resetForm();
+            setIsExpenseModalOpen(false);
+          },
+          onError: (err) => {
+            showErrorToast(err?.message);
+          },
+        }
+      );
     },
   });
 
   return (
-    <Drawer open={open}>
+    <Drawer open={isExpenseModalOpen}>
       <DrawerTrigger asChild>
-        <Button
-          onClick={() => setOpen(true)}
-          className="bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Expense
-        </Button>
+        <OpenExpenseDrawerButton onClick={() => setIsExpenseModalOpen(true)} />
       </DrawerTrigger>
       <DrawerContent className="max-w-2xl mb-12 mx-auto">
-        <form>
-          <DrawerHeader>
-            <DrawerTitle className="flex items-start gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <DollarSign className="w-4 h-4 text-white" />
-              </div>
-              Add New Expense
-            </DrawerTitle>
-            <DrawerDescription>
-              Fill in the details below to track your expense.
-            </DrawerDescription>
-          </DrawerHeader>
+        <form onSubmit={formik.handleSubmit}>
+          <ExpenseDrawerHeader />
           <div className="px-4 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -110,18 +84,22 @@ export function AddExpenseDrawer() {
                       variant={"outline"}
                       className={cn(
                         "w-full justify-start text-left font-normal cursor-pointer",
-                        !date && "text-muted-foreground"
+                        !formik.values.date && "text-muted-foreground"
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {date ? format(date, "PPP") : "Pick a date"}
+                      {expenseForm.date
+                        ? format(expenseForm.date, "PPP")
+                        : "Pick a date"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
                     <Calendar
                       mode="single"
-                      selected={date}
-                      onSelect={(date) => date && setDate(date)}
+                      selected={expenseForm?.date}
+                      onSelect={(date) =>
+                        date && formik.setFieldValue("date", date)
+                      }
                     />
                   </PopoverContent>
                 </Popover>
@@ -133,11 +111,9 @@ export function AddExpenseDrawer() {
                   <Input
                     id="amount"
                     type="number"
-                    step="0.01"
-                    min="0"
-                    placeholder="0.00"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    name="amount"
+                    value={formik.values.amount}
+                    onChange={formik.handleChange}
                     className="pl-10"
                   />
                 </div>
@@ -147,9 +123,10 @@ export function AddExpenseDrawer() {
               <Label htmlFor="description">Description *</Label>
               <Textarea
                 id="description"
+                name="description"
                 placeholder="What did you spend on?"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={formik.values.description}
+                onChange={formik.handleChange}
                 className="resize-none"
                 rows={5}
                 cols={5}
@@ -158,14 +135,28 @@ export function AddExpenseDrawer() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
               <div className="space-y-2">
                 <Label htmlFor="category">Category *</Label>
-                <Select value={category} onValueChange={setCategory}>
+                <Select
+                  name="category"
+                  value={formik.values.categoryId}
+                  onValueChange={(value) =>
+                    formik.setFieldValue("categoryId", value)
+                  }
+                >
                   <SelectTrigger className="w-full cursor-pointer">
-                    <SelectValue placeholder="Select a category" />
+                    <SelectValue placeholder="Select a category">
+                      {categories?.find(
+                        (items: any) => items?.id == formik.values?.categoryId
+                      )?.name || "Select category"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={cat} value={cat}>
-                        {cat}
+                    {categories?.map((cat: any) => (
+                      <SelectItem
+                        className="text-white"
+                        key={cat.id}
+                        value={cat.id}
+                      >
+                        {cat.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -173,14 +164,25 @@ export function AddExpenseDrawer() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="paymentMethod">Payment Method *</Label>
-                <Select value={paymentMethod} onValueChange={setPaymentMethod}>
+                <Select
+                  name="paymentMethod"
+                  value={formik.values.paymentMethodId}
+                  onValueChange={(value) =>
+                    formik.setFieldValue("paymentMethodId", value)
+                  }
+                >
                   <SelectTrigger className="w-full cursor-pointer">
-                    <SelectValue placeholder="Select a payment method" />
+                    <SelectValue placeholder="Select a payment method">
+                      {paymentMethods?.find(
+                        (items: any) =>
+                          items?.id == formik.values?.paymentMethodId
+                      )?.name || "Select Payment Method"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
-                    {paymentMethods.map((cat) => (
-                      <SelectItem key={cat} value={cat}>
-                        {cat}
+                    {paymentMethods?.map((payType: any) => (
+                      <SelectItem key={payType.id} value={payType.id}>
+                        {payType.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -191,7 +193,7 @@ export function AddExpenseDrawer() {
 
           <div className="grid grid-cols-2 gap-4 w-auto mx-4 mt-4">
             <Button
-              onClick={() => setOpen(false)}
+              onClick={() => setIsExpenseModalOpen(false)}
               type="reset"
               className="bg-red-500 hover:bg-red-400 w-full cursor-pointer"
             >
