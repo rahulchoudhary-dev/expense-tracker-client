@@ -1,4 +1,5 @@
 import axiosConfig, { endpoints } from "@/lib";
+import { storage } from "@/utils/storageUtils";
 import { useMutation } from "@tanstack/react-query";
 
 interface iSignIn {
@@ -16,7 +17,10 @@ const useSignIn = () => {
     mutationKey: ["auth", "signin"],
     mutationFn: signInHandler,
     onSuccess: (data) => {
-      console.log("sigin done", data);
+      const user = data?.data;
+      if (user) {
+        storage.set("user", JSON.stringify(user));
+      }
     },
     onError: (error) => {
       console.error("Sign up failed:", error);
