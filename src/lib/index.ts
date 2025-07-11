@@ -1,5 +1,6 @@
 import { storage } from "@/utils/storageUtils";
 import axios from "axios";
+import { string } from "yup";
 
 const axiosConfig = axios.create({
   baseURL: "http://localhost:5000/api/v1",
@@ -29,6 +30,7 @@ export const endpoints = {
   sigIn: "/auth/signIn",
   signUp: "/auth/signUp",
   getExpenses: "/expenses",
+  getExpenseSummary: "/expense/expense-summary",
   addExpense: "/expense",
   deleteExpense: "/expenses/:id",
   updateExpense: "/expenses/:id",
@@ -36,3 +38,10 @@ export const endpoints = {
   getPaymentMethods: "payment-methods",
 };
 export default axiosConfig;
+
+export function replaceParams(path: string, params: any) {
+  for (const key in params) {
+    path = path.replace(`:${key}`, params[key]);
+  }
+  return path;
+}
