@@ -95,14 +95,15 @@ export function AddExpenseDrawer() {
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {expenseForm.date
-                        ? format(expenseForm.date, "PPP")
+                        ? format(formik.values.date, "PPP")
                         : "Pick a date"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
                     <Calendar
+                      autoFocus={true}
                       mode="single"
-                      selected={expenseForm?.date}
+                      selected={formik.values?.date}
                       onSelect={(date) =>
                         date && formik.setFieldValue("date", date)
                       }
