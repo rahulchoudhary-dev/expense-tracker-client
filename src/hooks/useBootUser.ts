@@ -1,3 +1,4 @@
+import { STORAGE_KEYS } from "@/constant";
 import { storage } from "@/utils/storageUtils";
 import { useMemo } from "react";
 
@@ -11,7 +12,7 @@ export interface User {
 const useBootUser = () => {
   const user: User | null = useMemo(() => {
     try {
-      const data = storage.get("user");
+      const data = storage.get(STORAGE_KEYS.USER);
       return data ? JSON.parse(data) : null;
     } catch {
       return null;

@@ -26,7 +26,9 @@ import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import ExpenseDrawerHeader from "./ExpenseDrawerHeader";
 import OpenExpenseDrawerButton from "./OpenExpenseDrawerButton";
 import { iExpenseFormData } from "@/interfaces/expense";
-import useBootUser from "@/query/useBootUser";
+import useBootUser from "@/hooks/useBootUser";
+import { addExpenseSchema } from "@/validations/addExpense.validation";
+import FormErrorMessage from "./FormErrorMessage";
 
 export function AddExpenseDrawer() {
   const showSuccessToast = useShowSuccess();
@@ -36,9 +38,9 @@ export function AddExpenseDrawer() {
   const [expenseForm, setExpenseForm] = useState<iExpenseFormData>({
     date: new Date(),
     description: "",
-    amount: "1000",
-    categoryId: "0",
-    paymentMethodId: "8",
+    amount: "",
+    categoryId: "",
+    paymentMethodId: "",
   });
   const { id: userId } = useBootUser();
 
@@ -49,6 +51,10 @@ export function AddExpenseDrawer() {
   const formik = useFormik({
     initialValues: expenseForm,
     enableReinitialize: true,
+    validationSchema: addExpenseSchema,
+    validateOnBlur: true,
+    validateOnMount: true,
+    validateOnChange: true,
     onSubmit: (values, { resetForm }) => {
       mutate(
         { ...values, userId },
@@ -103,6 +109,7 @@ export function AddExpenseDrawer() {
                     />
                   </PopoverContent>
                 </Popover>
+                <FormErrorMessage name="date" formik={formik} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="amount">Amount *</Label>
@@ -117,6 +124,7 @@ export function AddExpenseDrawer() {
                     className="pl-10"
                   />
                 </div>
+                <FormErrorMessage name="amount" formik={formik} />
               </div>
             </div>
             <div className="space-y-2">
@@ -131,12 +139,13 @@ export function AddExpenseDrawer() {
                 rows={5}
                 cols={5}
               />
+              <FormErrorMessage name="description" formik={formik} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
               <div className="space-y-2">
                 <Label htmlFor="category">Category *</Label>
                 <Select
-                  name="category"
+                  name="categoryId"
                   value={formik.values.categoryId}
                   onValueChange={(value) =>
                     formik.setFieldValue("categoryId", value)
@@ -161,11 +170,12 @@ export function AddExpenseDrawer() {
                     ))}
                   </SelectContent>
                 </Select>
+                <FormErrorMessage name="categoryId" formik={formik} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="paymentMethod">Payment Method *</Label>
                 <Select
-                  name="paymentMethod"
+                  name="paymentMethodId"
                   value={formik.values.paymentMethodId}
                   onValueChange={(value) =>
                     formik.setFieldValue("paymentMethodId", value)
@@ -187,6 +197,7 @@ export function AddExpenseDrawer() {
                     ))}
                   </SelectContent>
                 </Select>
+                <FormErrorMessage name="paymentMethodId" formik={formik} />
               </div>
             </div>
           </div>
