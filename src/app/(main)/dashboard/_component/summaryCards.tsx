@@ -11,17 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Wallet, DollarSign, ChartBar, Calendar1, CatIcon } from "lucide-react";
-
-interface iData {
-  key: "Total Expense" | "Avg Expense" | "This Month" | "Top Category"; // use union for known values
-  amount: number;
-  otherInfo: string;
-  name?: string;
-}
-interface iSummaryCardsProps {
-  data: iData[];
-  isLoading: boolean;
-}
+import { iData, iSummaryCardsProps } from "@/interfaces/summaryCardsProps";
 
 const ICONS_MAP: Record<string, JSX.Element> = {
   "Total Expense": <DollarSign className="w-5 h-5 text-primary font-bold" />,

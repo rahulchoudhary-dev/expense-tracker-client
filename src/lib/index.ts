@@ -29,7 +29,7 @@ axiosConfig.interceptors.response.use(
 export const endpoints = {
   sigIn: "/auth/signIn",
   signUp: "/auth/signUp",
-  getExpenses: "/expenses",
+  getExpense: "/expense",
   getExpenseSummary: "/expense/expense-summary",
   addExpense: "/expense",
   deleteExpense: "/expenses/:id",
