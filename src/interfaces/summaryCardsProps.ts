@@ -1,6 +1,6 @@
 export interface iData {
-  key: "Total Expense" | "Avg Expense" | "This Month" | "Top Category"; // use union for known values
-  amount: number;
+  lable: "Total Expense" | "Avg Expense" | "This Month" | "Top Category"; // use union for known values
+  value: number;
   otherInfo: string;
   name?: string;
 }

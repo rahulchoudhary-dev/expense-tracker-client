@@ -35,8 +35,10 @@ const SummaryCards: React.FC<iSummaryCardsProps> = ({
     return data?.map((item: iData) => {
       return {
         ...item,
-        icon: ICONS_MAP[item.key] || <Wallet className="w-5 h-5 text-muted" />,
-        bgColor: COLOR_MAP[item.key] || "bg-gray-400",
+        icon: ICONS_MAP[item.lable] || (
+          <Wallet className="w-5 h-5 text-muted" />
+        ),
+        bgColor: COLOR_MAP[item.lable] || "bg-gray-400",
       };
     });
   }, [data]);
@@ -67,9 +69,9 @@ const SummaryCards: React.FC<iSummaryCardsProps> = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 md:gap-5">
       {memoizedData?.map((item: any) => (
-        <Card className="dark:bg-gray-900" key={item.key}>
+        <Card className="dark:bg-gray-900" key={item.lable}>
           <CardHeader>
-            <CardTitle>{item.key}</CardTitle>
+            <CardTitle>{item.lable}</CardTitle>
             <CardAction>
               <Button
                 variant="outline"
@@ -81,7 +83,15 @@ const SummaryCards: React.FC<iSummaryCardsProps> = ({
             </CardAction>
           </CardHeader>
           <CardContent className="mt-[-20]">
-            <h1 className="font-bold text-2xl">{item?.amount}</h1>
+            {item.lable == "Top Category" ? (
+              <>
+                <h1 className="font-bold text-2xl">{item.value}</h1>
+              </>
+            ) : (
+              <h1 className="font-bold text-2xl">
+                {item.currency} {Number(item?.value).toFixed(2)}
+              </h1>
+            )}
           </CardContent>
           <CardFooter className="mt-[-20]">
             <p className="text-muted font-normal text-sm">{item?.otherInfo}</p>
