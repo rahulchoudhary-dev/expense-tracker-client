@@ -1,3 +1,4 @@
+import { queryClient } from "@/app/ClientProvider";
 import { iExpenseFormData } from "@/interfaces/expense";
 import axiosConfig, { endpoints } from "@/lib";
 import { useMutation } from "@tanstack/react-query";
@@ -11,7 +12,14 @@ const useAddExpenseMutation = () => {
   return useMutation({
     mutationKey: ["expense:add"],
     mutationFn: addExpenseRequest,
-    retry: 3,
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["get-expenses"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["get-expense-summary"],
+      });
+    },
   });
 };
 
