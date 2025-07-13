@@ -8,106 +8,14 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-const expenseData = [
-  {
-    month: "January",
-    year: 2025,
-    totalExpense: 2400,
-    food: 800,
-    utilities: 500,
-    shopping: 1100,
-  },
-  {
-    month: "February",
-    year: 2025,
-    totalExpense: 800,
-    food: 700,
-    utilities: 600,
-    shopping: 900,
-  },
-  {
-    month: "March",
-    year: 2025,
-    totalExpense: 2800,
-    food: 900,
-    utilities: 650,
-    shopping: 1250,
-  },
-  {
-    month: "April",
-    year: 2025,
-    totalExpense: 2600,
-    food: 850,
-    utilities: 620,
-    shopping: 1130,
-  },
-  {
-    month: "May",
-    year: 2025,
-    totalExpense: 3000,
-    food: 950,
-    utilities: 700,
-    shopping: 1350,
-  },
-  {
-    month: "June",
-    year: 2025,
-    totalExpense: 2500,
-    food: 820,
-    utilities: 580,
-    shopping: 1100,
-  },
-  {
-    month: "July",
-    year: 2025,
-    totalExpense: 3100,
-    food: 1000,
-    utilities: 720,
-    shopping: 1380,
-  },
-  {
-    month: "August",
-    year: 2025,
-    totalExpense: 2700,
-    food: 870,
-    utilities: 650,
-    shopping: 1180,
-  },
-  {
-    month: "September",
-    year: 2025,
-    totalExpense: 50,
-    food: 910,
-    utilities: 680,
-    shopping: 1360,
-  },
-  {
-    month: "October",
-    year: 2025,
-    totalExpense: 2650,
-    food: 850,
-    utilities: 620,
-    shopping: 1180,
-  },
-  {
-    month: "November",
-    year: 2025,
-    totalExpense: 200,
-    food: 900,
-    utilities: 650,
-    shopping: 1250,
-  },
-  {
-    month: "December",
-    year: 2025,
-    totalExpense: 3200,
-    food: 1050,
-    utilities: 750,
-    shopping: 1400,
-  },
-];
+import { Skeleton } from "@/components/ui/skeleton";
+import { Loader2 } from "lucide-react";
+import { memo } from "react";
+import { iYearlyExpenseChartProps } from "@/interfaces/analytics";
+import LoadingSpinner from "./LoadingSpinner";
+
 export const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
+  if (active && payload?.length) {
     return (
       <div className="bg-white dark:bg-gray-800 text-sm text-black dark:text-white p-3 rounded shadow-md border dark:border-gray-700">
         <p className="font-semibold">{label}</p>
@@ -119,57 +27,64 @@ export const CustomTooltip = ({ active, payload, label }: any) => {
       </div>
     );
   }
-
   return null;
 };
 
-const CustomeLegend = () => {
+const CustomLegend = () => {
   return (
-    <div className="w-full flex items-center justify-center">
-      <h1>Total Expenses ( Line Chart )</h1>
+    <div className="w-full text-center font-medium text-gray-700 dark:text-gray-200 mb-2">
+      Total Expenses ( Yearly Expense Trend Line Chart )
     </div>
   );
 };
 
-export const LineChartComponent = () => {
+const YearlyExpenseLineChart = ({
+  data,
+  isLoading,
+}: iYearlyExpenseChartProps) => {
   return (
-    <div className="w-full h-[350px]">
-      <ResponsiveContainer className={"max-w-8/8"}>
-        <LineChart
-          data={expenseData}
-          margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
-        >
-          {/* Grid and Axis */}
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Legend content={<CustomeLegend />} />
-          <Tooltip content={<CustomTooltip />} />
+    <div className="w-full h-[350px] rounded-xl  dark:bg-gray-900 ">
+      <ResponsiveContainer width="100%" height="100%">
+        {isLoading ? (
+          <div className="w-full">
+            <LoadingSpinner />
+          </div>
+        ) : (
+          <LineChart
+            data={data}
+            margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Legend content={<CustomLegend />} />
+            <Tooltip content={<CustomTooltip />} />
 
-          {/* Gradient Definition */}
-          <defs>
-            <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#8b5cf6" /> {/* purple-500 */}
-              <stop offset="100%" stopColor="#3b82f6" /> {/* blue-500 */}
-            </linearGradient>
-          </defs>
+            <defs>
+              <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#8b5cf6" />
+                <stop offset="100%" stopColor="#3b82f6" />
+              </linearGradient>
+            </defs>
 
-          {/* Line with Gradient Stroke */}
-          <Line
-            type="linear"
-            dataKey="totalExpense"
-            stroke="url(#lineGradient)"
-            strokeWidth={3}
-            dot={{ r: 4, stroke: "#6366f1", strokeWidth: 2, fill: "#fff" }}
-            activeDot={{
-              r: 6,
-              stroke: "#7c3aed",
-              strokeWidth: 2,
-              fill: "#fff",
-            }}
-          />
-        </LineChart>
+            <Line
+              type="monotone"
+              dataKey="totalExpenseAmount"
+              stroke="url(#lineGradient)"
+              strokeWidth={3}
+              dot={{ r: 4, stroke: "#6366f1", strokeWidth: 2, fill: "#fff" }}
+              activeDot={{
+                r: 6,
+                stroke: "#7c3aed",
+                strokeWidth: 2,
+                fill: "#fff",
+              }}
+            />
+          </LineChart>
+        )}
       </ResponsiveContainer>
     </div>
   );
 };
+
+export default memo(YearlyExpenseLineChart);

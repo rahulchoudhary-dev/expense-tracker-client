@@ -1,4 +1,4 @@
-import { iExpenseData } from "@/app/(main)/dashboard/_component/ExpenseTableColumns";
+import { iExpenseData } from "@/app/(main)/dashboard/_components/ExpenseTableColumns";
 
 export interface iExpenseFormData {
   date: Date;
