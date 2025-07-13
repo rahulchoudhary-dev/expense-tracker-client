@@ -20,3 +20,7 @@ export const yearOptions = [
   { label: "2022", value: 2022 },
   { label: "2021", value: 2021 },
 ];
+
+export const CURRENT_DATE = new Date();
+export const CURRENT_MONTH = CURRENT_DATE.getMonth() + 1;
+export const CURRENT_YEAR = CURRENT_DATE.getFullYear();

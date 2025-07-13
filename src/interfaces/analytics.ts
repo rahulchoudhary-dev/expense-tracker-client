@@ -7,5 +7,13 @@ interface YearlyExpenseData {
 
 export interface iYearlyExpenseChartProps {
   data: YearlyExpenseData[];
-  isLoading: boolean;
+}
+
+interface CategoryData {
+  categoryName: string;
+  totalExpenseAmount: number;
+}
+
+export interface iCategoryExpensePieChartProps {
+  data: CategoryData[];
 }

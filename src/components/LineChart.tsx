@@ -1,3 +1,6 @@
+"use client";
+
+import { memo } from "react";
 import {
   LineChart,
   Line,
@@ -8,11 +11,8 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Loader2 } from "lucide-react";
-import { memo } from "react";
+
 import { iYearlyExpenseChartProps } from "@/interfaces/analytics";
-import LoadingSpinner from "./LoadingSpinner";
 
 export const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload?.length) {
@@ -38,50 +38,41 @@ const CustomLegend = () => {
   );
 };
 
-const YearlyExpenseLineChart = ({
-  data,
-  isLoading,
-}: iYearlyExpenseChartProps) => {
+const YearlyExpenseLineChart = ({ data }: iYearlyExpenseChartProps) => {
   return (
     <div className="w-full h-[350px] rounded-xl  dark:bg-gray-900 ">
       <ResponsiveContainer width="100%" height="100%">
-        {isLoading ? (
-          <div className="w-full">
-            <LoadingSpinner />
-          </div>
-        ) : (
-          <LineChart
-            data={data}
-            margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Legend content={<CustomLegend />} />
-            <Tooltip content={<CustomTooltip />} />
+        <LineChart
+          data={data}
+          margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Legend content={<CustomLegend />} />
+          <Tooltip content={<CustomTooltip />} />
 
-            <defs>
-              <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#8b5cf6" />
-                <stop offset="100%" stopColor="#3b82f6" />
-              </linearGradient>
-            </defs>
+          <defs>
+            <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#8b5cf6" />
+              <stop offset="100%" stopColor="#3b82f6" />
+            </linearGradient>
+          </defs>
 
-            <Line
-              type="monotone"
-              dataKey="totalExpenseAmount"
-              stroke="url(#lineGradient)"
-              strokeWidth={3}
-              dot={{ r: 4, stroke: "#6366f1", strokeWidth: 2, fill: "#fff" }}
-              activeDot={{
-                r: 6,
-                stroke: "#7c3aed",
-                strokeWidth: 2,
-                fill: "#fff",
-              }}
-            />
-          </LineChart>
-        )}
+          <Line
+            type="monotone"
+            dataKey="totalExpenseAmount"
+            stroke="url(#lineGradient)"
+            strokeWidth={3}
+            dot={{ r: 4, stroke: "#6366f1", strokeWidth: 2, fill: "#fff" }}
+            activeDot={{
+              r: 6,
+              stroke: "#7c3aed",
+              strokeWidth: 2,
+              fill: "#fff",
+            }}
+          />
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );
