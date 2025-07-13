@@ -1,5 +1,5 @@
 import axiosConfig, { endpoints } from "@/lib";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface ifetchExpenseSummary {
   userId: string;
@@ -12,11 +12,11 @@ const fetchExpenseSummary = async (data: ifetchExpenseSummary) => {
   return resp.data;
 };
 
-const useGetExpenseSummary = () => {
-  return useMutation({
-    mutationKey: ["get-expense-summary"],
-    mutationFn: fetchExpenseSummary,
-    retry: 3,
+const useGetExpenseSummary = (params: ifetchExpenseSummary) => {
+  return useQuery({
+    queryKey: ["get-expense-summary", params?.userId],
+    queryFn: () => fetchExpenseSummary(params),
+    staleTime: 1000 * 60 * 1,
   });
 };
 

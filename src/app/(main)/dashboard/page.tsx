@@ -24,27 +24,18 @@ const ExpenseDashBoard = () => {
     paymentMethodId: "",
   });
 
-  const {
-    mutate: getSummary,
-    data: summaryData,
-    isPending: isSummaryLoading,
-  } = useGetExpenseSummary();
+  const { data: summaryData, isPending: isSummaryLoading } =
+    useGetExpenseSummary({ userId: id });
 
   const { data: expenseData, isLoading: isExpenseLoading } =
     useGetExpenses(pageData);
-
-  useEffect(() => {
-    if (id) {
-      getSummary({ userId: id });
-    }
-  }, [id]);
 
   const tableData = useMemo(() => {
     return {
       count: expenseData?.count || 0,
       data: expenseData?.resp || [],
     };
-  }, [expenseData]);
+  }, [expenseData, isExpenseLoading]);
 
   return (
     <div>
