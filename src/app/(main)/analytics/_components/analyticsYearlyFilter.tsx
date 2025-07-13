@@ -9,49 +9,50 @@ import {
 } from "@/components/ui/select";
 import { yearOptions } from "@/constant/dateOptions";
 
-interface AnalyticsYearlyFilterProps {
-  yearlyExpenseParams: {
-    year: number;
-  };
-  setYearlyExpenseParams: React.Dispatch<
-    React.SetStateAction<{ year: number }>
-  >;
+interface AnalyticsYearlyFilterProps<T extends { year: number }> {
+  filterParams: T;
+  setFilterParams: React.Dispatch<React.SetStateAction<T>>;
 }
 
-function AnalyticsYearlyFilter({
-  yearlyExpenseParams,
-  setYearlyExpenseParams,
-}: AnalyticsYearlyFilterProps) {
+function AnalyticsYearlyFilter<T extends { year: number }>({
+  filterParams,
+  setFilterParams,
+}: AnalyticsYearlyFilterProps<T>) {
   return (
-    <div>
-      <Select
-        name="categoryId"
-        onValueChange={(value) =>
-          setYearlyExpenseParams({
-            ...yearlyExpenseParams,
-            year: Number(value),
-          })
-        }
-      >
-        <SelectTrigger className="w-full hover:shadow-lg shadow-sm cursor-pointer">
-          <SelectValue placeholder="Select a year">
-            {yearOptions?.find(
-              (year: any) => year?.value === yearlyExpenseParams?.year
-            )?.label || "Select category"}
-          </SelectValue>
-        </SelectTrigger>
-        <SelectContent className="shadow-sm">
-          {yearOptions?.map((year: any) => (
-            <SelectItem
-              className="text-muted z-50 bg-primary shadow-2xl cursor-pointer"
-              key={year.value}
-              value={year.value}
-            >
-              {year.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+    <div className="flex hover:shadow-sm">
+      <div className="flex hover:shadow-sm">
+        <Select
+          name="year"
+          value={String(filterParams.year)}
+          onValueChange={(value) =>
+            setFilterParams({
+              ...filterParams,
+              year: Number(value),
+            })
+          }
+        >
+          <SelectTrigger className="w-full shadow-sm cursor-pointer">
+            <SelectValue placeholder="Select month">
+              {
+                yearOptions.find(
+                  (m) => Number(m.value) === Number(filterParams.year)
+                )?.label
+              }
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent className="z-50">
+            {yearOptions.map((year) => (
+              <SelectItem
+                className="text-muted z-50 bg-primary shadow-2xl cursor-pointer"
+                key={year.value}
+                value={String(year.value)}
+              >
+                {year.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 }

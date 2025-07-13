@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { memo } from "react";
 import {
   BarChart,
   Bar,
@@ -12,78 +14,65 @@ import {
 } from "recharts";
 import { CustomTooltip } from "./LineChart";
 import { iYearlyExpenseChartProps } from "@/interfaces/analytics";
-import { Loader2 } from "lucide-react";
-import LoadingSpinner from "./LoadingSpinner";
 
-const CustomeLegend = () => {
-  return (
-    <div className="w-full flex items-center justify-center">
-      <h1>Total Expenses ( Yearly Expense Trend Bar Chart )</h1>
-    </div>
-  );
-};
-export const YearlyExpenseBarChart = ({
-  data,
-  isLoading,
-}: iYearlyExpenseChartProps) => {
+const CustomLegend = () => (
+  <div className="w-full text-center font-medium text-gray-700 dark:text-gray-200 mb-2">
+    Yearly Expense Trend (Bar Chart)
+  </div>
+);
+
+const YearlyExpenseBarChart = ({ data }: iYearlyExpenseChartProps) => {
   return (
     <div className="h-[350px] max-w-full">
-      <ResponsiveContainer className={"max-w-8/8"}>
-        {isLoading ? (
-          <div className="w-full">
-            <LoadingSpinner />
-          </div>
-        ) : (
-          <BarChart
-            data={data}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis dataKey="totalExpenseAmount" />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend content={<CustomeLegend />} />
-            <defs>
-              <linearGradient id="expenseGradient" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#8b5cf6" /> {/* from-purple-500 */}
-                <stop offset="100%" stopColor="#2563eb" /> {/* to-blue-600 */}
-              </linearGradient>
-            </defs>
+      <ResponsiveContainer>
+        <BarChart
+          data={data}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
+          {/* Gradients */}
+          <defs>
+            <linearGradient id="expenseGradient" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#8b5cf6" />
+              <stop offset="100%" stopColor="#2563eb" />
+            </linearGradient>
+            <linearGradient
+              id="expenseActiveGradient"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="0"
+            >
+              <stop offset="0%" stopColor="#7c3aed" />
+              <stop offset="100%" stopColor="#1d4ed8" />
+            </linearGradient>
+          </defs>
 
-            <Bar
-              dataKey="totalExpenseAmount"
-              fill="url(#expenseGradient)"
-              activeBar={
-                <Rectangle
-                  fill="url(#expenseActiveGradient)"
-                  stroke="#4f46e5" // indigo-600 stroke
-                  strokeWidth={2}
-                  radius={[4, 4, 4, 4]} // Optional: rounded corners
-                />
-              }
-            />
-            <defs>
-              <linearGradient
-                id="expenseActiveGradient"
-                x1="0"
-                y1="0"
-                x2="1"
-                y2="0"
-              >
-                <stop offset="0%" stopColor="#7c3aed" /> {/* from-purple-600 */}
-                <stop offset="100%" stopColor="#1d4ed8" /> {/* to-blue-700 */}
-              </linearGradient>
-            </defs>
-          </BarChart>
-        )}
+          {/* Axes & Grid */}
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+
+          {/* Legend & Tooltip */}
+          <Legend content={<CustomLegend />} />
+          <Tooltip content={<CustomTooltip />} />
+
+          {/* Bar */}
+          <Bar
+            dataKey="totalExpenseAmount"
+            fill="url(#expenseGradient)"
+            activeBar={
+              <Rectangle
+                fill="url(#expenseActiveGradient)"
+                stroke="#4f46e5"
+                strokeWidth={2}
+                radius={[4, 4, 4, 4]}
+              />
+            }
+          />
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-export default YearlyExpenseBarChart;
+export default memo(YearlyExpenseBarChart);
