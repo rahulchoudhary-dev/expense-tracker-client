@@ -35,7 +35,9 @@ export const endpoints = {
   deleteExpense: "/expenses/:id",
   updateExpense: "/expenses/:id",
   getCategories: "/categories",
-  getPaymentMethods: "payment-methods",
+  getPaymentMethods: "/payment-methods",
+  getAnalyticsYearlyExpenses: "/analytics-charts/yearly-expenses",
+  getAnalyticsMonthlyExpenses: "/analytics-charts/category-expenses",
 };
 export default axiosConfig;
 

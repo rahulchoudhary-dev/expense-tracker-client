@@ -2,11 +2,11 @@
 
 import withAuth from "@/hoc/withAuth";
 import React, { useEffect, useMemo, useState } from "react";
-import SummaryCards from "./_component/summaryCards";
+import SummaryCards from "./_components/summaryCards";
 import useGetExpenseSummary from "@/query/useGetExpenseSummary";
 import useBootUser from "@/hooks/useBootUser";
 import useGetExpenses from "@/query/useGetExpenses";
-import { ExpenseDataTable } from "./_component/ExpenseDataTable";
+import { ExpenseDataTable } from "./_components/ExpenseDataTable";
 import getCurrentMonthYear from "@/utils/getCurrentMonthYear";
 import { iExpenseParams } from "@/interfaces/expense";
 const ExpenseDashBoard = () => {

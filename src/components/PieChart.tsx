@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Legend } from "recharts";
 
 const data = [
@@ -49,7 +50,7 @@ const renderOutsideLabel = ({
   );
 };
 
-export default function PieChartComponent() {
+function CategoryExpensePieChart() {
   return (
     <div className="dark:bg-zinc-900 dark:shadow-md rounded-xl p-6 max-w-4xl mx-auto w-full">
       <h2 className="text-lg font-bold mb-4 text-center dark:text-white">
@@ -82,3 +83,5 @@ export default function PieChartComponent() {
     </div>
   );
 }
+
+export default memo(CategoryExpensePieChart);
