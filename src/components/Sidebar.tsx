@@ -18,11 +18,12 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "./ui/sidebar";
+import Link from "next/link";
 
 const mainMenuItems = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/dashboard",
     icon: LayoutDashboard,
   },
   {
@@ -32,7 +33,7 @@ const mainMenuItems = [
   },
   {
     title: "Analytics",
-    url: "#",
+    url: "/analytics",
     icon: BarChart2,
   },
   {
@@ -59,7 +60,7 @@ export function AppSidebar() {
   return (
     <SidebarProvider>
       <Sidebar>
-        <div className="bg-white border-b border-gray-300 p-6 flex justify-start gap-4 items-center">
+        <div className="dark:bg-gray-900 border-b border-gray-300 dark:border-gray-500 p-6 flex justify-start gap-4 items-center">
           <div className="w-9 h-9 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
             <TrendingUp className="w-4 h-4 text-white" />
           </div>
@@ -74,7 +75,7 @@ export function AppSidebar() {
             </div>
           </div>
         </div>
-        <SidebarContent className="">
+        <SidebarContent className="dark:bg-gray-900">
           <SidebarGroup>
             <SidebarGroupLabel className="text-base font-bold tracking-wide">
               Main Menu
@@ -84,13 +85,13 @@ export function AppSidebar() {
                 {mainMenuItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                      <a
+                      <Link
                         href={item.url}
                         className="flex items-center gap-3 text-sm text-muted hover:text-primary"
                       >
                         <item.icon size={18} />
                         <span className="">{item.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
@@ -105,13 +106,13 @@ export function AppSidebar() {
                 {settingsItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                      <a
+                      <Link
                         href={item.url}
                         className="flex items-center gap-3 text-sm text-muted hover:text-primary"
                       >
                         <item.icon size={18} />
                         <span>{item.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}

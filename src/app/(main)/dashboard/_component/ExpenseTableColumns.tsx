@@ -44,14 +44,6 @@ export const columns: ColumnDef<iExpenseData>[] = [
   {
     accessorKey: "description",
     header: "Description",
-    // header: ({ column }) => (
-    //   <Button
-    //     variant="ghost"
-    //     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //   >
-    //     Email <ArrowUpDown className="ml-2 h-4 w-4" />
-    //   </Button>
-    // ),
     cell: ({ row }) => (
       <div className="lowercase">{row.getValue("description")}</div>
     ),
@@ -99,7 +91,6 @@ export const columns: ColumnDef<iExpenseData>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -116,11 +107,9 @@ export const columns: ColumnDef<iExpenseData>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer">
               Edit Expense
-              {/* <SquarePen color="#0dde30" /> */}
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
               Delete Expense
-              {/* <Trash color="#dd2222" /> */}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
