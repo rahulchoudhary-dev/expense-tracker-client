@@ -7,7 +7,7 @@ import withAuth from "@/hoc/withAuth";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex min-h-screen bg-primary">
+    <div className="flex dark:bg-gray-900 min-h-screen bg-primary">
       <aside className="w-64  border-r shadow-md">
         <AppSidebar />
       </aside>

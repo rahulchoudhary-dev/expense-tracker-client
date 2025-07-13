@@ -5,7 +5,7 @@ import Logout from "./Logout";
 import { ThemeToggle } from "./ThemeToggle";
 const Header = () => {
   return (
-    <header className="w-full border-gray-300  px-6 py-1 flex items-center justify-between">
+    <header className="w-full  border-gray-300  px-6 py-1 flex items-center justify-between">
       <div className="hidden md:flex md:items-center gap-4">
         <div>
           <FcMoneyTransfer size={30} />

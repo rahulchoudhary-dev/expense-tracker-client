@@ -9,7 +9,6 @@ import useGetExpenses from "@/query/useGetExpenses";
 import { ExpenseDataTable } from "./_component/ExpenseDataTable";
 import getCurrentMonthYear from "@/utils/getCurrentMonthYear";
 import { iExpenseParams } from "@/interfaces/expense";
-
 const ExpenseDashBoard = () => {
   const { id } = useBootUser();
 
@@ -50,7 +49,7 @@ const ExpenseDashBoard = () => {
   return (
     <div>
       <SummaryCards data={summaryData} isLoading={isSummaryLoading} />
-      <div className="bg-gray shadow-sm p-4 mt-4 rounded-3xl">
+      <div className="bg-gray shadow-sm p-4 mt-4 rounded-3xl dark:bg-gray-900 ">
         <ExpenseDataTable
           count={tableData.count}
           data={tableData.data}

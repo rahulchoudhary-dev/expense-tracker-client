@@ -67,7 +67,7 @@ const SummaryCards: React.FC<iSummaryCardsProps> = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 md:gap-5">
       {memoizedData?.map((item: any) => (
-        <Card key={item.key}>
+        <Card className="dark:bg-gray-900" key={item.key}>
           <CardHeader>
             <CardTitle>{item.key}</CardTitle>
             <CardAction>
