@@ -1,6 +1,6 @@
+import { STORAGE_KEYS } from "@/constant";
 import { storage } from "@/utils/storageUtils";
 import axios from "axios";
-import { string } from "yup";
 
 const axiosConfig = axios.create({
   baseURL: "http://localhost:5000/api/v1",
@@ -18,9 +18,33 @@ axiosConfig.interceptors.request.use((config) => {
 });
 
 axiosConfig.interceptors.response.use(
-  (response) => response.data, // success case
+  (response) => response.data,
   async (error) => {
     const originalRequest = error.config;
+    console.log("Error in axios interceptor:", error);
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const refreshToken = storage.get(STORAGE_KEYS.REFRESH_TOKEN);
+        if (refreshToken) {
+          const response = await axiosConfig.post(endpoints.refreshToken, {
+            refreshToken,
+          });
+          const { newAccesssToken, newRefreshToken } = response.data;
+          axiosConfig.defaults.headers.common.Authorization = `Bearer ${newAccesssToken}`;
+
+          originalRequest.headers.Authorization = `Bearer ${newAccesssToken}`;
+          storage.set(STORAGE_KEYS.ACCESS_TOKEN, newAccesssToken);
+          storage.set(STORAGE_KEYS.REFRESH_TOKEN, newRefreshToken);
+          return axiosConfig(originalRequest);
+        }
+      } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError);
+        storage.remove("access_token");
+        storage.remove("refresh_token");
+        return Promise.reject(refreshError);
+      }
+    }
 
     return Promise.reject(error?.response?.data);
   }
@@ -29,6 +53,7 @@ axiosConfig.interceptors.response.use(
 export const endpoints = {
   sigIn: "/auth/signIn",
   signUp: "/auth/signUp",
+  refreshToken: "/auth/refresh-token",
   getExpense: "/expense",
   getExpenseSummary: "/expense/expense-summary",
   addExpense: "/expense",
