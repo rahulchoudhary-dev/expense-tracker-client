@@ -81,15 +81,15 @@ export function AddExpenseDrawer() {
         <form onSubmit={formik.handleSubmit}>
           <ExpenseDrawerHeader />
           <div className="px-4 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
+              <div className="space-y-2 ">
                 <Label htmlFor="date">Date *</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full justify-start text-left font-normal cursor-pointer",
+                        "w-full justify-start dark:bg-input/30 text-left font-normal cursor-pointer",
                         !formik.values.date && "text-muted-foreground"
                       )}
                     >
@@ -99,8 +99,11 @@ export function AddExpenseDrawer() {
                         : "Pick a date"}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
+                  <PopoverContent className="w-auto p-0 bg-white dark:bg-gray-800 shadow-lg">
                     <Calendar
+                      className="rounded-md"
+                      initialFocus={true}
+                      defaultMonth={formik.values.date}
                       autoFocus={true}
                       mode="single"
                       selected={formik.values?.date}
@@ -159,10 +162,10 @@ export function AddExpenseDrawer() {
                       )?.name || "Select category"}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white dark:bg-gray-800 shadow-sm">
                     {categories?.map((cat: any) => (
                       <SelectItem
-                        className="text-white"
+                        className="text-black dark:text-white"
                         key={cat.id}
                         value={cat.id}
                       >
@@ -190,7 +193,7 @@ export function AddExpenseDrawer() {
                       )?.name || "Select Payment Method"}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white dark:bg-gray-800 shadow-sm">
                     {paymentMethods?.map((payType: any) => (
                       <SelectItem key={payType.id} value={payType.id}>
                         {payType.name}
