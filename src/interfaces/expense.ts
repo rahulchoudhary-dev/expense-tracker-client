@@ -1,5 +1,3 @@
-import { iExpenseData } from "@/app/(main)/dashboard/_components/ExpenseTableColumns";
-
 export interface iExpenseFormData {
   date: Date;
   description: string;
@@ -18,9 +16,16 @@ export interface iExpenseParams {
   categoryId?: string;
   paymentMethodId?: string;
 }
+export interface iExpenseDataTable {
+  id: string;
+  amount: number;
+  Category: any;
+  PaymentMethod: any;
+  date?: string | Date;
+}
 
 export interface iExpenseDataTableProps {
-  data: iExpenseData[];
+  data: iExpenseDataTable[];
   columns?: any;
   isLoading: boolean;
   pageData: any;

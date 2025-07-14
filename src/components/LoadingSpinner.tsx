@@ -14,7 +14,7 @@ const LoadingSpinner = ({
   return (
     <div className="w-full h-full flex items-center justify-center">
       <Loader2
-        className="animate-spin text-black dark:text-white"
+        className="animate-spin text-gray-500 dark:text-white"
         size={size}
       />{" "}
       {label}

@@ -13,15 +13,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
+import { iExpenseDataTable } from "@/interfaces/expense";
 
-export type iExpenseData = {
-  id: string;
-  amount: number;
-  Category: any;
-  PaymentMethod: any;
-  date?: string | Date;
-};
-export const CATEGORY_COLOR_MAP: Record<string, string> = {
+export const CATEGORY_BG_COLOR_MAP: Record<string, string> = {
   Food: "bg-red-100 text-red-800",
   Transportation: "bg-orange-100 text-orange-800",
   Entertainment: "bg-indigo-100 text-indigo-800",
@@ -31,7 +25,17 @@ export const CATEGORY_COLOR_MAP: Record<string, string> = {
   Other: "bg-gray-100 text-gray-800",
 };
 
-export const columns: ColumnDef<iExpenseData>[] = [
+export const CATEGORY_TEXT_COLOR_MAP: Record<string, string> = {
+  Food: "text-red-800",
+  Transportation: "text-orange-800",
+  Entertainment: "text-indigo-800",
+  Shopping: "text-pink-800",
+  Utilities: "text-blue-800",
+  Healthcare: "text-green-800",
+  Other: "text-gray-800",
+};
+
+export const columns: ColumnDef<iExpenseDataTable>[] = [
   {
     accessorKey: "date",
     header: "Date",
@@ -54,13 +58,16 @@ export const columns: ColumnDef<iExpenseData>[] = [
     accessorFn: (row) => row?.Category?.name,
     cell: ({ getValue }) => {
       const categoryName = getValue() as string;
-      const categoryColor = CATEGORY_COLOR_MAP[categoryName] || "bg-slate-300";
+      const categoryBgColor =
+        CATEGORY_BG_COLOR_MAP[categoryName] || "bg-slate-300";
+      const categoryTextColor =
+        CATEGORY_TEXT_COLOR_MAP[categoryName] || "bg-slate-300";
 
       return (
         <span className="capitalize">
           <Badge
             variant="outline"
-            className={`px-2 py-1 rounded-md text-white ${categoryColor}`}
+            className={`px-2 py-1 rounded-md ${categoryBgColor} dark:${categoryTextColor}`}
           >
             {categoryName}
           </Badge>

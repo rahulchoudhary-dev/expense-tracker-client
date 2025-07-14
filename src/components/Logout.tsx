@@ -29,14 +29,14 @@ const Logout = () => {
         <div className="flex gap-4 justify-center mt-2">
           <Button
             variant="outline"
-            className="text-sm text-blue-600 cursor-pointer hover:underline"
+            className="text-sm text-blue-600 hover:text-blue-600 cursor-pointer hover:underline  dark:text-blue-600"
             onClick={() => toast.dismiss(toastId)}
           >
             Cancel
           </Button>
           <Button
             variant="outline"
-            className="text-sm text-red-600 cursor-pointer hover:underline"
+            className="text-sm text-red-600 hover:text-red-600 cursor-pointer hover:underline"
             onClick={() => {
               toast.dismiss(toastId);
               logoutAction();

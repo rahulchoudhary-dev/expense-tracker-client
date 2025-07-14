@@ -103,7 +103,7 @@ const ExpenseFilters = ({ pageData, setPageData }: ExpenseFiltersProps) => {
               setPageData({ ...pageData, paymentMethodId: value })
             }
           >
-            <SelectTrigger className="w-full cursor-pointer">
+            <SelectTrigger className="w-full shadow-sm cursor-pointer">
               <SelectValue placeholder="Select a payment method">
                 {paymentMethods?.find(
                   (items: any) => items?.id == pageData?.paymentMethodId
