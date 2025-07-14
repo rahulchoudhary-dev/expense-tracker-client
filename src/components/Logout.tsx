@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import { STORAGE_KEYS } from "@/constant";
 
 const Logout = () => {
   const showSuccessToast = useShowSuccess();
@@ -15,7 +16,9 @@ const Logout = () => {
   const logoutAction = () => {
     router.push(ROUTES.SIGN_IN);
     showSuccessToast("Logged out successfully");
-    storage.clear();
+    storage.remove(STORAGE_KEYS.ACCESS_TOKEN);
+    storage.remove(STORAGE_KEYS.REFRESH_TOKEN);
+    storage.remove(STORAGE_KEYS.USER);
   };
 
   const handleLogout = () => {
