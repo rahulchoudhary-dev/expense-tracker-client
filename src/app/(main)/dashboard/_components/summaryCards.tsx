@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Wallet, DollarSign, ChartBar, Calendar1, CatIcon } from "lucide-react";
 import { iData, iSummaryCardsProps } from "@/interfaces/summaryCardsProps";
+import CountUp from "react-countup";
 
 const ICONS_MAP: Record<string, JSX.Element> = {
   "Total Expense": <DollarSign className="w-5 h-5 text-primary font-bold" />,
@@ -69,7 +70,10 @@ const SummaryCards: React.FC<iSummaryCardsProps> = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 md:gap-5">
       {memoizedData?.map((item: any) => (
-        <Card className="dark:bg-gray-900" key={item.lable}>
+        <Card
+          className="dark:bg-gray-900 hover:shadow-lg transition-shadow duration-300 ease-in-out"
+          key={item.lable}
+        >
           <CardHeader>
             <CardTitle>{item.lable}</CardTitle>
             <CardAction>
@@ -85,11 +89,15 @@ const SummaryCards: React.FC<iSummaryCardsProps> = ({
           <CardContent className="mt-[-20]">
             {item.lable == "Top Category" ? (
               <>
-                <h1 className="font-bold text-2xl">{item.value}</h1>
+                <h1 className="font-bold text-2xl">{item?.value}</h1>
               </>
             ) : (
               <h1 className="font-bold text-2xl">
-                {item.currency} {Number(item?.value).toFixed(2)}
+                <CountUp
+                  end={Number(item?.value)}
+                  decimals={2}
+                  prefix={`${item.currency} `}
+                />{" "}
               </h1>
             )}
           </CardContent>
