@@ -22,9 +22,6 @@ const useSignIn = () => {
         storage.set("user", JSON.stringify(user));
       }
     },
-    onError: (error) => {
-      console.error("Sign up failed:", error);
-    },
   });
 };
 

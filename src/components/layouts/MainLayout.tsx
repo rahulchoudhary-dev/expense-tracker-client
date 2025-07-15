@@ -23,7 +23,7 @@ const LayoutBody = ({ children }: { children: React.ReactNode }) => {
     <>
       <aside
         className={`transition-all duration-300 ${
-          open ? "w-64" : "w-10 "
+          open ? "w-64" : "w-20"
         } border-r shadow-md`}
       >
         <AppSidebar />
@@ -33,7 +33,7 @@ const LayoutBody = ({ children }: { children: React.ReactNode }) => {
           <Header />
         </header>
 
-        <section className="flex-1 p-6 bg-gray-50 ">{children}</section>
+        <section className="flex-1 p-6 px-6 bg-gray-50 ">{children}</section>
       </main>
     </>
   );
