@@ -14,6 +14,8 @@ import {
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { iExpenseDataTable } from "@/interfaces/expense";
+import { use } from "react";
+import useDeleteExpense from "@/query/useDeleteExpense";
 
 export const CATEGORY_BG_COLOR_MAP: Record<string, string> = {
   Food: "bg-red-100 text-red-800",
@@ -98,6 +100,8 @@ export const columns: ColumnDef<iExpenseDataTable>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
+      const expenseId = row.original.id;
+      const { mutate } = useDeleteExpense(expenseId);
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -115,7 +119,10 @@ export const columns: ColumnDef<iExpenseDataTable>[] = [
             <DropdownMenuItem className="cursor-pointer">
               Edit Expense
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem
+              onClick={() => mutate(expenseId)}
+              className="cursor-pointer"
+            >
               Delete Expense
             </DropdownMenuItem>
           </DropdownMenuContent>
