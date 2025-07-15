@@ -1,16 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { CalendarIcon, DollarSign } from "lucide-react";
-import { format } from "date-fns";
-import { Button } from "@/components/ui/button";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { Label } from "./ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Calendar } from "./ui/calendar";
-import { cn } from "@/utils";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
+import React, { memo, useEffect, useState } from "react";
+import { DollarSign } from "lucide-react";
+
+import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import { Label } from "../../../../components/ui/label";
+
+import { Input } from "../../../../components/ui/input";
+import { Textarea } from "../../../../components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -23,17 +20,23 @@ import useGetCategory from "@/query/useGetCategory";
 import usePaymentMethods from "@/query/useGetPaymentMethod";
 import useAddExpenseMutation from "@/query/useAddExpense";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
-import ExpenseDrawerHeader from "./ExpenseDrawerHeader";
-import OpenExpenseDrawerButton from "./OpenExpenseDrawerButton";
+import ExpenseDrawerHeader from "../../../../components/ExpenseDrawerHeader";
 import { iExpenseFormData } from "@/interfaces/expense";
 import useBootUser from "@/hooks/useBootUser";
 import { addExpenseSchema } from "@/validations/addExpense.validation";
-import FormErrorMessage from "./FormErrorMessage";
+import FormErrorMessage from "../../../../components/FormErrorMessage";
+import useUpdateExpenseMutation from "@/query/useUpdateExpense";
+import DatePickerField from "./DatePickerField";
+import FormActionButtons from "./FormActionButtons";
 
-export function AddExpenseDrawer() {
+function AddExpenseDrawer({
+  open,
+  onOpenChange,
+  defaultData,
+  isEditMode,
+}: any) {
   const showSuccessToast = useShowSuccess();
   const showErrorToast = useShowError();
-  const [isExpenseModalOpen, setIsExpenseModalOpen] = useState<boolean>(false);
 
   const [expenseForm, setExpenseForm] = useState<iExpenseFormData>({
     date: new Date(),
@@ -44,9 +47,17 @@ export function AddExpenseDrawer() {
   });
   const { id: userId } = useBootUser();
 
+  useEffect(() => {
+    if (defaultData && isEditMode) {
+      setExpenseForm({ ...defaultData, date: new Date(defaultData.date) });
+    }
+  }, [isEditMode]);
+
   const { data: categories } = useGetCategory();
   const { data: paymentMethods } = usePaymentMethods();
-  const { mutate } = useAddExpenseMutation();
+  const { mutate: addExpenseMutation } = useAddExpenseMutation();
+
+  const { mutate: updateExpenseMutation } = useUpdateExpenseMutation();
 
   const formik = useFormik({
     initialValues: expenseForm,
@@ -56,27 +67,42 @@ export function AddExpenseDrawer() {
     validateOnMount: true,
     validateOnChange: true,
     onSubmit: (values, { resetForm }) => {
-      mutate(
-        { ...values, userId },
-        {
-          onSuccess: () => {
-            showSuccessToast("Expense Added SuccessFully");
-            resetForm();
-            setIsExpenseModalOpen(false);
-          },
-          onError: (err) => {
-            showErrorToast(err?.message);
-          },
+      try {
+        if (isEditMode) {
+          updateExpenseMutation(
+            { ...values, id: defaultData.id },
+            {
+              onSuccess: () => {
+                showSuccessToast("Expense Update SuccessFully");
+              },
+              onError: (err) => {
+                showErrorToast(err?.message);
+              },
+            }
+          );
+        } else {
+          addExpenseMutation(
+            { ...values, userId },
+            {
+              onSuccess: () => {
+                showSuccessToast("Expense Added SuccessFully");
+              },
+              onError: (err) => {
+                showErrorToast(err?.message);
+              },
+            }
+          );
         }
-      );
+      } catch (error) {
+      } finally {
+        resetForm();
+        onOpenChange();
+      }
     },
   });
 
   return (
-    <Drawer open={isExpenseModalOpen}>
-      <DrawerTrigger asChild>
-        <OpenExpenseDrawerButton onClick={() => setIsExpenseModalOpen(true)} />
-      </DrawerTrigger>
+    <Drawer open={open}>
       <DrawerContent className="max-w-2xl mb-12 mx-auto">
         <form onSubmit={formik.handleSubmit}>
           <ExpenseDrawerHeader />
@@ -84,35 +110,7 @@ export function AddExpenseDrawer() {
             <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
               <div className="space-y-2 ">
                 <Label htmlFor="date">Date *</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full justify-start dark:bg-input/30 text-left font-normal cursor-pointer",
-                        !formik.values.date && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {expenseForm.date
-                        ? format(formik.values.date, "PPP")
-                        : "Pick a date"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 bg-white dark:bg-gray-800 shadow-lg">
-                    <Calendar
-                      className="rounded-md"
-                      initialFocus={true}
-                      defaultMonth={formik.values.date}
-                      autoFocus={true}
-                      mode="single"
-                      selected={formik.values?.date}
-                      onSelect={(date) =>
-                        date && formik.setFieldValue("date", date)
-                      }
-                    />
-                  </PopoverContent>
-                </Popover>
+                <DatePickerField formik={formik} />
                 <FormErrorMessage name="date" formik={formik} />
               </div>
               <div className="space-y-2">
@@ -205,24 +203,10 @@ export function AddExpenseDrawer() {
               </div>
             </div>
           </div>
-
-          <div className="grid grid-cols-2 gap-4 w-auto mx-4 mt-4">
-            <Button
-              onClick={() => setIsExpenseModalOpen(false)}
-              type="reset"
-              className="bg-red-500 hover:bg-red-400 w-full cursor-pointer"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              className="w-full cursor-pointer bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700"
-            >
-              Submit
-            </Button>
-          </div>
+          <FormActionButtons onCancel={() => onOpenChange()} />
         </form>
       </DrawerContent>
     </Drawer>
   );
 }
+export default memo(AddExpenseDrawer);

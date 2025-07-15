@@ -1,13 +1,15 @@
-import React from "react";
+import React, { memo, useState } from "react";
 import { FcMoneyTransfer } from "react-icons/fc";
-import { AddExpenseDrawer } from "./Drawer";
+import AddExpenseDrawer from "../app/(main)/dashboard/_components/AddExpenseDrawer";
 import Logout from "./Logout";
 import { ThemeToggle } from "./ThemeToggle";
-import { SidebarTrigger, useSidebar } from "./ui/sidebar";
-import { Frame, Menu, X } from "lucide-react";
+import { useSidebar } from "./ui/sidebar";
+import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
+import OpenExpenseDrawerButton from "./OpenExpenseDrawerButton";
 const Header = () => {
   const { setOpen, open } = useSidebar();
+  const [isExpenseModalOpen, setIsExpenseModalOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -42,7 +44,14 @@ const Header = () => {
             </div>
           </div>
           <div className="hidden md:flex md:gap-4 items-center">
-            <AddExpenseDrawer />
+            <OpenExpenseDrawerButton
+              onClick={() => setIsExpenseModalOpen(true)}
+            />
+            <AddExpenseDrawer
+              open={isExpenseModalOpen}
+              onOpenChange={() => setIsExpenseModalOpen(false)}
+              isEditMode={true}
+            />
             <Logout />
             <ThemeToggle />
           </div>
@@ -52,4 +61,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

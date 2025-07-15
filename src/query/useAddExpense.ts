@@ -12,13 +12,15 @@ const useAddExpenseMutation = () => {
   return useMutation({
     mutationKey: ["expense:add"],
     mutationFn: addExpenseRequest,
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["get-expenses"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["get-expense-summary"],
-      });
+    onSettled: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["get-expenses"],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["get-expense-summary"],
+        }),
+      ]);
     },
   });
 };
