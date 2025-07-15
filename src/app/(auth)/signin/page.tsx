@@ -54,7 +54,9 @@ const SignIn = () => {
           resetForm();
         },
         onError: (err) => {
-          showError(err.message);
+          showError(
+            err?.message || "Something went wrong, please try again later."
+          );
         },
       });
     },
