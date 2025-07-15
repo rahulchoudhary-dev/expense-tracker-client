@@ -3,10 +3,12 @@ import { storage } from "@/utils/storageUtils";
 import { useMemo } from "react";
 
 export interface User {
-  id: string;
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;
+  createdAt: string;
+  fullName: string;
 }
 
 const useBootUser = () => {

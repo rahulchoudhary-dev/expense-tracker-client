@@ -1,13 +1,10 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-
 import * as React from "react";
-
+import { TrendingUp } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -20,17 +17,19 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { mainMenuItems, settingsItems } from "@/config/navigation";
+import { usePathname } from "next/navigation";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open } = useSidebar();
+  const pathName = usePathname();
   return (
     <Sidebar
-      className={`${open ? "w-64" : "w-24"} h-full`}
+      className={`${open ? "w-64" : "w-24"} h-screen `}
       collapsible="icon"
       {...props}
     >
       {" "}
-      <SidebarHeader>
+      <SidebarHeader className="shadow-xl bg-gray-50 dark:bg-gray-900">
         <div
           className={`dark:bg-gray-900 border-b border-gray-300 dark:border-gray-500 ${
             open ? "p-4" : "py-4 px-2"
@@ -39,7 +38,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <div className="w-12 h-full bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
             <TrendingUp className="w-8 h-12 text-white" />
           </div>
-          {open && (
+          {open ? (
             <div className="flex flex-col">
               <div>
                 <h2 className="font-bold text-lg bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
@@ -52,23 +51,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </p>
               </div>
             </div>
+          ) : (
+            ""
           )}
         </div>
       </SidebarHeader>
-      <SidebarContent className="dark:bg-gray-900">
+      <SidebarContent className="dark:bg-gray-900 shadow-xl bg-gray-50">
         <SidebarGroup>
           <SidebarGroupLabel className="text-base font-bold tracking-wide">
             Main Menu{" "}
           </SidebarGroupLabel>{" "}
           <SidebarGroupContent>
             {" "}
-            <SidebarMenu className={`${open ? "ml-4" : ""}`}>
+            <SidebarMenu className={`${open ? "" : ""}`}>
               {mainMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link
                       href={item.url}
-                      className="flex items-center gap-3 text-sm text-muted hover:text-primary"
+                      className={`flex  ${
+                        pathName == item.url
+                          ? "bg-gray-200 dark:text-black"
+                          : ""
+                      } items-center gap-3 text-sm text-muted hover:text-primary`}
                     >
                       <item.icon className="w-9 h-9" /> {/* ← Bigger icons */}
                       <span className="">{item.title}</span>
@@ -82,7 +87,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             Settings
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className={`${open ? "ml-4" : ""}`}>
+            <SidebarMenu className={`${open ? "" : ""}`}>
               {settingsItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
@@ -100,7 +105,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>{/* <NavUser user={data.user} /> */}</SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

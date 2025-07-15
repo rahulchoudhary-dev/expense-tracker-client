@@ -29,9 +29,9 @@ function ExpenseActions({ expense }: any) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem className="cursor-pointer">
+          {/* <DropdownMenuItem className="cursor-pointer">
             View Expense
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer"
