@@ -4,6 +4,7 @@ import {
   BarChart2,
   PiggyBank,
   Settings,
+  User,
 } from "lucide-react";
 
 export const mainMenuItems = [
@@ -28,9 +29,9 @@ export const mainMenuItems = [
     icon: PiggyBank,
   },
   {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Profile",
+    url: "/profile",
+    icon: User,
   },
 ];
 

@@ -11,6 +11,7 @@ import getCurrentMonthYear from "@/utils/getCurrentMonthYear";
 import { iExpenseParams } from "@/interfaces/expense";
 const ExpenseDashBoard = () => {
   const { id } = useBootUser();
+  console.log("User ID:", id);
 
   const { currentMonth, currentYear } = getCurrentMonthYear();
 
