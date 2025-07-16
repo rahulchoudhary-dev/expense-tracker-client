@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { TrendingUp } from "lucide-react";
+import { LogOut, TrendingUp } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -18,6 +18,9 @@ import {
 import Link from "next/link";
 import { mainMenuItems, settingsItems } from "@/config/navigation";
 import { usePathname } from "next/navigation";
+import { Button } from "./ui/button";
+import Logout from "./Logout";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open, toggleSidebar, isMobile } = useSidebar();
@@ -109,8 +112,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <div className="p-4 border-t dark:border-gray-700 space-y-2">
+          <ThemeToggle />
+
+          <Logout />
+        </div>
       </SidebarContent>
-      <SidebarRail />
+      <SidebarRail className="dark:bg-gray-900 shadow-xl bg-gray-50">
+        <div className="flex flex-col items-center justify-center h-full">
+          <Link
+            href="/"
+            className="text-muted-foreground hover:text-primary text-sm"
+          >
+            © 2024 ExpenseTracker
+          </Link>
+        </div>
+      </SidebarRail>
     </Sidebar>
   );
 }

@@ -8,8 +8,10 @@ import React from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { STORAGE_KEYS } from "@/constant";
+import { useSidebar } from "./ui/sidebar";
 
 const Logout = () => {
+  const { open } = useSidebar();
   const showSuccessToast = useShowSuccess();
   const router = useRouter();
 
@@ -51,12 +53,12 @@ const Logout = () => {
 
   return (
     <Button
-      size={"icon"}
-      variant="outline"
+      variant="ghost"
       onClick={handleLogout}
-      className="bg-white cursor-pointer hover:scale-125 rounded-full w-10 h-10 flex items-center justify-center"
+      className="w-full justify-start space-x-3 text-red-600 hover:text-red-700 dark:hover:text-white hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900"
     >
-      <LogOut color="red" />
+      <LogOut className="h-5 w-5" />
+      {open && <span>Sign Out</span>}
     </Button>
   );
 };
