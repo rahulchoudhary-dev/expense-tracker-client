@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useSidebar } from "./ui/sidebar";
 
 export function ThemeToggle() {
+  const { open } = useSidebar();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -15,8 +16,6 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) return null;
-
-  const { open } = useSidebar();
 
   return (
     <Button

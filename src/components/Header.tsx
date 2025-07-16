@@ -4,8 +4,11 @@ import React, { memo, useState } from "react";
 import { FcMoneyTransfer } from "react-icons/fc";
 import AddExpenseDrawer from "../app/(main)/dashboard/_components/AddExpenseDrawer";
 import OpenExpenseDrawerButton from "./OpenExpenseDrawerButton";
-
+import { Plus } from "lucide-react";
+import { Button } from "./ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 const Header = () => {
+  const isMobile = useIsMobile();
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState<boolean>(false);
   const userName = "Rahul";
 
@@ -21,6 +24,18 @@ const Header = () => {
             <p className="text-sm text-muted-foreground">
               Here's your expense tracking overview 📊
             </p>
+          </div>
+          <div>
+            {isMobile && (
+              <Button
+                size="icon"
+                onClick={() => setIsExpenseModalOpen(true)}
+                variant={"secondary"}
+                className=""
+              >
+                <Plus />
+              </Button>
+            )}
           </div>
         </div>
 
