@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useSidebar } from "./ui/sidebar";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -15,18 +16,20 @@ export function ThemeToggle() {
 
   if (!mounted) return null;
 
+  const { open } = useSidebar();
+
   return (
     <Button
-      variant="outline"
-      size="icon"
+      variant="ghost"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="rounded-full cursor-pointer h-10 w-10"
+      className="w-full justify-start space-x-3 hover:"
     >
-      {theme === "dark" ? (
-        <Sun className="h-5 w-5 text-yellow-400" />
+      {theme === "light" ? (
+        <Moon className="h-5 w-5" />
       ) : (
-        <Moon className="h-5 w-5 text-gray-900" />
+        <Sun className="h-5 w-5" />
       )}
+      {open && <span>{theme === "light" ? "Dark Mode" : "Light Mode"}</span>}
     </Button>
   );
 }
