@@ -24,7 +24,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathName = usePathname();
   return (
     <Sidebar
-      className={`${open ? "w-64" : "w-24"} h-screen `}
+      // className={`${open ? "w-64" : "w-24"} h-screen `}
       collapsible="icon"
       {...props}
     >

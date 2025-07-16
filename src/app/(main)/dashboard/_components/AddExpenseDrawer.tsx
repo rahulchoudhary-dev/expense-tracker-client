@@ -103,7 +103,7 @@ function AddExpenseDrawer({
 
   return (
     <Drawer open={open}>
-      <DrawerContent className="max-w-2xl mb-12 mx-auto">
+      <DrawerContent className="max-w-2xl mb-12 mx-auto pt-4 md:pt-0">
         <form onSubmit={formik.handleSubmit}>
           <ExpenseDrawerHeader />
           <div className="px-4 space-y-6">
