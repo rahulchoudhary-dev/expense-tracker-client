@@ -9,11 +9,11 @@ import useGetExpenses from "@/query/useGetExpenses";
 import { ExpenseDataTable } from "./_components/ExpenseDataTable";
 import getCurrentMonthYear from "@/utils/getCurrentMonthYear";
 import { iExpenseParams } from "@/interfaces/expense";
-import { useIsMobile } from "@/hooks/use-mobile";
 import ExpenseCardList from "./_components/ExpenseCardList";
+import { useIsMobile } from "@/hooks/use-mobile";
 const ExpenseDashBoard = () => {
+  const isMobile = useIsMobile();
   const { id } = useBootUser();
-  console.log("User ID:", id);
 
   const { currentMonth, currentYear } = getCurrentMonthYear();
 
@@ -39,8 +39,6 @@ const ExpenseDashBoard = () => {
       data: expenseData?.resp || [],
     };
   }, [expenseData, isExpenseLoading]);
-
-  const isMobile = useIsMobile();
 
   return (
     <div>

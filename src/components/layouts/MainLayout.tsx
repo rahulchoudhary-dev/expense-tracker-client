@@ -4,14 +4,7 @@ import React from "react";
 import Header from "../Header";
 import { AppSidebar } from "../Sidebar";
 import withAuth from "@/hoc/withAuth";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-  useSidebar,
-} from "../ui/sidebar";
-import { Button } from "../ui/button";
-import { Menu, X } from "lucide-react";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -24,9 +17,6 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 const LayoutBody = ({ children }: { children: React.ReactNode }) => {
-  const { open, isMobile, toggleSidebar, setOpen, setOpenMobile, openMobile } =
-    useSidebar();
-
   return (
     <>
       <SidebarProvider
@@ -39,7 +29,7 @@ const LayoutBody = ({ children }: { children: React.ReactNode }) => {
       >
         <AppSidebar variant="inset" />
         <SidebarInset>
-          <header className="flex p-4 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
+          <header className="dark:bg-gray-900 flex p-4 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
             <div className="flex w-full items-center gap-1 px-2 lg:gap-2">
               <SidebarTrigger />
               <Header />
