@@ -43,18 +43,18 @@ const ExpenseDashBoard = () => {
   return (
     <div>
       <SummaryCards data={summaryData} isLoading={isSummaryLoading} />
-      <div className="bg-gray border-[1px] shadow-gray-300 shadow-sm p-4 mt-4 rounded-3xl dark:bg-gray-900 ">
-        {isMobile ? (
+      <div className="overflow-auto bg-gray border-[1px] shadow-gray-300 shadow-sm p-4 mt-4 rounded-3xl dark:bg-gray-900 ">
+        {/* {isMobile ? (
           <ExpenseCardList data={tableData.data} />
-        ) : (
-          <ExpenseDataTable
-            count={tableData.count}
-            data={tableData.data}
-            isLoading={isExpenseLoading}
-            pageData={pageData}
-            setPageData={setPageData}
-          />
-        )}
+        ) : ( */}
+        <ExpenseDataTable
+          count={tableData.count}
+          data={tableData.data}
+          isLoading={isExpenseLoading}
+          pageData={pageData}
+          setPageData={setPageData}
+        />
+        {/* )} */}
       </div>
     </div>
   );

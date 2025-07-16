@@ -64,11 +64,12 @@ export function ExpenseDataTable({
       },
     },
   });
+  // flex flex-wrap items-center justify-end py-4 gap-5
 
   return (
     <>
-      <div className="w-full">
-        <div className="flex items-center justify-end py-4 gap-5">
+      <div className="w-full overflow-auto">
+        <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 py-4">
           <ExpenseFilters pageData={pageData} setPageData={setPageData} />
         </div>
         <div className="rounded-md border">
