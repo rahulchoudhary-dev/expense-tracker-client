@@ -80,7 +80,7 @@ const Profile = () => {
   }, [formik]);
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-4">
+    <div className="max-w-2xl mx-auto mt-0 md:mt-10 p-4">
       <form onSubmit={formik.handleSubmit}>
         <Card className="shadow-2xl rounded-2xl dark:bg-gray-900 shadow-gray-300">
           <CardHeader className="flex items-center gap-4 p-6">

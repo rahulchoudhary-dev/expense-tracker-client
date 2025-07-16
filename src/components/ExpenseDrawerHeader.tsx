@@ -4,19 +4,24 @@ import {
   DrawerTitle,
   DrawerDescription,
 } from "@/components/ui/drawer";
+import { Label } from "./ui/label";
 
 const ExpenseDrawerHeader = () => {
   return (
-    <DrawerHeader>
-      <DrawerTitle className="flex items-start gap-2">
-        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
-          <DollarSign className="w-4 h-4 text-white" />
-        </div>
-        Add New Expense
-      </DrawerTitle>
-      <DrawerDescription>
-        Fill in the details below to track your expense.
-      </DrawerDescription>
+    <DrawerHeader className="hidden md:inline-flex flex-col gap-2">
+      <DrawerHeader className="flex flex-col gap-1">
+        <Label className="text-lg font-semibold">
+          {" "}
+          <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
+            <DollarSign className="w-5 h-5 text-white" />
+          </div>
+          Add New Expense
+        </Label>
+        <Label className="text-sm text-muted-foreground">
+          Fill in the details below to track your expense.
+        </Label>
+      </DrawerHeader>
+      <DrawerTitle className="text-lg font-semibold"></DrawerTitle>
     </DrawerHeader>
   );
 };

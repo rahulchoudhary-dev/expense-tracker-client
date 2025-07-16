@@ -20,14 +20,18 @@ import { mainMenuItems, settingsItems } from "@/config/navigation";
 import { usePathname } from "next/navigation";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { open } = useSidebar();
+  const { open, toggleSidebar, isMobile } = useSidebar();
   const pathName = usePathname();
+
+  // on mobile, toggle the sidebar when a menu item is clicked
+  const toggleSidebarOnMobie = () => {
+    if (isMobile) {
+      toggleSidebar();
+    }
+  };
+
   return (
-    <Sidebar
-      className={`${open ? "w-64" : "w-24"} h-screen `}
-      collapsible="icon"
-      {...props}
-    >
+    <Sidebar collapsible="icon" {...props}>
       {" "}
       <SidebarHeader className="shadow-xl bg-gray-50 dark:bg-gray-900">
         <div
@@ -68,6 +72,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link
+                      onClick={() => toggleSidebarOnMobie()}
                       href={item.url}
                       className={`flex  ${
                         pathName == item.url

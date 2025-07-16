@@ -79,8 +79,8 @@ const SignIn = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 font-sans">
       {/* Left - Form */}
-      <div className="flex p-12 justify-center items-center h-screen">
-        <div className="w-full dark:bg-gray-900 shadow-2xl max-w-md bg-primary rounded-3xl p-8">
+      <div className="flex py-12 px-6 justify-center items-center h-screen">
+        <div className="w-full dark:bg-gray-900 shadow-2xl max-w-md bg-primary rounded-3xl p-6">
           <h2 className="text-3xl font-bold text-center text-muted mb-6">
             Sign In To Your Account
           </h2>

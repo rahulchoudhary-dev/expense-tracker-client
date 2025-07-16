@@ -9,6 +9,8 @@ import useGetExpenses from "@/query/useGetExpenses";
 import { ExpenseDataTable } from "./_components/ExpenseDataTable";
 import getCurrentMonthYear from "@/utils/getCurrentMonthYear";
 import { iExpenseParams } from "@/interfaces/expense";
+import { useIsMobile } from "@/hooks/use-mobile";
+import ExpenseCardList from "./_components/ExpenseCardList";
 const ExpenseDashBoard = () => {
   const { id } = useBootUser();
   console.log("User ID:", id);
@@ -38,17 +40,23 @@ const ExpenseDashBoard = () => {
     };
   }, [expenseData, isExpenseLoading]);
 
+  const isMobile = useIsMobile();
+
   return (
     <div>
       <SummaryCards data={summaryData} isLoading={isSummaryLoading} />
       <div className="bg-gray border-[1px] shadow-gray-300 shadow-sm p-4 mt-4 rounded-3xl dark:bg-gray-900 ">
-        <ExpenseDataTable
-          count={tableData.count}
-          data={tableData.data}
-          isLoading={isExpenseLoading}
-          pageData={pageData}
-          setPageData={setPageData}
-        />
+        {isMobile ? (
+          <ExpenseCardList data={tableData.data} />
+        ) : (
+          <ExpenseDataTable
+            count={tableData.count}
+            data={tableData.data}
+            isLoading={isExpenseLoading}
+            pageData={pageData}
+            setPageData={setPageData}
+          />
+        )}
       </div>
     </div>
   );
