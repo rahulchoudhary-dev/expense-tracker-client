@@ -73,7 +73,7 @@ const Analytics = () => {
   }, [isYearlyExpenseLoading, yearlyExpenseData]);
 
   return (
-    <div className="p-4 space-y-6 dark:bg-gray-900 dark:shadow:xl dark:rounded-2xl">
+    <div className="p-0 md:p-4 space-y-6 dark:bg-gray-900 dark:shadow:xl dark:rounded-2xl">
       <div className="flex justify-between items-center">
         <SectionHeader
           title="Expense Analytics"

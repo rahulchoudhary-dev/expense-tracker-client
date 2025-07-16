@@ -11,17 +11,15 @@ import { Button } from "./ui/button";
 import OpenExpenseDrawerButton from "./OpenExpenseDrawerButton";
 
 const Header = () => {
-  const { setOpen, open } = useSidebar();
+  const { setOpen, open, toggleSidebar } = useSidebar();
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState<boolean>(false);
-
-  console.log("Header component rendered", open);
 
   return (
     <>
       <header className="w-full py-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 flex items-center justify-between">
         <div className="flex items-center gap-3 md:gap-4">
           {/* <Button
-            onClick={() => setOpen(!open)}
+            onClick={() => toggleSidebar()}
             variant="ghost"
             size="icon"
             className=""
