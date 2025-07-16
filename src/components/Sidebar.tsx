@@ -49,7 +49,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <div className="flex flex-col">
               <div>
                 <h2 className="font-bold text-lg bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                  ExpenseTracker
+                  Expendo
                 </h2>
               </div>
               <div>

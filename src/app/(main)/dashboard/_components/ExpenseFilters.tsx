@@ -57,7 +57,7 @@ const ExpenseFilters = ({ pageData, setPageData }: ExpenseFiltersProps) => {
   }, [debouncedValue]);
 
   return (
-    <div className="flex gap-5">
+    <div className="grid grid-cols-1 md:flex gap-4 md:gap-4">
       <Input
         placeholder="Search by description or amount..."
         value={searchText}
@@ -181,12 +181,13 @@ const ExpenseFilters = ({ pageData, setPageData }: ExpenseFiltersProps) => {
       </div>
 
       <Button
-        variant="outline"
+        variant="secondary"
         onClick={handleResetFilters}
-        size="icon"
-        className={`rounded-3xl cursor-pointer h-10 w-10 hover:scale-110 hover:shadow-2xl`}
+        size="default"
+        className={`rounded-full cursor-pointer hover:shadow-xl`}
       >
-        <RefreshCw color="black" />
+        {/* <RefreshCw color="black" /> */}
+        Reset
       </Button>
     </div>
   );
