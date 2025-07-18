@@ -25,7 +25,7 @@ export const mainMenuItems = [
   },
   {
     title: "Budget",
-    url: "#",
+    url: "/budget",
     icon: PiggyBank,
   },
   {

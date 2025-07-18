@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/aboute",
-    "src/constant/index.js"
+    "src/constant/index.js",
+    "src/app/(main)/budget/page.jsx"
   ],
   "exclude": ["node_modules"]
 }

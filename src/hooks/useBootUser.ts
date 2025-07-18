@@ -9,6 +9,12 @@ export interface User {
   email: string;
   createdAt: string;
   fullName: string;
+  address?: string;
+  phone?: string;
+  isActive?: string;
+  bio?: string;
+  subscriptionStatus?: string;
+  role?: string;
 }
 
 const useBootUser = () => {
@@ -22,12 +28,20 @@ const useBootUser = () => {
   }, []);
 
   return {
-    isLoggedIn: !!user,
     user,
+    isLoggedIn: !!user,
+    id: user?.id || "",
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
+    fullName: user?.fullName || "",
     email: user?.email || "",
-    id: user?.id || "",
+    createdAt: user?.createdAt || "",
+    address: user?.address || "",
+    phone: user?.phone || "",
+    isActive: user?.isActive || "",
+    bio: user?.bio || "",
+    subscriptionStatus: user?.subscriptionStatus || "",
+    role: user?.role || "",
   };
 };
 
