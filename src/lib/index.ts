@@ -1,6 +1,5 @@
-import { STORAGE_KEYS } from "@/constant";
+import { setAuthTokens } from "@/redux/slices/userSlice";
 import { store } from "@/redux/store";
-import { storage } from "@/utils/storageUtils";
 import axios from "axios";
 
 const axiosConfig = axios.create({
@@ -26,7 +25,7 @@ axiosConfig.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const refreshToken = storage.get(STORAGE_KEYS.REFRESH_TOKEN);
+        const refreshToken = store.getState().user.refresh_token;
         if (refreshToken) {
           const response = await axiosConfig.post(endpoints.refreshToken, {
             refreshToken,
@@ -35,14 +34,16 @@ axiosConfig.interceptors.response.use(
           axiosConfig.defaults.headers.common.Authorization = `Bearer ${newAccesssToken}`;
 
           originalRequest.headers.Authorization = `Bearer ${newAccesssToken}`;
-          storage.set(STORAGE_KEYS.ACCESS_TOKEN, newAccesssToken);
-          storage.set(STORAGE_KEYS.REFRESH_TOKEN, newRefreshToken);
+          store.dispatch(
+            setAuthTokens({
+              access_token: newAccesssToken,
+              refresh_token: newRefreshToken,
+            })
+          );
+
           return axiosConfig(originalRequest);
         }
       } catch (refreshError) {
-        console.error("Token refresh failed:", refreshError);
-        storage.remove("access_token");
-        storage.remove("refresh_token");
         return Promise.reject(refreshError);
       }
     }
