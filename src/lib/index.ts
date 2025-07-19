@@ -77,6 +77,9 @@ export const endpoints = {
   addExpense: "/expense",
   deleteExpense: "/expense/:id",
   updateExpense: "/expense/:id",
+
+  uploadExpenseAttachments: "/expense/upload-attachments",
+
   getExpenseSummary: "/expense/expense-summary",
 
   getAnalyticsYearlyExpenses: "/analytics-charts/yearly-expenses",
