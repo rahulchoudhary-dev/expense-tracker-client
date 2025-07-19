@@ -48,7 +48,7 @@ const Header = () => {
           <AddExpenseDrawer
             open={isExpenseModalOpen}
             onOpenChange={() => setIsExpenseModalOpen(false)}
-            isEditMode={true}
+            isEditMode={false}
           />
         </div>
       </header>

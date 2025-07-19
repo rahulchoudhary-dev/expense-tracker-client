@@ -19,3 +19,16 @@ export const useShowInfo = () => {
     });
   };
 };
+
+export const useShowLoading = () => {
+  return (message: string) => {
+    const toastId = toast.loading(message);
+    return toastId;
+  };
+};
+
+export const useDismissToast = () => {
+  return (toastId: string | number) => {
+    toast.dismiss(toastId);
+  };
+};
