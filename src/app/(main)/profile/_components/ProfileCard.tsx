@@ -64,12 +64,12 @@ const ProfileCard = () => {
         <CardHeader className="pb-0">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6 p-6">
             {/* Avatar Section */}
-            <div className="relative group">
+            <div className="relative group hover:scale-110">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Avatar className="w-10 h-10 border-4 border-white shadow-xl overflow-hidden">
+                <Avatar className="w-10 h-10 border-4 border-gray-300 dark:border-white  shadow-xl overflow-hidden">
                   {profileUrl ? (
                     <>
                       {isPending ? (

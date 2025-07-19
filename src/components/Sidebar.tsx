@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { LogOut, TrendingUp } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -18,9 +17,10 @@ import {
 import Link from "next/link";
 import { mainMenuItems, settingsItems } from "@/config/navigation";
 import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
 import Logout from "./Logout";
 import { ThemeToggle } from "./ThemeToggle";
+import Image from "next/image";
+import appLogo from "../../public/app-logo-1.jpeg";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open, toggleSidebar, isMobile } = useSidebar();
@@ -42,24 +42,42 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             open ? "p-4" : "py-4 px-2"
           } flex justify-start gap-4 items-center`}
         >
-          <div className="w-12 h-full bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
+          {/* <div className="w-12 h-full bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
             <TrendingUp className="w-8 h-12 text-white" />
-          </div>
+          </div> */}
           {open ? (
-            <div className="flex flex-col">
-              <div>
-                <h2 className="font-bold text-lg bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                  Expendo
-                </h2>
-              </div>
-              <div>
-                <p className="text-xs text-muted-foreground">
-                  Financial Manager
-                </p>
-              </div>
-            </div>
+            // <div className="hidden md:block h-screen">
+            <Image
+              src={appLogo}
+              alt="Expendo Logo"
+              width={300}
+              height={100}
+              loading="lazy"
+              className="object-contain"
+            />
           ) : (
-            ""
+            <Image
+              src={appLogo}
+              alt="Expendo Logo"
+              width={200}
+              height={56}
+              loading="lazy"
+              className="object-contain"
+            />
+            // </div>
+            // <div className="flex flex-col">
+            //   <div>
+            //     <h2 className="font-bold text-lg bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+            //       Expendo
+            //     </h2>
+            //   </div>
+            //   <div>
+            //     <p className="text-xs text-muted-foreground">
+            //       Financial Manager
+            //     </p>
+            //   </div>
+            // </div>
+            // ""
           )}
         </div>
       </SidebarHeader>
