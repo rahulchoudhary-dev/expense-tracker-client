@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Expendo - Financial Manager",
+  icons: {
+    icon: "/favicon.ico",
+  },
   description:
     "Expendo is your smart financial companion — track expenses, manage budgets, and gain insights to take control of your money. Stay organized and financially confident with Expendo.",
   keywords: [

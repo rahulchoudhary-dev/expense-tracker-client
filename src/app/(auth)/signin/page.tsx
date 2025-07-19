@@ -15,6 +15,7 @@ import Link from "next/link";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useDispatch } from "react-redux";
 import { setAuthTokens, setUser } from "@/redux/slices/userSlice";
+import appLogo from "../../../../public/app-logo-2.jpeg";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -81,10 +82,10 @@ const SignIn = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 font-sans">
+    <div className="grid grid-cols-1 md:grid-cols-2 h-screen bg-gradient-to-br from-purple-300 via-blue-200 to-pink-100 font-sans">
       {/* Left - Form */}
       <div className="flex py-12 px-6 justify-center items-center h-screen">
-        <div className="w-full dark:bg-gray-900 shadow-2xl max-w-md bg-primary rounded-3xl p-6">
+        <div className="w-full dark:bg-gray-900 bg-white shadow-2xl max-w-md rounded-3xl p-6">
           <h2 className="text-3xl font-bold text-center text-muted mb-6">
             Sign In To Your Account
           </h2>
@@ -149,12 +150,12 @@ const SignIn = () => {
       {/* Right - Image */}
       <div className="hidden md:block h-screen">
         <Image
-          width={100}
-          height={100}
+          src={appLogo}
+          alt="Expendo Logo"
+          width={1000}
+          height={1000}
           loading="lazy"
-          src="https://images.unsplash.com/photo-1709534486708-fb8f94150d0a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Signup Visual"
-          className="w-full h-full object-cover"
+          className="object-contain"
         />
       </div>
     </div>
