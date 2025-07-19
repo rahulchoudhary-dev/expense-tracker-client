@@ -116,37 +116,6 @@ const ProfileCard = () => {
                     {fullName}
                   </h1>
                 </div>
-
-                <div className="flex gap-2 mt-4 md:mt-0">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20"
-                  >
-                    <Heart className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20"
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20"
-                  >
-                    <Share2 className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20"
-                  >
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </div>
               </div>
 
               {/* Quick Stats */}

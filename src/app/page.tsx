@@ -1,9 +1,6 @@
+import ROUTES from "@/routes";
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return (
-    <>
-      <div className="flex min-h-screen">
-        <h1>Hello</h1>
-      </div>
-    </>
-  );
+  redirect(ROUTES.SIGN_IN); // or ROUTES.SIGN_IN if imported
 }
