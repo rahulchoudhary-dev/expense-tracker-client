@@ -1,26 +1,25 @@
 "use client";
 import { useShowSuccess } from "@/app/toastProvider";
 import ROUTES from "@/routes";
-import { storage } from "@/utils/storageUtils";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
-import { STORAGE_KEYS } from "@/constant";
 import { useSidebar } from "./ui/sidebar";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { clearUser } from "@/redux/slices/userSlice";
 
 const Logout = () => {
+  const dispatch = useAppDispatch();
   const { open } = useSidebar();
   const showSuccessToast = useShowSuccess();
   const router = useRouter();
 
   const logoutAction = () => {
     router.push(ROUTES.SIGN_IN);
+    dispatch(clearUser());
     showSuccessToast("Logged out successfully");
-    storage.remove(STORAGE_KEYS.ACCESS_TOKEN);
-    storage.remove(STORAGE_KEYS.REFRESH_TOKEN);
-    storage.remove(STORAGE_KEYS.USER);
   };
 
   const handleLogout = () => {

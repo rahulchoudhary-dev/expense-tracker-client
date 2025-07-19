@@ -22,12 +22,12 @@ import useAddExpenseMutation from "@/query/useAddExpense";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import ExpenseDrawerHeader from "../../../../components/ExpenseDrawerHeader";
 import { iExpenseFormData } from "@/interfaces/expense";
-import useBootUser from "@/hooks/useBootUser";
 import { addExpenseSchema } from "@/validations/addExpense.validation";
 import FormErrorMessage from "../../../../components/FormErrorMessage";
 import useUpdateExpenseMutation from "@/query/useUpdateExpense";
 import DatePickerField from "./DatePickerField";
 import FormActionButtons from "./FormActionButtons";
+import useBootUser from "@/hooks/useBootUser";
 
 function AddExpenseDrawer({
   open,
@@ -35,6 +35,7 @@ function AddExpenseDrawer({
   defaultData,
   isEditMode,
 }: any) {
+  const { userId } = useBootUser();
   const showSuccessToast = useShowSuccess();
   const showErrorToast = useShowError();
 
@@ -45,7 +46,6 @@ function AddExpenseDrawer({
     categoryId: "",
     paymentMethodId: "",
   });
-  const { id: userId } = useBootUser();
 
   useEffect(() => {
     if (defaultData && isEditMode) {

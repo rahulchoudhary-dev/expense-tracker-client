@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, memo } from "react";
+import React, { useState, useCallback, memo, useEffect } from "react";
 import InputField from "@/components/InputFiled";
 import { motion, AnimatePresence } from "framer-motion";
 import { Edit3, User } from "lucide-react";
@@ -9,24 +9,25 @@ import withAuth from "@/hoc/withAuth";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 
-import useBootUser from "@/hooks/useBootUser";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useFormik } from "formik";
 import { profileValidationSchema } from "@/validations/profile.validation";
 import useUpdateUserMutation from "@/query/useUpdateUser";
 import { storage } from "@/utils/storageUtils";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
-import { containerVariants, itemVariants } from "@/constant";
+import { containerVariants, itemVariants, STORAGE_KEYS } from "@/constant";
 import ProfileHeader from "./_components/ProfileHeader";
 import ProfileCard from "./_components/ProfileCard";
 import ProfileInfoGrid from "./_components/ProfileInfoGrid";
 import ProfileActions from "./_components/ProfileActions";
 import { Textarea } from "@/components/ui/textarea";
 import FormErrorMessage from "@/components/FormErrorMessage";
+import useBootUser from "@/hooks/useBootUser";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { setUser } from "@/redux/slices/userSlice";
 
 function Profile() {
-  const { user } = useBootUser();
-  if (!user) return null;
+  const dispatch = useAppDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const {
     fullName,
@@ -40,7 +41,8 @@ function Profile() {
     phone,
     role,
     subscriptionStatus,
-  } = user;
+    profileUrl,
+  } = useAppSelector((state) => state.user.user) || {};
   const [profileData, setProfileData] = useState({
     fullName: fullName || "",
     firstName: firstName || "",
@@ -53,17 +55,14 @@ function Profile() {
     role: role || "",
     isActive: isActive || "",
     subscriptionStatus: subscriptionStatus || "",
+    profileUrl: profileUrl || "",
   });
+
+  useEffect(() => {}, []);
 
   const { mutate: updateUserMutation } = useUpdateUserMutation();
   const showSuccess = useShowSuccess();
   const showError = useShowError();
-
-  const handleValuesChange = (values: any) => {
-    setProfileData((prevValues) => ({
-      ...values,
-    }));
-  };
 
   const formik = useFormik({
     initialValues: profileData,
@@ -75,8 +74,7 @@ function Profile() {
     onSubmit: (values, { resetForm }) => {
       updateUserMutation(values, {
         onSuccess: (data) => {
-          handleValuesChange(data.data);
-          storage.set("user", data.data);
+          dispatch(setUser({ ...data?.data, profileUrl }));
           showSuccess("User profile updated successfully");
           setIsEditing(false);
         },
@@ -106,7 +104,7 @@ function Profile() {
         animate="visible"
         className="max-w-4xl mx-auto px-4 -mt-32 relative z-10"
       >
-        <ProfileCard profileData={profileData} />
+        <ProfileCard />
         <form onSubmit={formik.handleSubmit}>
           <div className="w-full space-y-6 mt-6">
             <div className="lg:col-span-1 ">
@@ -236,7 +234,7 @@ function Profile() {
                           </div>
                         </motion.div>
                       ) : (
-                        <ProfileInfoGrid profileData={profileData} />
+                        <ProfileInfoGrid />
                       )}
                     </AnimatePresence>
                   </CardContent>

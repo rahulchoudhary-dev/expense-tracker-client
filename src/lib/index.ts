@@ -1,4 +1,5 @@
 import { STORAGE_KEYS } from "@/constant";
+import { store } from "@/redux/store";
 import { storage } from "@/utils/storageUtils";
 import axios from "axios";
 
@@ -10,7 +11,7 @@ const axiosConfig = axios.create({
 });
 
 axiosConfig.interceptors.request.use((config) => {
-  const token = storage.get("access_token");
+  const token = store.getState().user.access_token;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -58,6 +59,8 @@ export const endpoints = {
   updateUser: "/user/update-user",
   getUser: "/user/get-user",
   deleteUser: "/user/delete-user",
+
+  userProfileUpload: "/user/profile-upload",
 
   getCategories: "/categories",
   addCategory: "/categories",

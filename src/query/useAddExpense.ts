@@ -1,4 +1,4 @@
-import { queryClient } from "@/app/ClientProvider";
+import { queryClient } from "@/app/TanstackClientProvider";
 import { iExpenseFormData } from "@/interfaces/expense";
 import axiosConfig, { endpoints } from "@/lib";
 import { useMutation } from "@tanstack/react-query";

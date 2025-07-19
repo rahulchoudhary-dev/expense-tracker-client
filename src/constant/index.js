@@ -2,6 +2,7 @@ export const STORAGE_KEYS = {
   ACCESS_TOKEN: "access_token",
   REFRESH_TOKEN: "refresh_token",
   USER: "user",
+  USER_PROFILE_URL: "user_profile_url",
   EMAIL: "email",
   REMEMBER_ME: "remember_me",
   THEME: "theme",

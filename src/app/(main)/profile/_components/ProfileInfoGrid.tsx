@@ -1,5 +1,6 @@
 "use client";
 
+import { useAppSelector } from "@/hooks/useRedux";
 import { motion } from "framer-motion";
 import {
   Mail,
@@ -9,8 +10,11 @@ import {
   UserCog,
   ShieldCheck,
 } from "lucide-react";
+import { memo } from "react";
 
-const ProfileInfoGrid = ({ profileData }: any) => {
+const ProfileInfoGrid = () => {
+  const { email, createdAt, address, phone, role, subscriptionStatus } =
+    useAppSelector((state) => state.user.user) || {};
   return (
     <motion.div
       key="viewing"
@@ -24,7 +28,7 @@ const ProfileInfoGrid = ({ profileData }: any) => {
         <Mail className="h-5 w-5 text-blue-600" />
         <div>
           <p className="text-sm text-gray-600 dark:text-gray-400">Email</p>
-          <p className="font-medium">{profileData?.email || "N/A"}</p>
+          <p className="font-medium">{email || "N/A"}</p>
         </div>
       </div>
 
@@ -33,7 +37,7 @@ const ProfileInfoGrid = ({ profileData }: any) => {
         <Phone className="h-5 w-5 text-blue-600" />
         <div>
           <p className="text-sm text-gray-600 dark:text-gray-400">Phone</p>
-          <p className="font-medium">{profileData?.phone || "N/A"}</p>
+          <p className="font-medium">{phone || "N/A"}</p>
         </div>
       </div>
 
@@ -42,7 +46,7 @@ const ProfileInfoGrid = ({ profileData }: any) => {
         <MapPin className="h-5 w-5 text-blue-600" />
         <div>
           <p className="text-sm text-gray-600 dark:text-gray-400">Location</p>
-          <p className="font-medium">{profileData?.address || "N/A"}</p>
+          <p className="font-medium">{address || "N/A"}</p>
         </div>
       </div>
 
@@ -52,9 +56,7 @@ const ProfileInfoGrid = ({ profileData }: any) => {
         <div>
           <p className="text-sm text-gray-600 dark:text-gray-400">Joined</p>
           <p className="font-medium">
-            {profileData?.createdAt
-              ? new Date(profileData.createdAt).toLocaleDateString()
-              : "N/A"}
+            {createdAt ? new Date(createdAt).toLocaleDateString() : "N/A"}
           </p>
         </div>
       </div>
@@ -64,7 +66,7 @@ const ProfileInfoGrid = ({ profileData }: any) => {
         <UserCog className="h-5 w-5 text-blue-600" />
         <div>
           <p className="text-sm text-gray-600 dark:text-gray-400">Role</p>
-          <p className="font-medium capitalize">{profileData?.role || "N/A"}</p>
+          <p className="font-medium capitalize">{role || "N/A"}</p>
         </div>
       </div>
 
@@ -76,7 +78,7 @@ const ProfileInfoGrid = ({ profileData }: any) => {
             Subscription
           </p>
           <p className="font-medium capitalize">
-            {profileData?.subscriptionStatus || "N/A"}
+            {subscriptionStatus || "N/A"}
           </p>
         </div>
       </div>
@@ -84,4 +86,4 @@ const ProfileInfoGrid = ({ profileData }: any) => {
   );
 };
 
-export default ProfileInfoGrid;
+export default memo(ProfileInfoGrid);

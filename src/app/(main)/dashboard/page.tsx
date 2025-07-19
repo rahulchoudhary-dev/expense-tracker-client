@@ -1,19 +1,16 @@
 "use client";
 
+import React, { useMemo, useState } from "react";
 import withAuth from "@/hoc/withAuth";
-import React, { useEffect, useMemo, useState } from "react";
 import SummaryCards from "./_components/summaryCards";
 import useGetExpenseSummary from "@/query/useGetExpenseSummary";
-import useBootUser from "@/hooks/useBootUser";
 import useGetExpenses from "@/query/useGetExpenses";
 import { ExpenseDataTable } from "./_components/ExpenseDataTable";
 import getCurrentMonthYear from "@/utils/getCurrentMonthYear";
 import { iExpenseParams } from "@/interfaces/expense";
-import ExpenseCardList from "./_components/ExpenseCardList";
-import { useIsMobile } from "@/hooks/use-mobile";
+import useBootUser from "@/hooks/useBootUser";
 const ExpenseDashBoard = () => {
-  const isMobile = useIsMobile();
-  const { id } = useBootUser();
+  const { userId } = useBootUser();
 
   const { currentMonth, currentYear } = getCurrentMonthYear();
 
@@ -28,7 +25,7 @@ const ExpenseDashBoard = () => {
   });
 
   const { data: summaryData, isPending: isSummaryLoading } =
-    useGetExpenseSummary({ userId: id });
+    useGetExpenseSummary({ userId });
 
   const { data: expenseData, isLoading: isExpenseLoading } =
     useGetExpenses(pageData);
@@ -44,9 +41,6 @@ const ExpenseDashBoard = () => {
     <div>
       <SummaryCards data={summaryData} isLoading={isSummaryLoading} />
       <div className="overflow-auto bg-gray border-[1px] shadow-gray-300 shadow-sm p-4 mt-4 rounded-3xl dark:bg-gray-900 ">
-        {/* {isMobile ? (
-          <ExpenseCardList data={tableData.data} />
-        ) : ( */}
         <ExpenseDataTable
           count={tableData.count}
           data={tableData.data}
@@ -54,7 +48,6 @@ const ExpenseDashBoard = () => {
           pageData={pageData}
           setPageData={setPageData}
         />
-        {/* )} */}
       </div>
     </div>
   );
