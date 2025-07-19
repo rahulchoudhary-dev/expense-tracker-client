@@ -1,6 +1,4 @@
-import { STORAGE_KEYS } from "@/constant";
-import { storage } from "@/utils/storageUtils";
-import { useMemo } from "react";
+import { store } from "@/redux/store";
 
 export interface User {
   id?: string;
@@ -15,22 +13,16 @@ export interface User {
   bio?: string;
   subscriptionStatus?: string;
   role?: string;
+  profileUrl?: string;
 }
 
 const useBootUser = () => {
-  const user: User | null = useMemo(() => {
-    try {
-      const data = storage.get(STORAGE_KEYS.USER);
-      return data ? JSON.parse(data) : null;
-    } catch {
-      return null;
-    }
-  }, []);
+  const user = store.getState().user.user;
 
   return {
     user,
     isLoggedIn: !!user,
-    id: user?.id || "",
+    userId: user?.id || "",
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
     fullName: user?.fullName || "",
@@ -42,6 +34,7 @@ const useBootUser = () => {
     bio: user?.bio || "",
     subscriptionStatus: user?.subscriptionStatus || "",
     role: user?.role || "",
+    profileUrl: user?.profileUrl,
   };
 };
 

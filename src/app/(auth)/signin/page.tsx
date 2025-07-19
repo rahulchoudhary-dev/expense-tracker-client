@@ -13,8 +13,11 @@ import { STORAGE_KEYS } from "@/constant";
 import InputFiled from "@/components/InputFiled";
 import Link from "next/link";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useDispatch } from "react-redux";
+import { setAuthTokens, setUser } from "@/redux/slices/userSlice";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const showSuccess = useShowSuccess();
   const showError = useShowError();
@@ -37,9 +40,10 @@ const SignIn = () => {
     onSubmit: (values, { resetForm }) => {
       mutate(values, {
         onSuccess: (data: any) => {
-          const { access_token, refresh_token } = data?.data;
-          storage.set(STORAGE_KEYS.ACCESS_TOKEN, access_token);
-          storage.set(STORAGE_KEYS.REFRESH_TOKEN, refresh_token);
+          const { access_token, refresh_token, userMedia, ...user } =
+            data?.data;
+          dispatch(setUser({ ...user, profileUrl: userMedia?.url }));
+          dispatch(setAuthTokens({ access_token, refresh_token }));
           showSuccess("Sign In Successfully");
           router.push(ROUTES.DASHBOARD);
           if (rememberMe) {

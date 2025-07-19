@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { X, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { memo } from "react";
 
 const ProfileActions = ({ onCancel }: any) => {
   return (
@@ -35,4 +36,4 @@ const ProfileActions = ({ onCancel }: any) => {
   );
 };
 
-export default ProfileActions;
+export default memo(ProfileActions);

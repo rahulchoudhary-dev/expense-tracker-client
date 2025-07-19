@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { storage } from "@/utils/storageUtils";
-import { STORAGE_KEYS } from "@/constant";
 import ROUTES from "@/routes";
+import { useAppSelector } from "@/hooks/useRedux";
 
 const withAuth = <P extends object>(
   Component: React.ComponentType<P>
@@ -14,15 +13,17 @@ const withAuth = <P extends object>(
     const [loading, setLoading] = useState(true);
     const [authorized, setAuthorized] = useState(false);
 
+    const access_token = useAppSelector((state) => state.user);
+
     useEffect(() => {
-      const token = storage.get(STORAGE_KEYS.ACCESS_TOKEN);
+      const token = access_token;
       if (!token) {
         router.replace(ROUTES.SIGN_IN);
       } else {
         setAuthorized(true);
       }
       setLoading(false);
-    }, []);
+    }, [access_token]);
 
     if (loading)
       return (

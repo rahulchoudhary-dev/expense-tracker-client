@@ -1,5 +1,5 @@
 import { Settings } from "lucide-react";
-import { Button } from "@/components/ui/button"; // adjust based on your setup
+import { Button } from "@/components/ui/button";
 
 export default function ProfileHeader() {
   return (

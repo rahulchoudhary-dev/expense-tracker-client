@@ -1,4 +1,4 @@
-import { queryClient } from "@/app/ClientProvider";
+import { queryClient } from "@/app/TanstackClientProvider";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import axiosConfig, { endpoints, replaceParams } from "@/lib";
 import { useMutation } from "@tanstack/react-query";
