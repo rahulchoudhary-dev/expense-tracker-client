@@ -13,10 +13,12 @@ import {
 import useDeleteExpense from "@/query/useDeleteExpense";
 import { memo, useState } from "react";
 import AddExpenseDrawer from "@/app/(main)/dashboard/_components/AddExpenseDrawer";
+import ExpenseDetailsDialog from "./view-expense/ExpenseDetailsDialog";
 
 function ExpenseActions({ expense }: any) {
   const { mutate } = useDeleteExpense(expense.id);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isEditDrawerOpen, setIsEditDrawerOpen] = useState<boolean>(false);
+  const [isViewDialogOpen, setIsViewDialogOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -29,13 +31,16 @@ function ExpenseActions({ expense }: any) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {/* <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuItem
+            onClick={() => setIsViewDialogOpen(true)}
+            className="cursor-pointer"
+          >
             View Expense
-          </DropdownMenuItem> */}
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => setIsDrawerOpen(true)}
+            onClick={() => setIsEditDrawerOpen(true)}
           >
             Edit Expense
           </DropdownMenuItem>
@@ -49,10 +54,15 @@ function ExpenseActions({ expense }: any) {
       </DropdownMenu>
 
       <AddExpenseDrawer
-        open={isDrawerOpen}
-        onOpenChange={setIsDrawerOpen}
+        open={isEditDrawerOpen}
+        onOpenChange={setIsEditDrawerOpen}
         defaultData={expense}
         isEditMode={true}
+      />
+      <ExpenseDetailsDialog
+        isOpen={isViewDialogOpen}
+        onClose={() => setIsViewDialogOpen(false)}
+        expenseId={expense.id}
       />
     </>
   );

@@ -8,6 +8,9 @@ import { useShowInfo } from "@/app/toastProvider";
 type AttachmentUploaderProps = {
   attachmentFiles: File[];
   setAttachmentFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  isViewExpense?: boolean;
+  uploadAttachmentHandler?: () => void;
+  isPending?: boolean;
 };
 
 const MAX_FILES = 5;
@@ -15,6 +18,9 @@ const MAX_FILES = 5;
 export default function AttachmentUploader({
   attachmentFiles,
   setAttachmentFiles,
+  isViewExpense = false,
+  isPending = false,
+  uploadAttachmentHandler,
 }: AttachmentUploaderProps) {
   const showInfo = useShowInfo();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -92,11 +98,15 @@ export default function AttachmentUploader({
           </div>
           <div className="text-sm text-blue-800 dark:text-blue-200">
             <p className="font-medium">Upload Guidelines</p>
-            <p className="mt-1 text-blue-700 dark:text-blue-300">
+            <p className="text-blue-700 dark:text-blue-300">
               You can upload up to{" "}
-              <span className="font-semibold">{MAX_FILES}</span> image
-              attachments. All attachments will be submitted automatically with
-              your expense details.
+              <span className="font-semibold">{MAX_FILES}</span> Imagess
+              {!isViewExpense && (
+                <span>
+                  attachments. All attachments will be submitted automatically
+                  with your expense details.
+                </span>
+              )}
             </p>
           </div>
         </div>
@@ -104,32 +114,50 @@ export default function AttachmentUploader({
 
       {/* Enhanced Attachments List */}
       {attachmentFiles.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="bg-white w-full dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
           <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 px-6 py-4 border-b border-gray-200 dark:border-gray-600">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-4 h-4 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+            <div className="flex items-center space-x-3 justify-between">
+              <div className="flex items-center gap-5">
+                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                  <svg
+                    className="w-4 h-4 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    Uploaded Attachments
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {attachmentFiles.length} file
+                    {attachmentFiles.length !== 1 ? "s" : ""} ready
+                  </p>
+                </div>
               </div>
               <div>
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Uploaded Attachments
-                </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {attachmentFiles.length} file
-                  {attachmentFiles.length !== 1 ? "s" : ""} ready
-                </p>
+                {isViewExpense && (
+                  <div>
+                    <Button
+                      disabled={attachmentFiles?.length <= 0 || isPending}
+                      type="button"
+                      variant={"ghost"}
+                      onClick={uploadAttachmentHandler}
+                      className="bg-gradient-to-r disabled:bg-gray-600 disabled:hover:cursor-not-allowed from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    >
+                      Upload Files
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

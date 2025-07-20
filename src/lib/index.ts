@@ -74,6 +74,7 @@ export const endpoints = {
   deletePaymentMethod: "/payment-methods/:id",
 
   getExpense: "/expense",
+  getExpenseById: "/expense/:expenseId",
   addExpense: "/expense",
   deleteExpense: "/expense/:id",
   updateExpense: "/expense/:id",
