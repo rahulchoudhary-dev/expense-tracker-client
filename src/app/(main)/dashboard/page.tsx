@@ -40,7 +40,7 @@ const ExpenseDashBoard = () => {
   return (
     <div>
       <SummaryCards data={summaryData} isLoading={isSummaryLoading} />
-      <div className="overflow-auto bg-gray border-[1px] shadow-gray-300 shadow-sm p-4 mt-4 rounded-3xl dark:bg-gray-900 ">
+      <div className="overflow-auto bg-gray border-[1px] shadow-gray-300 shadow-sm mt-4 rounded-3xl dark:bg-gray-900 ">
         <ExpenseDataTable
           count={tableData.count}
           data={tableData.data}
