@@ -60,13 +60,15 @@ function AddExpenseDrawer({
     if (expenseData && isEditMode) {
       setExpenseForm({ ...expenseData, date: new Date(expenseData.date) });
     }
-  }, [isEditMode]);
+  }, [isEditMode, expenseData]);
 
   const { data: categories } = useGetCategory();
   const { data: paymentMethods } = usePaymentMethods();
   const { mutate: addExpenseMutation } = useAddExpenseMutation();
 
-  const { mutate: updateExpenseMutation } = useUpdateExpenseMutation();
+  const { mutate: updateExpenseMutation } = useUpdateExpenseMutation(
+    Number(expenseData?.id)
+  );
   const { mutate: uploadExpenseAttachmentsMutation } =
     useUploadExpenseAttachments();
 

@@ -10,12 +10,17 @@ const handleUpdateExpense = async (data: any) => {
   return resp.data;
 };
 
-const useUpdateExpenseMutation = () => {
+const useUpdateExpenseMutation = (expenseId: number) => {
+  expenseId;
   return useMutation({
     mutationKey: ["updateExpense"],
     mutationFn: handleUpdateExpense,
 
     onSuccess: async () => {
+      await queryClient.refetchQueries({
+        queryKey: ["get-expense-by-id", expenseId],
+      });
+
       await Promise.all([
         queryClient.invalidateQueries({
           queryKey: ["get-expenses"],

@@ -9,7 +9,7 @@ const fetchExpenseById = async (expenseId: number) => {
 
 const useGetExpenseById = (expenseId: number) => {
   return useQuery({
-    queryKey: [expenseId],
+    queryKey: ["get-expense-by-id", expenseId], // ✅ descriptive key
     queryFn: () => fetchExpenseById(expenseId),
     enabled: !!expenseId,
     staleTime: 1000 * 60 * 1,
