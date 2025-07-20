@@ -45,6 +45,7 @@ export interface AttachmentGridProps {
   attachments: Attachment[];
   onView: (attachment: Attachment) => void;
   onDelete: (attachmentId: number) => void;
+  deletingAttachmentId: number | null;
 }
 
 export interface AttachmentViewerProps {
