@@ -64,8 +64,6 @@ export function ExpenseDataTable({
       },
     },
   });
-  // flex flex-wrap items-center justify-end py-4 gap-5
-
   return (
     <>
       <div className="w-full overflow-auto">
