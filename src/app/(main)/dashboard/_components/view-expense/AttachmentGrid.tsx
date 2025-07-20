@@ -11,6 +11,7 @@ const AttachmentGrid: React.FC<AttachmentGridProps> = ({
   attachments,
   onView,
   onDelete,
+  deletingAttachmentId,
 }) => {
   const getFileIcon = (format: string, resourceType: string) => {
     if (resourceType === "image") {
@@ -145,8 +146,9 @@ const AttachmentGrid: React.FC<AttachmentGridProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
+                  disabled={deletingAttachmentId === attachment.id}
                   onClick={() => onDelete(attachment.id)}
-                  className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                  className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed"
                   title="Delete attachment"
                 >
                   <Trash2 className="h-4 w-4" />

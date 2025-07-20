@@ -28,6 +28,7 @@ import {
 } from "@/app/toastProvider";
 import useGetExpenseById from "@/query/useGetExpenseById";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import useDeleteExpenseAttachment from "@/query/useDeleteExpenseAttachment";
 
 const ExpenseDetailsDialog: React.FC<ExpenseDetailsDialogProps> = ({
   expenseId,
@@ -35,6 +36,9 @@ const ExpenseDetailsDialog: React.FC<ExpenseDetailsDialogProps> = ({
   onClose,
 }) => {
   if (!expenseId) return null;
+  const [deletingAttachmentId, setDeletingAttachmentId] = useState<
+    number | null
+  >(null);
 
   const [attachmentFiles, setAttachmentFiles] = useState<File[]>([]);
   const [selectedAttachment, setSelectedAttachment] =
@@ -51,14 +55,29 @@ const ExpenseDetailsDialog: React.FC<ExpenseDetailsDialogProps> = ({
   const { mutate: uploadExpenseAttachmentsMutation, isPending } =
     useUploadExpenseAttachments();
 
+  const { mutate: deleteAttachmentMutation } = useDeleteExpenseAttachment();
+
   const handleViewAttachment = (attachment: Attachment) => {
     setSelectedAttachment(attachment);
     setIsViewerOpen(true);
   };
 
   const handleDeleteAttachment = (attachmentId: number) => {
-    console.log("Delete attachment:", attachmentId);
-    // TODO: Implement delete API
+    setDeletingAttachmentId(attachmentId);
+    const toastId = showLoading("Deleting attachment...");
+    deleteAttachmentMutation(attachmentId, {
+      onSuccess: () => {
+        dismissToast(toastId);
+        showSuccessToast("Attachment deleted successfully");
+        refetch();
+        setDeletingAttachmentId(null);
+      },
+      onError: (err) => {
+        dismissToast(toastId);
+        showErrorToast(err?.message || "Upload failed");
+        setDeletingAttachmentId(null);
+      },
+    });
   };
 
   const formatDate = (dateString: string) => {
@@ -221,6 +240,7 @@ const ExpenseDetailsDialog: React.FC<ExpenseDetailsDialogProps> = ({
                   attachments={expense?.attachments}
                   onView={handleViewAttachment}
                   onDelete={handleDeleteAttachment}
+                  deletingAttachmentId={deletingAttachmentId}
                 />
               </div>
             </TabsContent>

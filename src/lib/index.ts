@@ -80,6 +80,7 @@ export const endpoints = {
   updateExpense: "/expense/:id",
 
   uploadExpenseAttachments: "/expense/upload-attachments",
+  deleteExpenseAttachment: "/expense/delete-attachment/:attachmentId",
 
   getExpenseSummary: "/expense/expense-summary",
 
