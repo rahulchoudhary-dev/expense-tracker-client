@@ -15,7 +15,7 @@ const useUpdateExpenseMutation = () => {
     mutationKey: ["updateExpense"],
     mutationFn: handleUpdateExpense,
 
-    onSettled: async () => {
+    onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({
           queryKey: ["get-expenses"],

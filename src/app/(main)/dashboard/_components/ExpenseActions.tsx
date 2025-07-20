@@ -56,7 +56,7 @@ function ExpenseActions({ expense }: any) {
       <AddExpenseDrawer
         open={isEditDrawerOpen}
         onOpenChange={setIsEditDrawerOpen}
-        defaultData={expense}
+        expenseData={expense}
         isEditMode={true}
       />
       <ExpenseDetailsDialog

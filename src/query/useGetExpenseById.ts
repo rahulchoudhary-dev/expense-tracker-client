@@ -8,11 +8,11 @@ const fetchExpenseById = async (expenseId: number) => {
 };
 
 const useGetExpenseById = (expenseId: number) => {
-  console.log(expenseId);
   return useQuery({
-    queryKey: ["expense-details", expenseId],
+    queryKey: [expenseId],
     queryFn: () => fetchExpenseById(expenseId),
     enabled: !!expenseId,
+    staleTime: 1000 * 60 * 1,
   });
 };
 

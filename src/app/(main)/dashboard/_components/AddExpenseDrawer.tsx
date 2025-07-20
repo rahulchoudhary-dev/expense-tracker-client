@@ -39,7 +39,7 @@ import AttachmentUploader from "./AttachmentUploader";
 function AddExpenseDrawer({
   open,
   onOpenChange,
-  defaultData,
+  expenseData,
   isEditMode,
 }: any) {
   const [attachmentFiles, setAttachmentFiles] = useState<File[]>([]);
@@ -57,8 +57,8 @@ function AddExpenseDrawer({
   });
 
   useEffect(() => {
-    if (defaultData && isEditMode) {
-      setExpenseForm({ ...defaultData, date: new Date(defaultData.date) });
+    if (expenseData && isEditMode) {
+      setExpenseForm({ ...expenseData, date: new Date(expenseData.date) });
     }
   }, [isEditMode]);
 
@@ -70,11 +70,10 @@ function AddExpenseDrawer({
   const { mutate: uploadExpenseAttachmentsMutation } =
     useUploadExpenseAttachments();
 
-  const uploadAttachmenthandler = (expenseData: any) => {
+  const uploadAttachmenthandler = (expenseId: any) => {
     const toastId = showLaoding("Uploading expenses ...");
 
     const formData = new FormData();
-    const expenseId = expenseData.id;
 
     attachmentFiles.forEach((file) => {
       formData.append("files", file);
@@ -89,10 +88,12 @@ function AddExpenseDrawer({
 
     uploadExpenseAttachmentsMutation(formData, {
       onSuccess: (res) => {
+        setAttachmentFiles([]);
         showSuccessToast("Expense and attachment uploaded Successfully");
         dismissToast(toastId);
       },
       onError: (err) => {
+        setAttachmentFiles([]);
         showErrorToast(err?.message);
       },
     });
@@ -109,7 +110,7 @@ function AddExpenseDrawer({
       try {
         if (isEditMode) {
           updateExpenseMutation(
-            { ...values, id: defaultData.id },
+            { ...values, id: expenseData.id },
             {
               onSuccess: () => {
                 showSuccessToast("Expense Update SuccessFully");
@@ -125,7 +126,7 @@ function AddExpenseDrawer({
             {
               onSuccess: (res) => {
                 if (attachmentFiles?.length) {
-                  uploadAttachmenthandler(res?.data);
+                  uploadAttachmenthandler(res?.data?.id);
                 } else {
                   showSuccessToast("Expense Added Successfully");
                 }
@@ -149,15 +150,18 @@ function AddExpenseDrawer({
       {" "}
       <DrawerContent className="max-w-2xl mb-12 mx-auto pt-4 md:pt-0 min-h-[400px]">
         <Tabs defaultValue="details" className="w-full px-4">
-          <TabsList className="w-full">
-            <TabsTrigger value="details" className="cursor-pointer">
-              Expense Details
-            </TabsTrigger>
-            {/* <Separator v /> */}
-            <TabsTrigger value="attachments" className="cursor-pointer">
-              Attachments
-            </TabsTrigger>
-          </TabsList>
+          {!isEditMode && (
+            <TabsList className="w-full">
+              <TabsTrigger value="details" className="cursor-pointer">
+                Expense Details
+              </TabsTrigger>
+              {/* <Separator v /> */}
+              <TabsTrigger value="attachments" className="cursor-pointer">
+                Attachments
+              </TabsTrigger>
+            </TabsList>
+          )}
+
           <TabsContent value="details">
             {" "}
             <ExpenseDrawerHeader />

@@ -8,8 +8,8 @@ import { Label } from "./ui/label";
 
 const ExpenseDrawerHeader = () => {
   return (
-    <DrawerHeader className="hidden md:inline-flex flex-col gap-2">
-      <DrawerHeader className="flex flex-col gap-1">
+    <DrawerHeader className="hidden md:inline-flex flex-col gap-1">
+      <div className="flex flex-col gap-1">
         <Label className="text-lg font-semibold">
           {" "}
           <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
@@ -20,7 +20,7 @@ const ExpenseDrawerHeader = () => {
         <Label className="text-sm text-muted-foreground">
           Fill in the details below to track your expense.
         </Label>
-      </DrawerHeader>
+      </div>
       <DrawerTitle className="text-lg font-semibold"></DrawerTitle>
     </DrawerHeader>
   );
