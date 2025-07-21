@@ -18,11 +18,10 @@ const TablePagination: React.FC<TablePaginationProps> = React.memo(
   ({ count, pageData, setPageData }) => {
     return (
       <ResponsivePagination
-        // className="flex bg-gray-100  rounded-4xl space-x-2 text-2xl font-medium text-gray-700"
-        current={pageData.page + 1}
+        current={pageData.page}
         total={Math.ceil(count / pageData.limit)}
         onPageChange={(pageNumber) =>
-          setPageData({ ...pageData, page: pageNumber - 1 })
+          setPageData({ ...pageData, page: pageNumber })
         }
       />
     );

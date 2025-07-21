@@ -15,7 +15,7 @@ const ExpenseDashBoard = () => {
   const { currentMonth, currentYear } = getCurrentMonthYear();
 
   const [pageData, setPageData] = useState<iExpenseParams>({
-    page: 0,
+    page: 1,
     limit: 10,
     q: "",
     month: currentMonth,
