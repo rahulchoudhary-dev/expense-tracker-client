@@ -5,7 +5,11 @@ import { X, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { memo } from "react";
 
-const ProfileActions = ({ onCancel }: any) => {
+interface ProfileActions {
+  onCancel: () => void;
+}
+
+const ProfileActions = ({ onCancel }: ProfileActions) => {
   return (
     <motion.div
       key="actions"

@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 
 const handleUpdateUserMutation = async (userData: any) => {
   const resp = await axiosConfig.patch(endpoints.updateUser, userData);
-  return resp;
+  return resp.data;
 };
 
 const useUpdateUserMutation = () => {

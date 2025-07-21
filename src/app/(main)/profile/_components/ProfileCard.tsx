@@ -1,25 +1,18 @@
 "use client";
+import { memo, useRef } from "react";
 
 import { Card, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Calendar,
-  Camera,
-  Heart,
-  MessageCircle,
-  Share2,
-  MoreHorizontal,
-  MapPin,
-} from "lucide-react";
+import { Calendar, Camera, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import { objectToFormData } from "@/utils/objectToFormData";
-import { memo, useRef } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import useUserProfileUpload from "@/query/useUploadUserProfile";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { setProfileUrl } from "@/redux/slices/userSlice";
+import { TOAST_MESSAGES } from "@/constant";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -33,8 +26,8 @@ const ProfileCard = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
 
-  const successToast = useShowSuccess();
-  const errorToast = useShowError();
+  const showSuccessToast = useShowSuccess();
+  const showErrorToast = useShowError();
 
   const { mutate, isPending } = useUserProfileUpload();
 
@@ -48,10 +41,10 @@ const ProfileCard = () => {
       onSuccess: (res: any) => {
         const profileUrl = res?.data?.url;
         dispatch(setProfileUrl(profileUrl));
-        successToast("Profile updated successfully");
+        showSuccessToast(TOAST_MESSAGES.PROFILE_UPDATE_SUCCESS);
       },
       onError: (err) => {
-        errorToast(err?.message || "Upload failed");
+        showErrorToast(err?.message || TOAST_MESSAGES.ERROR_GENERIC);
       },
     });
   };

@@ -14,6 +14,7 @@ export const TOAST_MESSAGES = {
   SIGN_UP_SUCCESS: "Account created successfully",
   SIGN_OUT_SUCCESS: "Signed out successfully",
   ERROR_GENERIC: "Something went wrong. Please try again.",
+  PROFILE_UPDATE_SUCCESS: "Profile updated successfully",
 };
 
 export const RADIAN = Math.PI / 180;

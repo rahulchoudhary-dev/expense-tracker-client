@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const profileValidationSchema = Yup.object().shape({
+export const profileDto = Yup.object().shape({
   firstName: Yup.string()
     .trim()
     .min(2, "First name must be at least 2 characters")

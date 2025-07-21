@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const validationSchema = Yup.object().shape({
+const signUpDto = Yup.object().shape({
   firstName: Yup.string()
     .min(2, "First name must be at least 2 characters")
     .required("First name is required"),
@@ -22,4 +22,4 @@ const validationSchema = Yup.object().shape({
     .required("Confirm Password is required"),
 });
 
-export default validationSchema;
+export default signUpDto;

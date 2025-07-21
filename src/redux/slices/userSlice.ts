@@ -1,23 +1,8 @@
+import { UserData } from "@/interfaces/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface User {
-  id?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  createdAt: string;
-  fullName: string;
-  address?: string;
-  phone?: string;
-  isActive?: string;
-  bio?: string;
-  subscriptionStatus?: string;
-  role?: string;
-  profileUrl?: string;
-}
-
 interface UserState {
-  user: User | null;
+  user: UserData | null;
   access_token: string;
   refresh_token: string;
 }
@@ -35,7 +20,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<User>) {
+    setUser(state, action: PayloadAction<UserData>) {
       state.user = action.payload;
     },
     setAuthTokens(state, action: PayloadAction<AuthToken>) {
