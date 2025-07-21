@@ -51,7 +51,7 @@ function CategoryExpensePieChart({ data }: iCategoryExpensePieChartProps) {
   };
 
   return (
-    <div className="dark:bg-zinc-900 dark:shadow-md rounded-xl p-6 max-w-4xl mx-auto w-full">
+    <div className="rounded-xl p-6 max-w-4xl mx-auto w-full">
       <h2 className="text-lg font-bold mb-4 text-center dark:text-white">
         Expense Category Breakdown
       </h2>

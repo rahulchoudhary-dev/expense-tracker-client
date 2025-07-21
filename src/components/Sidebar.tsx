@@ -38,15 +38,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {" "}
       <SidebarHeader className="shadow-xl bg-gray-50 dark:bg-gray-900">
         <div
-          className={`dark:bg-gray-900 border-b border-gray-300 dark:border-gray-500 ${
+          className={`dark:bg-gray-900 shadow-xl border-b border-gray-300 dark:border-gray-500 ${
             open ? "p-4" : "py-4 px-2"
           } flex justify-start gap-4 items-center`}
         >
-          {/* <div className="w-12 h-full bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
-            <TrendingUp className="w-8 h-12 text-white" />
-          </div> */}
           {open ? (
-            // <div className="hidden md:block h-screen">
             <Image
               src={appLogo}
               alt="Expendo Logo"
@@ -64,20 +60,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               loading="lazy"
               className="object-contain"
             />
-            // </div>
-            // <div className="flex flex-col">
-            //   <div>
-            //     <h2 className="font-bold text-lg bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-            //       Expendo
-            //     </h2>
-            //   </div>
-            //   <div>
-            //     <p className="text-xs text-muted-foreground">
-            //       Financial Manager
-            //     </p>
-            //   </div>
-            // </div>
-            // ""
           )}
         </div>
       </SidebarHeader>
