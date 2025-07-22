@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { useAppSelector } from "@/hooks/useRedux";
 import { motion } from "framer-motion";
 import {
@@ -10,7 +11,6 @@ import {
   UserCog,
   ShieldCheck,
 } from "lucide-react";
-import { memo } from "react";
 
 const ProfileInfoGrid = () => {
   const { email, createdAt, address, phone, role, subscriptionStatus } =

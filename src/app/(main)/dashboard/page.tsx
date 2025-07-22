@@ -12,7 +12,7 @@ import useBootUser from "@/hooks/useBootUser";
 import ExpenseCalendar from "@/app/(main)/dashboard/_components/ExpenseFullCalender";
 import { Button } from "@/components/ui/button";
 import { Calendar, Table, LayoutGrid } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 const ExpenseDashBoard = () => {
   const { userId } = useBootUser();
 

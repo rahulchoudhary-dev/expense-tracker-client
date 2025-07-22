@@ -1,9 +1,9 @@
 "use client";
 
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { X, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { memo } from "react";
 
 interface ProfileActions {
   onCancel: () => void;

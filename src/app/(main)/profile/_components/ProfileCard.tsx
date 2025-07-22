@@ -12,12 +12,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import useUserProfileUpload from "@/query/useUploadUserProfile";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { setProfileUrl } from "@/redux/slices/userSlice";
-import { TOAST_MESSAGES } from "@/constant";
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
+import { itemVariants, TOAST_MESSAGES } from "@/constant";
 
 const ProfileCard = () => {
   const { fullName, createdAt, bio, profileUrl, address } =

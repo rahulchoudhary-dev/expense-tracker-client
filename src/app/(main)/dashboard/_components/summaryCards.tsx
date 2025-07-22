@@ -60,21 +60,25 @@ const SummaryCards: React.FC<iSummaryCardsProps> = ({
   isLoading,
 }: any) => {
   const memoizedData = useMemo(() => {
-    return data?.map((item: iData) => {
-      const colorConfig = COLOR_MAP[item.lable] || {
-        gradient: "bg-gradient-to-br from-gray-500 to-gray-600",
-        shadow: "shadow-gray-500/25",
-        accent: "from-gray-400 to-gray-500",
-      };
+    if (data?.length >= 0) {
+      return data?.map((item: iData) => {
+        const colorConfig = COLOR_MAP[item.lable] || {
+          gradient: "bg-gradient-to-br from-gray-500 to-gray-600",
+          shadow: "shadow-gray-500/25",
+          accent: "from-gray-400 to-gray-500",
+        };
 
-      return {
-        ...item,
-        icon: ICONS_MAP[item.lable] || (
-          <Wallet className="w-5 h-5 text-white" />
-        ),
-        ...colorConfig,
-      };
-    });
+        return {
+          ...item,
+          icon: ICONS_MAP[item.lable] || (
+            <Wallet className="w-5 h-5 text-white" />
+          ),
+          ...colorConfig,
+        };
+      });
+    } else {
+      return [];
+    }
   }, [data]);
 
   const renderSkeletonCard = () => (
