@@ -10,8 +10,8 @@ import {
 import { memo, useCallback, useEffect, useState } from "react";
 
 import { monthOptions, yearOptions } from "../../../../constant/dateOptions";
-import useGetCategory from "@/query/useGetCategory";
-import usePaymentMethods from "@/query/useGetPaymentMethod";
+import useGetCategory from "@/query/category/useGetCategory";
+import usePaymentMethods from "@/query/payment/useGetPaymentMethod";
 import { Button } from "@/components/ui/button";
 import {
   Calendar,

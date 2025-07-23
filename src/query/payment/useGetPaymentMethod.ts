@@ -1,4 +1,5 @@
-import axiosConfig, { endpoints } from "@/lib";
+import axiosConfig from "@/lib/axios/axiosInstance";
+import { endpoints } from "@/lib/axios/endpoints";
 import { useQuery } from "@tanstack/react-query";
 
 export const fetchPaymentMethods = async () => {

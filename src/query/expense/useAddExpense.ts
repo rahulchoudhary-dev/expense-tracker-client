@@ -1,9 +1,10 @@
+import { ExpenseParams } from "@/app/(main)/dashboard/types";
 import { queryClient } from "@/app/TanstackClientProvider";
-import { iExpenseFormData } from "@/interfaces/expense";
-import axiosConfig, { endpoints } from "@/lib";
+import axiosConfig from "@/lib/axios/axiosInstance";
+import { endpoints } from "@/lib/axios/endpoints";
 import { useMutation } from "@tanstack/react-query";
 
-const addExpenseRequest = async (data: iExpenseFormData) => {
+const addExpenseRequest = async (data: any) => {
   const resp = await axiosConfig.post(endpoints.addExpense, data);
   return resp;
 };

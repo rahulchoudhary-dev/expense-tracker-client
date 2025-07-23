@@ -16,9 +16,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useFormik } from "formik";
-import useGetCategory from "@/query/useGetCategory";
-import usePaymentMethods from "@/query/useGetPaymentMethod";
-import useAddExpenseMutation from "@/query/useAddExpense";
+import useGetCategory from "@/query/category/useGetCategory";
+import usePaymentMethods from "@/query/payment/useGetPaymentMethod";
+import useAddExpenseMutation from "@/query/expense/useAddExpense";
 import {
   useDismissToast,
   useShowError,
@@ -28,11 +28,11 @@ import {
 import ExpenseDrawerHeader from "../../../../components/ExpenseDrawerHeader";
 import { addExpenseSchema } from "@/validations/addExpense.validation";
 import FormErrorMessage from "../../../../components/FormErrorMessage";
-import useUpdateExpenseMutation from "@/query/useUpdateExpense";
+import useUpdateExpenseMutation from "@/query/expense/useUpdateExpense";
 import DatePickerField from "./DatePickerField";
 import FormActionButtons from "./FormActionButtons";
 import useBootUser from "@/hooks/useBootUser";
-import useUploadExpenseAttachments from "@/query/uploadExpenseAttachments";
+import useUploadExpenseAttachments from "@/query/attachment/uploadExpenseAttachments";
 import AttachmentUploader from "./AttachmentUploader";
 import { AddExpenseDrawerProps, ExpenseFormData } from "./types";
 import { TOAST_MESSAGES } from "@/constant";

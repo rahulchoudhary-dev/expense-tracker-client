@@ -1,5 +1,6 @@
 import { STORAGE_KEYS } from "@/constant";
-import axiosConfig, { endpoints } from "@/lib";
+import axiosConfig from "@/lib/axios/axiosInstance";
+import { endpoints } from "@/lib/axios/endpoints";
 import { storage } from "@/utils/storageUtils";
 import { useMutation } from "@tanstack/react-query";
 
@@ -10,7 +11,7 @@ interface iSignIn {
 
 const signInHandler = async (data: iSignIn) => {
   const resp = await axiosConfig.post(endpoints.sigIn, data);
-  return resp;
+  return resp?.data;
 };
 
 const useSignIn = () => {

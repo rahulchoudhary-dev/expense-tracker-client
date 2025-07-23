@@ -19,16 +19,16 @@ import {
 import AttachmentViewer from "./AttachmentViewer";
 import AttachmentGrid from "./AttachmentGrid";
 import AttachmentUploader from "../AttachmentUploader";
-import useUploadExpenseAttachments from "@/query/uploadExpenseAttachments";
+import useUploadExpenseAttachments from "@/query/attachment/uploadExpenseAttachments";
 import {
   useDismissToast,
   useShowError,
   useShowLoading,
   useShowSuccess,
 } from "@/app/toastProvider";
-import useGetExpenseById from "@/query/useGetExpenseById";
+import useGetExpenseById from "@/query/expense/useGetExpenseById";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import useDeleteExpenseAttachment from "@/query/useDeleteExpenseAttachment";
+import useDeleteExpenseAttachment from "@/query/attachment/useDeleteExpenseAttachment";
 
 const ExpenseDetailsDialog: React.FC<ExpenseDetailsDialogProps> = ({
   expenseId,

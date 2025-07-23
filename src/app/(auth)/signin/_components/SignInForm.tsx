@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { useFormik } from "formik";
 
-import useSignIn from "@/query/useSignIn";
+import useSignIn from "@/query/auth/useSignIn";
 import SignInDto from "@/validations/signin.validation";
 import { setAuthTokens, setUser } from "@/redux/slices/userSlice";
 import { storage } from "@/utils/storageUtils";
@@ -62,7 +62,7 @@ const SignInForm = () => {
       mutate(values, {
         onSuccess: (response) => {
           const { access_token, refresh_token, userMedia, ...user } =
-            response?.data || {};
+            response || {};
 
           dispatch(setUser({ ...user, profileUrl: userMedia?.url }));
           dispatch(setAuthTokens({ access_token, refresh_token }));

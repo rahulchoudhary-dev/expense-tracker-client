@@ -3,10 +3,10 @@
 import withAuth from "@/hoc/withAuth";
 import React, { useMemo, useState } from "react";
 
-import useAnalyticsYearlyExpenses from "@/query/useAnalyticsYearlyExpense";
+import useAnalyticsYearlyExpenses from "@/query/expense/useAnalyticsYearlyExpense";
 import ChartCard from "@/components/ChartCard";
 import { CURRENT_MONTH, CURRENT_YEAR } from "@/constant/dateOptions";
-import useAnalyticsCategoryExpenses from "@/query/useAnalyticsCategoryExpense";
+import useAnalyticsCategoryExpenses from "@/query/expense/useAnalyticsCategoryExpense";
 import SectionHeader from "./_components/analyticsSectionHeader";
 import NoDataFound from "./_components/noDataFound";
 import LoadingSpinner from "@/components/LoadingSpinner";

@@ -1,13 +1,14 @@
-import { iExpenseParams } from "@/interfaces/expense";
-import axiosConfig, { endpoints } from "@/lib";
+import { ExpenseParams } from "@/app/(main)/dashboard/types";
+import axiosConfig from "@/lib/axios/axiosInstance";
+import { endpoints } from "@/lib/axios/endpoints";
 import { useQuery } from "@tanstack/react-query";
 
-const fetchExpenses = async (params: iExpenseParams) => {
+const fetchExpenses = async (params: ExpenseParams) => {
   const { data } = await axiosConfig.get(endpoints.getExpense, { params });
   return data;
 };
 
-const useGetExpenses = (params: iExpenseParams) => {
+const useGetExpenses = (params: ExpenseParams) => {
   return useQuery({
     queryKey: ["get-expenses", params],
     queryFn: () => fetchExpenses(params),

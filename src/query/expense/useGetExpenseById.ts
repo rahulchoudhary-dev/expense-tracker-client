@@ -1,4 +1,6 @@
-import axiosConfig, { endpoints, replaceParams } from "@/lib";
+import axiosConfig from "@/lib/axios/axiosInstance";
+import { endpoints } from "@/lib/axios/endpoints";
+import { replaceParams } from "@/lib/axios/utils";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchExpenseById = async (expenseId: number) => {

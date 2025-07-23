@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import useDeleteExpense from "@/query/useDeleteExpense";
+import useDeleteExpense from "@/query/expense/useDeleteExpense";
 import React, { memo, useState } from "react";
 import AddExpenseDrawer from "@/app/(main)/dashboard/_components/AddExpenseDrawer";
 import ExpenseDetailsDialog from "./view-expense/ExpenseDetailsDialog";

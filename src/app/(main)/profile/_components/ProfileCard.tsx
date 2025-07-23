@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import { objectToFormData } from "@/utils/objectToFormData";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import useUserProfileUpload from "@/query/useUploadUserProfile";
+import useUserProfileUpload from "@/query/user/useUploadUserProfile";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { setProfileUrl } from "@/redux/slices/userSlice";
 import { itemVariants, TOAST_MESSAGES } from "@/constant";

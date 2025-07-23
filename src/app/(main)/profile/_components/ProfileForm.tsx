@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { setUser } from "@/redux/slices/userSlice";
 import { profileDto } from "@/validations/profile.validation";
-import useUpdateUserMutation from "@/query/useUpdateUser";
+import useUpdateUserMutation from "@/query/auth/useUpdateUser";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import { itemVariants, TOAST_MESSAGES } from "@/constant";
 import { Textarea } from "@/components/ui/textarea";

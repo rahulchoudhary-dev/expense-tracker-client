@@ -1,5 +1,7 @@
 import { queryClient } from "@/app/TanstackClientProvider";
-import axiosConfig, { endpoints, replaceParams } from "@/lib";
+import axiosConfig from "@/lib/axios/axiosInstance";
+import { endpoints } from "@/lib/axios/endpoints";
+import { replaceParams } from "@/lib/axios/utils";
 import { useMutation } from "@tanstack/react-query";
 
 const handleUpdateExpense = async (data: any) => {

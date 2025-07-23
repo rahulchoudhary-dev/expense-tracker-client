@@ -3,8 +3,8 @@
 import React, { useMemo, useState } from "react";
 import withAuth from "@/hoc/withAuth";
 import SummaryCards from "./_components/summaryCards";
-import useGetExpenseSummary from "@/query/useGetExpenseSummary";
-import useGetExpenses from "@/query/useGetExpenses";
+import useGetExpenseSummary from "@/query/expense/useGetExpenseSummary";
+import useGetExpenses from "@/query/expense/useGetExpenses";
 import { ExpenseDataTable } from "./_components/ExpenseDataTable";
 import getCurrentMonthYear from "@/utils/getCurrentMonthYear";
 import useBootUser from "@/hooks/useBootUser";

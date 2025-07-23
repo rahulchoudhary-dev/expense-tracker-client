@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import ROUTES from "@/routes";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Button } from "@/components/ui/button";
-import useSignUp from "@/query/useSignUp";
+import useSignUp from "@/query/auth/useSignUp";
 import signUpDto from "@/validations/signup.validation";
 import InputFiled from "@/components/InputFiled";
 import TermsNotice from "./TermsNotice";

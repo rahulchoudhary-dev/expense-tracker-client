@@ -1,9 +1,10 @@
 import { setAuthTokens } from "@/redux/slices/userSlice";
 import { store } from "@/redux/store";
 import axios from "axios";
+import { endpoints } from "./endpoints";
 
 const axiosConfig = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -22,6 +23,7 @@ axiosConfig.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     console.log("Error in axios interceptor:", error);
+
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
@@ -30,10 +32,12 @@ axiosConfig.interceptors.response.use(
           const response = await axiosConfig.post(endpoints.refreshToken, {
             refreshToken,
           });
-          const { newAccesssToken, newRefreshToken } = response.data;
-          axiosConfig.defaults.headers.common.Authorization = `Bearer ${newAccesssToken}`;
 
+          const { newAccesssToken, newRefreshToken } = response.data;
+
+          axiosConfig.defaults.headers.common.Authorization = `Bearer ${newAccesssToken}`;
           originalRequest.headers.Authorization = `Bearer ${newAccesssToken}`;
+
           store.dispatch(
             setAuthTokens({
               access_token: newAccesssToken,
@@ -52,46 +56,4 @@ axiosConfig.interceptors.response.use(
   }
 );
 
-export const endpoints = {
-  sigIn: "/auth/signIn",
-  signUp: "/auth/signUp",
-  refreshToken: "/auth/refresh-token",
-
-  updateUser: "/user/update-user",
-  getUser: "/user/get-user",
-  deleteUser: "/user/delete-user",
-
-  userProfileUpload: "/user/profile-upload",
-
-  getCategories: "/categories",
-  addCategory: "/categories",
-  updateCategory: "/categories/:id",
-  deleteCategory: "/categories/:id",
-
-  getPaymentMethods: "/payment-methods",
-  addPaymentMethod: "/payment-methods",
-  updatePaymentMethod: "/payment-methods/:id",
-  deletePaymentMethod: "/payment-methods/:id",
-
-  getExpense: "/expense",
-  getExpenseById: "/expense/:expenseId",
-  addExpense: "/expense",
-  deleteExpense: "/expense/:id",
-  updateExpense: "/expense/:id",
-
-  uploadExpenseAttachments: "/expense/upload-attachments",
-  deleteExpenseAttachment: "/expense/delete-attachment/:attachmentId",
-
-  getExpenseSummary: "/expense/expense-summary",
-
-  getAnalyticsYearlyExpenses: "/analytics-charts/yearly-expenses",
-  getAnalyticsCategoryExpenses: "/analytics-charts/category-expenses",
-};
 export default axiosConfig;
-
-export function replaceParams(path: string, params: any) {
-  for (const key in params) {
-    path = path.replace(`:${key}`, params[key]);
-  }
-  return path;
-}

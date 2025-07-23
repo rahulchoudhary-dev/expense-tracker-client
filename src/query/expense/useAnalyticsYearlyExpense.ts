@@ -1,6 +1,7 @@
 "use client";
 
-import axiosConfig, { endpoints } from "@/lib";
+import axiosConfig from "@/lib/axios/axiosInstance";
+import { endpoints } from "@/lib/axios/endpoints";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchAnalyticsYearlyExpenses = async (data: any) => {
