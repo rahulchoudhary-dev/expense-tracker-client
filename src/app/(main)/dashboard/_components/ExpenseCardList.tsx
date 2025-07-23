@@ -2,27 +2,9 @@
 
 import React from "react";
 import { format } from "date-fns";
+import { Expense } from "./types";
 
-interface ExpenseItem {
-  id: number;
-  amount: number;
-  date: string;
-  description: string;
-  Category: {
-    id: number;
-    name: string;
-  };
-  PaymentMethod: {
-    id: number;
-    name: string;
-  };
-}
-
-interface ExpenseCardProps {
-  data: ExpenseItem[];
-}
-
-const ExpenseCardList: React.FC<ExpenseCardProps> = ({ data }) => {
+const ExpenseCardList = ({ data }: { data: Expense[] }) => {
   if (!data?.length) {
     return (
       <p className="text-center py-4 text-muted-foreground">

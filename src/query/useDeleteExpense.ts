@@ -3,12 +3,12 @@ import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import axiosConfig, { endpoints, replaceParams } from "@/lib";
 import { useMutation } from "@tanstack/react-query";
 
-const handleDeleteExpense = async (expenseId: string) => {
+const handleDeleteExpense = async (expenseId: number) => {
   const URL = replaceParams(endpoints.deleteExpense, { id: expenseId });
   const response = await axiosConfig.delete(URL);
   return response;
 };
-const useDeleteExpense = (expenseId: string) => {
+const useDeleteExpense = (expenseId: number) => {
   const showSuccess = useShowSuccess();
   const showError = useShowError();
 

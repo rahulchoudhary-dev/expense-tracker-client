@@ -1,21 +1,3 @@
-export interface iExpenseFormData {
-  date: Date;
-  description: string;
-  amount: string;
-  categoryId: string;
-  paymentMethodId: string;
-  userId?: string;
-}
-
-export interface iExpenseParams {
-  page: number;
-  limit: number;
-  q?: string;
-  month: number;
-  year: number;
-  categoryId?: string;
-  paymentMethodId?: string;
-}
 export interface iExpenseDataTable {
   id: string;
   amount: number;
@@ -69,22 +51,6 @@ export interface Expense {
   Category: Category;
   PaymentMethod: PaymentMethod;
   attachments?: Attachment[];
-}
-
-export interface FullCalendarEvent {
-  id: string;
-  title: string;
-  date: string;
-  backgroundColor: string;
-  borderColor: string;
-  extendedProps: {
-    amount: number;
-    description: string;
-    category: string;
-    paymentMethod: string;
-    attachments: Attachment[];
-    fullExpense: Expense;
-  };
 }
 
 // Category color mapping

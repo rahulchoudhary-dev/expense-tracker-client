@@ -19,8 +19,10 @@ import {
   TrendingUp,
   ArrowUpRight,
 } from "lucide-react";
-import { iData, iSummaryCardsProps } from "@/interfaces/summaryCardsProps";
 import CountUp from "react-countup";
+import { COLOR_MAP } from "@/constant";
+import { renderSkeletonCard } from "./renderSkeletonCard";
+import { Data, SummaryCardsProps } from "./types";
 
 const ICONS_MAP: Record<string, JSX.Element> = {
   "Total Expense": <DollarSign className="w-5 h-5 text-white font-bold" />,
@@ -29,39 +31,10 @@ const ICONS_MAP: Record<string, JSX.Element> = {
   "Top Category": <CatIcon className="w-5 h-5 text-white" />,
 };
 
-const COLOR_MAP: Record<
-  string,
-  { gradient: string; shadow: string; accent: string }
-> = {
-  "Total Expense": {
-    gradient: "bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600",
-    shadow: "shadow-green-500/25",
-    accent: "from-emerald-400 to-green-500",
-  },
-  "Avg Expense": {
-    gradient: "bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600",
-    shadow: "shadow-blue-500/25",
-    accent: "from-blue-400 to-indigo-500",
-  },
-  "This Month": {
-    gradient: "bg-gradient-to-br from-amber-500 via-yellow-500 to-orange-600",
-    shadow: "shadow-yellow-500/25",
-    accent: "from-amber-400 to-yellow-500",
-  },
-  "Top Category": {
-    gradient: "bg-gradient-to-br from-purple-500 via-violet-500 to-indigo-600",
-    shadow: "shadow-purple-500/25",
-    accent: "from-purple-400 to-violet-500",
-  },
-};
-
-const SummaryCards: React.FC<iSummaryCardsProps> = ({
-  data,
-  isLoading,
-}: any) => {
+const SummaryCards: React.FC<SummaryCardsProps> = ({ data, isLoading }) => {
   const memoizedData = useMemo(() => {
     if (data?.length >= 0) {
-      return data?.map((item: iData) => {
+      return data?.map((item: Data) => {
         const colorConfig = COLOR_MAP[item.lable] || {
           gradient: "bg-gradient-to-br from-gray-500 to-gray-600",
           shadow: "shadow-gray-500/25",
@@ -81,37 +54,13 @@ const SummaryCards: React.FC<iSummaryCardsProps> = ({
     }
   }, [data]);
 
-  const renderSkeletonCard = () => (
-    <Card className="w-full relative overflow-hidden bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
-      {/* Animated gradient background for skeleton */}
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 animate-pulse"></div>
-
-      <div className="relative z-10 p-6">
-        <CardHeader className="flex justify-between items-start pb-4">
-          <div className="space-y-2">
-            <div className="bg-gray-300 dark:bg-gray-600 h-4 w-24 animate-pulse rounded-md" />
-          </div>
-          <div className="bg-gray-300 dark:bg-gray-600 h-12 w-12 rounded-full animate-pulse" />
-        </CardHeader>
-
-        <CardContent className="pb-4">
-          <div className="h-8 bg-gray-300 dark:bg-gray-600 rounded-md w-32 animate-pulse" />
-        </CardContent>
-
-        <CardFooter>
-          <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-20 animate-pulse" />
-        </CardFooter>
-      </div>
-    </Card>
-  );
-
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
       {isLoading
         ? Array.from({ length: 4 }).map((_, idx) => (
             <React.Fragment key={idx}>{renderSkeletonCard()}</React.Fragment>
           ))
-        : memoizedData?.map((item: any, index: number) => (
+        : memoizedData?.map((item, index: number) => (
             <Card
               key={item.lable}
               className="group relative overflow-hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 hover:shadow-2xl hover:shadow-black/10 dark:hover:shadow-black/20 transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-1"
@@ -168,7 +117,7 @@ const SummaryCards: React.FC<iSummaryCardsProps> = ({
                         <CountUp
                           end={Number(item?.value)}
                           decimals={2}
-                          prefix={`${item.currency} `}
+                          prefix={`${item?.currency} `}
                           duration={2}
                         />
                       </h1>

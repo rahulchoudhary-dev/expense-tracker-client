@@ -4,16 +4,8 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { UploadIcon, Trash2Icon } from "lucide-react";
 import { useShowInfo } from "@/app/toastProvider";
-
-type AttachmentUploaderProps = {
-  attachmentFiles: File[];
-  setAttachmentFiles: React.Dispatch<React.SetStateAction<File[]>>;
-  isViewExpense?: boolean;
-  uploadAttachmentHandler?: () => void;
-  isPending?: boolean;
-};
-
-const MAX_FILES = 5;
+import { MAX_FILES } from "@/constant";
+import { AttachmentUploaderProps } from "./types";
 
 export default function AttachmentUploader({
   attachmentFiles,

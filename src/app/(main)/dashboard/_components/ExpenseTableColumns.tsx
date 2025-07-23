@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
-import { iExpenseDataTable } from "@/interfaces/expense";
+import { Expense } from "./types";
 import ExpenseActions from "./ExpenseActions";
 
 export const CATEGORY_BG_COLOR_MAP: Record<string, string> = {
@@ -27,7 +27,7 @@ export const CATEGORY_TEXT_COLOR_MAP: Record<string, string> = {
   Other: "text-gray-800",
 };
 
-export const columns: ColumnDef<iExpenseDataTable>[] = [
+export const columns: ColumnDef<Expense>[] = [
   {
     accessorKey: "date",
     header: "Date",

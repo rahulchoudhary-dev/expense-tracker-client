@@ -26,7 +26,6 @@ import {
   useShowSuccess,
 } from "@/app/toastProvider";
 import ExpenseDrawerHeader from "../../../../components/ExpenseDrawerHeader";
-import { iExpenseFormData } from "@/interfaces/expense";
 import { addExpenseSchema } from "@/validations/addExpense.validation";
 import FormErrorMessage from "../../../../components/FormErrorMessage";
 import useUpdateExpenseMutation from "@/query/useUpdateExpense";
@@ -35,30 +34,38 @@ import FormActionButtons from "./FormActionButtons";
 import useBootUser from "@/hooks/useBootUser";
 import useUploadExpenseAttachments from "@/query/uploadExpenseAttachments";
 import AttachmentUploader from "./AttachmentUploader";
+import { AddExpenseDrawerProps, ExpenseFormData } from "./types";
+import { TOAST_MESSAGES } from "@/constant";
 
-function AddExpenseDrawer({
+const AddExpenseDrawer: React.FC<AddExpenseDrawerProps> = ({
   open,
   onOpenChange,
   expenseData,
   isEditMode,
-}: any) {
+}) => {
   const [attachmentFiles, setAttachmentFiles] = useState<File[]>([]);
   const { userId } = useBootUser();
   const showSuccessToast = useShowSuccess();
   const showErrorToast = useShowError();
   const showLaoding = useShowLoading();
   const dismissToast = useDismissToast();
-  const [expenseForm, setExpenseForm] = useState<iExpenseFormData>({
+  const [expenseForm, setExpenseForm] = useState<ExpenseFormData>({
     date: new Date(),
     description: "",
-    amount: "",
-    categoryId: "",
-    paymentMethodId: "",
+    amount: 0,
+    categoryId: 0,
+    paymentMethodId: 0,
   });
 
   useEffect(() => {
     if (expenseData && isEditMode) {
-      setExpenseForm({ ...expenseData, date: new Date(expenseData.date) });
+      setExpenseForm({
+        date: new Date(),
+        description: expenseData.description,
+        amount: expenseData.amount,
+        categoryId: expenseData.Category.id,
+        paymentMethodId: expenseData.PaymentMethod.id,
+      });
     }
   }, [isEditMode, expenseData]);
 
@@ -72,8 +79,8 @@ function AddExpenseDrawer({
   const { mutate: uploadExpenseAttachmentsMutation } =
     useUploadExpenseAttachments();
 
-  const uploadAttachmenthandler = (expenseId: any) => {
-    const toastId = showLaoding("Uploading expenses ...");
+  const uploadAttachmenthandler = (expenseId: number) => {
+    const toastId = showLaoding(TOAST_MESSAGES.EXPENSE_UPLOAD_LOADING);
 
     const formData = new FormData();
 
@@ -81,7 +88,7 @@ function AddExpenseDrawer({
       formData.append("files", file);
     });
 
-    formData.append("expenseId", expenseId);
+    formData.append("expenseId", expenseId.toString());
 
     // 🔍 Log each key-value in FormData
     for (let [key, value] of formData.entries()) {
@@ -89,9 +96,9 @@ function AddExpenseDrawer({
     }
 
     uploadExpenseAttachmentsMutation(formData, {
-      onSuccess: (res) => {
+      onSuccess: () => {
         setAttachmentFiles([]);
-        showSuccessToast("Expense and attachment uploaded Successfully");
+        showSuccessToast(TOAST_MESSAGES.EXPENSE_UPLOAD_SUCCESS);
         dismissToast(toastId);
       },
       onError: (err) => {
@@ -115,7 +122,7 @@ function AddExpenseDrawer({
             { ...values, id: expenseData.id },
             {
               onSuccess: () => {
-                showSuccessToast("Expense Update SuccessFully");
+                showSuccessToast(TOAST_MESSAGES.EXPENSE_UPDATE_SUCCESS);
               },
               onError: (err) => {
                 showErrorToast(err?.message);
@@ -130,7 +137,7 @@ function AddExpenseDrawer({
                 if (attachmentFiles?.length) {
                   uploadAttachmenthandler(res?.data?.id);
                 } else {
-                  showSuccessToast("Expense Added Successfully");
+                  showSuccessToast(TOAST_MESSAGES.EXPENSE_ADD_SUCCESS);
                 }
               },
               onError: (err) => {
@@ -210,7 +217,7 @@ function AddExpenseDrawer({
                     <Label htmlFor="category">Category *</Label>
                     <Select
                       name="categoryId"
-                      value={formik.values.categoryId}
+                      value={formik.values.categoryId.toString()}
                       onValueChange={(value) =>
                         formik.setFieldValue("categoryId", value)
                       }
@@ -241,7 +248,7 @@ function AddExpenseDrawer({
                     <Label htmlFor="paymentMethod">Payment Method *</Label>
                     <Select
                       name="paymentMethodId"
-                      value={formik.values.paymentMethodId}
+                      value={formik.values.paymentMethodId.toString()}
                       onValueChange={(value) =>
                         formik.setFieldValue("paymentMethodId", value)
                       }
@@ -279,5 +286,5 @@ function AddExpenseDrawer({
       </DrawerContent>
     </Drawer>
   );
-}
+};
 export default memo(AddExpenseDrawer);

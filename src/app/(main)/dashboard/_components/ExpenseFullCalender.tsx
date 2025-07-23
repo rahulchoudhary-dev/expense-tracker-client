@@ -7,30 +7,23 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   CalendarDays,
-  DollarSign,
-  Tag,
   CreditCard,
   FileText,
   Image as ImageIcon,
 } from "lucide-react";
 import { EventClickArg } from "@fullcalendar/core";
-import {
-  categoryColors,
-  Expense,
-  FullCalendarEvent,
-} from "@/interfaces/expense";
+import { categoryColors } from "@/interfaces/expense";
+import { Expense, FullCalendarEvent } from "./types";
 
-const ExpenseCalendar = ({ expenseData }: any) => {
+const ExpenseCalendar = ({ expenseData }: { expenseData: Expense[] }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);

@@ -11,11 +11,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useDeleteExpense from "@/query/useDeleteExpense";
-import { memo, useState } from "react";
+import React, { memo, useState } from "react";
 import AddExpenseDrawer from "@/app/(main)/dashboard/_components/AddExpenseDrawer";
 import ExpenseDetailsDialog from "./view-expense/ExpenseDetailsDialog";
+import { Expense } from "./types";
 
-function ExpenseActions({ expense }: any) {
+const ExpenseActions = ({ expense }: { expense: Expense }) => {
   const { mutate } = useDeleteExpense(expense.id);
   const [isEditDrawerOpen, setIsEditDrawerOpen] = useState<boolean>(false);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState<boolean>(false);
@@ -55,7 +56,7 @@ function ExpenseActions({ expense }: any) {
 
       <AddExpenseDrawer
         open={isEditDrawerOpen}
-        onOpenChange={setIsEditDrawerOpen}
+        onOpenChange={() => setIsEditDrawerOpen(!isEditDrawerOpen)}
         expenseData={expense}
         isEditMode={true}
       />
@@ -66,5 +67,5 @@ function ExpenseActions({ expense }: any) {
       />
     </>
   );
-}
+};
 export default memo(ExpenseActions);
