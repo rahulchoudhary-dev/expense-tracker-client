@@ -29,13 +29,7 @@ import { Input } from "@/components/ui/input";
 import { FcMoneyTransfer } from "react-icons/fc";
 
 interface ExpenseFiltersProps {
-  pageData: {
-    categoryId: string;
-    paymentMethodId: string;
-    month: number;
-    year: number;
-    q?: string;
-  };
+  pageData: any;
   setPageData: React.Dispatch<React.SetStateAction<any>>;
 }
 
@@ -46,7 +40,7 @@ const ExpenseFilters = ({ pageData, setPageData }: ExpenseFiltersProps) => {
 
   const handleResetFilters = useCallback(() => {
     setPageData({
-      page: 0,
+      page: 1,
       limit: 10,
       q: "",
       month: currentMonth,
@@ -68,7 +62,7 @@ const ExpenseFilters = ({ pageData, setPageData }: ExpenseFiltersProps) => {
   }, [debouncedValue]);
 
   return (
-    <div className="w-full bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+    <div className="w-full mb-2 rounded-4xl bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 p-6">
       {/* Header Section */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-2">

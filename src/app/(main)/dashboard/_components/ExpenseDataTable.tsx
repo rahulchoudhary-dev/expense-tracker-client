@@ -68,9 +68,6 @@ export function ExpenseDataTable({
     <>
       <div className="w-full overflow-auto bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 rounded-xl shadow-sm">
         {/* Header Section with Enhanced Styling */}
-        <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 p-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-700">
-          <ExpenseFilters pageData={pageData} setPageData={setPageData} />
-        </div>
 
         {/* Table Container with Enhanced Design */}
         <div className="relative overflow-hidden">

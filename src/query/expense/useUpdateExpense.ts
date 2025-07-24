@@ -5,7 +5,6 @@ import { replaceParams } from "@/lib/axios/utils";
 import { useMutation } from "@tanstack/react-query";
 
 const handleUpdateExpense = async (data: any) => {
-  console.log("datata", data);
   const expenseId = data.id;
   const URL = replaceParams(endpoints.deleteExpense, { id: expenseId });
   const resp = await axiosConfig.patch(URL, data);

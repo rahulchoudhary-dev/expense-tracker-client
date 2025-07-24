@@ -7,15 +7,16 @@ import useGetExpenseSummary from "@/query/expense/useGetExpenseSummary";
 import useGetExpenses from "@/query/expense/useGetExpenses";
 import { ExpenseDataTable } from "./_components/ExpenseDataTable";
 import getCurrentMonthYear from "@/utils/getCurrentMonthYear";
-import useBootUser from "@/hooks/useBootUser";
 import ExpenseCalendar from "@/app/(main)/dashboard/_components/ExpenseFullCalender";
 import { Button } from "@/components/ui/button";
 import { Calendar, Table, LayoutGrid } from "lucide-react";
 import { cn } from "@/utils";
 import { ViewMode } from "@/constant";
 import { ExpenseParams } from "./types";
+import { useAppSelector } from "@/hooks/useRedux";
+import ExpenseFilters from "./_components/ExpenseFilters";
 const ExpenseDashBoard = () => {
-  const { userId } = useBootUser();
+  const userId = useAppSelector((state) => state.user.user?.id);
 
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.TABLE);
 
@@ -98,7 +99,9 @@ const ExpenseDashBoard = () => {
         </div>
       </div>
 
-      <div className="overflow-auto bg-gray border-[1px] shadow-gray-300 shadow-sm rounded-3xl dark:bg-gray-900">
+      <ExpenseFilters pageData={pageData} setPageData={setPageData} />
+
+      <div>
         {/* Calendar View */}
         {(viewMode === ViewMode.CALENDAR || viewMode === ViewMode.BOTH) && (
           <div

@@ -82,19 +82,8 @@ const ExpenseCalendar = ({ expenseData }: { expenseData: Expense[] }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-gray-50">
       <div className="w-full mx-auto space-y-6">
-        {/* Header */}
-        <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center gap-2">
-            <CalendarDays className="h-8 w-8 text-blue-600" />
-            Expense Calendar
-          </h1>
-          <p className="text-gray-600">
-            Track and visualize your expenses over time
-          </p>
-        </div>
-
         {/* Calendar */}
         <Card>
           <CardHeader>

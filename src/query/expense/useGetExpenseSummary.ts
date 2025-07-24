@@ -3,14 +3,15 @@ import { endpoints } from "@/lib/axios/endpoints";
 import { useQuery } from "@tanstack/react-query";
 
 interface ifetchExpenseSummary {
-  userId: string;
+  userId: string | undefined;
 }
 
 const fetchExpenseSummary = async (data: ifetchExpenseSummary) => {
   const resp = await axiosConfig.get(endpoints.getExpenseSummary, {
     params: data,
   });
-  return resp.data;
+  console.log("resp", resp);
+  return resp?.data ? resp.data : {};
 };
 
 const useGetExpenseSummary = (params: ifetchExpenseSummary) => {
@@ -18,6 +19,7 @@ const useGetExpenseSummary = (params: ifetchExpenseSummary) => {
     queryKey: ["get-expense-summary", params?.userId],
     queryFn: () => fetchExpenseSummary(params),
     staleTime: 1000 * 60 * 1,
+    enabled: !!params?.userId,
   });
 };
 
