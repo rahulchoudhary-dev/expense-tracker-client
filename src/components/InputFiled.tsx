@@ -9,7 +9,7 @@ interface iInputFiledProps {
   value: string | undefined;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
-  onError?: string | boolean;
+  onError?: any;
 }
 
 const InputFiled = (props: iInputFiledProps) => {
