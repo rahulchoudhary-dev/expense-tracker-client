@@ -31,4 +31,8 @@ export const endpoints = {
 
   getAnalyticsYearlyExpenses: "/analytics-charts/yearly-expenses",
   getAnalyticsCategoryExpenses: "/analytics-charts/category-expenses",
+
+  forgotPassword: "/auth/forgot-password",
+  verifyOTP: "/auth/verify-otp",
+  resetPassword: "/auth/reset-password",
 };
