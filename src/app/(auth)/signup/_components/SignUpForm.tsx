@@ -12,7 +12,7 @@ import signUpDto from "@/validations/signup.validation";
 import InputFiled from "@/components/InputFiled";
 import TermsNotice from "./TermsNotice";
 import { MoveRight } from "lucide-react";
-import AlreadyHaveAccountNotice from "./AlreadyHaveAccountNotice";
+import AlreadyHaveAccountNotice from "../../_components/AlreadyHaveAccountNotice";
 import { TOAST_MESSAGES } from "@/constant";
 import { SignUpFormValues } from "../type";
 
@@ -137,7 +137,7 @@ const SignUpForm = () => {
           </span>
         )}
       </Button>
-      <AlreadyHaveAccountNotice />
+      <AlreadyHaveAccountNotice lable={"Already have an account?"} />
     </form>
   );
 };

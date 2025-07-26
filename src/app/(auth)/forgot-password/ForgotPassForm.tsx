@@ -124,6 +124,20 @@ const ForgotPasswordForm = () => {
     },
   });
 
+  const resenOTP = () => {
+    forgotPassMutation(
+      { email: userEmail || formik.values.email },
+      {
+        onSuccess: (response: any) => {
+          showSuccessToast("OTP resent successfully");
+        },
+        onError: (err: any) => {
+          showErrorToast(err.message || "Failed to resend OTP");
+        },
+      }
+    );
+  };
+
   const handleBackToEmail = () => {
     setStep("email");
     setResetPassToken("");
@@ -205,21 +219,11 @@ const ForgotPasswordForm = () => {
               <button
                 type="button"
                 onClick={() => {
+                  resenOTP();
                   formik.setFieldValue("otp", "");
-                  forgotPassMutation(
-                    { email: userEmail || formik.values.email },
-                    {
-                      onSuccess: (response: any) => {
-                        showSuccessToast("OTP resent successfully");
-                      },
-                      onError: (err: any) => {
-                        showErrorToast("Failed to resend OTP");
-                      },
-                    }
-                  );
                 }}
                 disabled={isEmailSubmitting}
-                className="text-blue-600 hover:text-blue-800 font-medium disabled:text-gray-400 disabled:cursor-not-allowed"
+                className="text-blue-600 cursor-pointer hover:text-blue-800 font-medium disabled:text-gray-400 disabled:cursor-not-allowed"
               >
                 {isEmailSubmitting ? "Resending..." : "Resend OTP"}
               </button>
