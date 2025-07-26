@@ -29,7 +29,7 @@
     ".next/types/**/*.ts",
     "src/app/aboute",
     "src/constant/index.ts",
-    "src/app/(main)/budget/page.jsx",
+    "src/app/(main)/budget/page.tsx",
     "src/app/(main)/dashboard/_components/ExpenseFullCalender.tsx"
   ],
   "exclude": ["node_modules"]
