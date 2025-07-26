@@ -1,5 +1,5 @@
 import AuthImageCard from "../_components/AuthImageCard";
-import AlreadyHaveAccountNotice from "../signup/_components/AlreadyHaveAccountNotice";
+import AlreadyHaveAccountNotice from "../_components/AlreadyHaveAccountNotice";
 import ForgotPassForm from "./ForgotPassForm";
 
 const ForgotPasswordPage = () => {
@@ -11,7 +11,7 @@ const ForgotPasswordPage = () => {
           <div className="order-2 lg:order-1 flex-1 w-full max-w-md lg:max-w-lg">
             <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 lg:p-10 border border-gray-200/50 dark:border-gray-700/50">
               <ForgotPassForm />
-              <AlreadyHaveAccountNotice />
+              <AlreadyHaveAccountNotice lable="Go TO The " />
             </div>
           </div>
         </div>
