@@ -24,3 +24,17 @@ export const yearOptions = [
 export const CURRENT_DATE = new Date();
 export const CURRENT_MONTH = CURRENT_DATE.getMonth() + 1;
 export const CURRENT_YEAR = CURRENT_DATE.getFullYear();
+export const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];

@@ -35,4 +35,7 @@ export const endpoints = {
   forgotPassword: "/auth/forgot-password",
   verifyOTP: "/auth/verify-otp",
   resetPassword: "/auth/reset-password",
+
+  createBudget: "/budget",
+  getBudget: "/budget/",
 };
