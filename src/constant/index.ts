@@ -19,6 +19,8 @@ export const TOAST_MESSAGES = {
   EXPENSE_UPDATE_SUCCESS: "Expense updated successfully",
   EXPENSE_ADD_SUCCESS: "Expense added successfully",
   EXPENSE_UPLOAD_LOADING: "Uploading expenses...",
+  BUDGET_CREATED: "Budget Created Successfully",
+  BUDGET_UPDATED: "Budget Updated Successfully",
 };
 
 export const RADIAN = Math.PI / 180;

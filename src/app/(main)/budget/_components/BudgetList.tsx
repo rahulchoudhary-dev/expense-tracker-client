@@ -4,16 +4,19 @@ import { Button } from "@/components/ui/button";
 import { monthNames } from "@/constant/dateOptions";
 import useGetBudgets from "@/query/budget/useGetBudgets";
 import React, { useState } from "react";
-import CreateBudget from "./CreateBudget";
 import useDeleteBudget from "@/query/budget/useDeleteBudget";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import { TOAST_MESSAGES } from "@/constant";
 
 type BudgetListProps = {
   setIsCreateBudget: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditBudgetData: React.Dispatch<React.SetStateAction<any>>;
 };
 
-const BudgetList: React.FC<BudgetListProps> = ({ setIsCreateBudget }) => {
+const BudgetList: React.FC<BudgetListProps> = ({
+  setIsCreateBudget,
+  setEditBudgetData,
+}) => {
   const showSuccessToast = useShowSuccess();
   const showErrorToast = useShowError();
   const [filter, setFilter] = useState<any>("all");
@@ -41,6 +44,10 @@ const BudgetList: React.FC<BudgetListProps> = ({ setIsCreateBudget }) => {
 
   const getMonthName = (month: number | null) => {
     return month ? monthNames[month - 1] : "";
+  };
+  const handleEditBudget = (item: any) => {
+    setEditBudgetData(item);
+    setIsCreateBudget(true);
   };
 
   return (
@@ -202,7 +209,7 @@ const BudgetList: React.FC<BudgetListProps> = ({ setIsCreateBudget }) => {
           {/* Budget Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {budgetData?.budgets?.length &&
-              budgetData?.budgets?.map((budget: Budget) => (
+              budgetData?.budgets?.map((budget: any) => (
                 <div
                   key={budget.id}
                   className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105"
@@ -246,8 +253,9 @@ const BudgetList: React.FC<BudgetListProps> = ({ setIsCreateBudget }) => {
                   <div className="mt-4 pt-4 border-t border-gray-200">
                     <div className="flex space-x-2">
                       <Button
+                        onClick={() => handleEditBudget(budget)}
                         variant={"outline"}
-                        className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200"
+                        className="bg-gradient-to-r w-1/2 cursor-pointer from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
                       >
                         Edit
                       </Button>
