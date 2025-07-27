@@ -9,3 +9,10 @@ interface Budget {
   createdAt: string;
   updatedAt: string;
 }
+type BudgetFormValues = {
+  title: string;
+  type: "monthly" | "yearly";
+  month: string | null;
+  year: string;
+  amount: string;
+};

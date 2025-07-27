@@ -1,5 +1,6 @@
 "use client";
 
+import { Info } from "lucide-react";
 import React from "react";
 
 interface iInputFiledProps {
@@ -26,7 +27,11 @@ const InputFiled = (props: iInputFiledProps) => {
         onChange={onChange}
         className={className}
       />
-      {onError && <p className="text-red-500 text-sm ml-2">{onError}</p>}
+      {onError && (
+        <span className="text-red-500 text-sm ml-2 flex items-center gap-1">
+          <Info size={15} /> {onError}
+        </span>
+      )}
     </div>
   );
 };
