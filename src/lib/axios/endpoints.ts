@@ -38,5 +38,6 @@ export const endpoints = {
 
   createBudget: "/budget",
   getBudget: "/budget",
+  updateBudget: "/budget",
   deleteBudget: "/budget/:id",
 };

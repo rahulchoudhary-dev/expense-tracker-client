@@ -1,15 +1,15 @@
-interface Budget {
+export interface Budget {
   id: number;
   userId: number;
   title: string;
   type: "monthly" | "yearly";
   month: number | null;
-  year: number;
+  year: number | string;
   amount: number;
   createdAt: string;
   updatedAt: string;
 }
-type BudgetFormValues = {
+export type BudgetFormValues = {
   title: string;
   type: "monthly" | "yearly";
   month: string | null;

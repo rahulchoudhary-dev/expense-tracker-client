@@ -15,9 +15,10 @@ import { monthOptions } from "@/constant/dateOptions";
 
 interface BudgetFormProps {
   formik: FormikProps<any>;
+  isEditing: boolean;
 }
 
-const BudgetForm: React.FC<BudgetFormProps> = ({ formik }) => {
+const BudgetForm: React.FC<BudgetFormProps> = ({ formik, isEditing }) => {
   return (
     <div className="backdrop-blur-lg bg-white/80 rounded-3xl shadow-2xl p-8 md:p-12 border border-white/30 transform transition-all duration-500 hover:scale-[1.02] hover:shadow-3xl">
       <form onSubmit={formik.handleSubmit} className="space-y-8">
@@ -207,7 +208,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ formik }) => {
           </div>
         </div>
 
-        <FormButtons formik={formik} />
+        <FormButtons isEditing={isEditing} formik={formik} />
       </form>
     </div>
   );

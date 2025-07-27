@@ -4,13 +4,13 @@ import BudgetHelpBox from "./BudgetHelpBox";
 const BudgetGuide = () => {
   return (
     <>
-      <div className="my-6 text-center">
+      {/* <div className="my-6 text-center">
         <BudgetHelpBox
           linkUrl="/budget-guide"
           linkText="detailed budgeting tutorial"
           message="Need help getting started? Check out our"
         />
-      </div>
+      </div> */}
 
       <div className="lg:col-span-1">
         <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-8">

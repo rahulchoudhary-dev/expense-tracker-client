@@ -7,6 +7,7 @@ interface FormButtonsProps {
   resetLabel?: string;
   submitLabel?: string;
   submittingLabel?: string;
+  isEditing: boolean;
 }
 
 const FormButtons: React.FC<FormButtonsProps> = ({
@@ -14,19 +15,23 @@ const FormButtons: React.FC<FormButtonsProps> = ({
   resetLabel = "🔄 Reset Form",
   submitLabel = "🚀 Create Budget",
   submittingLabel = "✨ Creating Your Budget...",
+  isEditing,
 }) => {
   return (
-    <div className="flex flex-col sm:flex-row gap-5 pt-10">
+    <div className="flex flex-col sm:flex-row gap-5 pt-4">
+      {!isEditing && (
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => formik.resetForm()}
+          className="flex-1 px-8 py-6 cursor-pointer border-2 border-gray-300 text-gray-700 rounded-2xl font-semibold hover:bg-gray-50 hover:border-gray-400 hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gray-200 text-sm transform hover:scale-105"
+        >
+          {resetLabel}
+        </Button>
+      )}
+
       <Button
-        type="button"
-        variant={"outline"}
-        onClick={() => formik.resetForm()}
-        className="flex-1 px-8 py-6 cursor-pointer border-2 border-gray-300 text-gray-700 rounded-2xl font-semibold hover:bg-gray-50 hover:border-gray-400 hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gray-200 text-sm transform hover:scale-105"
-      >
-        {resetLabel}
-      </Button>
-      <Button
-        variant={"outline"}
+        variant="outline"
         type="submit"
         disabled={formik.isSubmitting || !formik.isValid}
         className={`flex-1 px-8 py-6 cursor-pointer rounded-2xl font-semibold transition-all duration-300 focus:outline-none focus:ring-4 text-sm transform hover:scale-105 ${
@@ -57,8 +62,10 @@ const FormButtons: React.FC<FormButtonsProps> = ({
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            {submittingLabel}
+            {isEditing ? "⏳ Updating Budget..." : submittingLabel}
           </div>
+        ) : isEditing ? (
+          "✅ Update Budget"
         ) : (
           submitLabel
         )}
