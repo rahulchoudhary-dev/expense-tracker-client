@@ -1,3 +1,5 @@
+import { Info } from "lucide-react";
+
 interface iFormErrorMessageProps {
   name: string;
   formik: any;
@@ -11,7 +13,12 @@ const FormErrorMessage: React.FC<iFormErrorMessageProps> = ({
 
   if (!hasError) return null;
 
-  return <p className="text-red-500 text-sm ml-2">{formik.errors[name]}</p>;
+  return (
+    <div className="text-red-500 text-sm ml-2 flex gap-1 items-center">
+      {" "}
+      <Info size={15} /> {formik.errors[name]}
+    </div>
+  );
 };
 
 export default FormErrorMessage;
