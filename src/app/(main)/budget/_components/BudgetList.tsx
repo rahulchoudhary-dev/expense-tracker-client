@@ -5,15 +5,32 @@ import { monthNames } from "@/constant/dateOptions";
 import useGetBudgets from "@/query/budget/useGetBudgets";
 import React, { useState } from "react";
 import CreateBudget from "./CreateBudget";
+import useDeleteBudget from "@/query/budget/useDeleteBudget";
+import { useShowError, useShowSuccess } from "@/app/toastProvider";
+import { TOAST_MESSAGES } from "@/constant";
 
 type BudgetListProps = {
   setIsCreateBudget: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const BudgetList: React.FC<BudgetListProps> = ({ setIsCreateBudget }) => {
+  const showSuccessToast = useShowSuccess();
+  const showErrorToast = useShowError();
   const [filter, setFilter] = useState<any>("all");
-  const { data: budgetData, isLoading } = useGetBudgets(filter);
-  console.log(filter);
+  const { data: budgetData, isLoading, refetch } = useGetBudgets(filter);
+  const { mutate: deleteBudgetMutation } = useDeleteBudget();
+
+  const handleDeleteBudget = (id: number) => {
+    deleteBudgetMutation(id, {
+      onSuccess: () => {
+        showSuccessToast("Budget Deleted Successfully");
+        refetch();
+      },
+      onError: (error) => {
+        showErrorToast(error.message || TOAST_MESSAGES.ERROR_GENERIC);
+      },
+    });
+  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -228,12 +245,19 @@ const BudgetList: React.FC<BudgetListProps> = ({ setIsCreateBudget }) => {
 
                   <div className="mt-4 pt-4 border-t border-gray-200">
                     <div className="flex space-x-2">
-                      <button className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200">
+                      <Button
+                        variant={"outline"}
+                        className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200"
+                      >
                         Edit
-                      </button>
-                      <button className="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors duration-200">
-                        View
-                      </button>
+                      </Button>
+                      <Button
+                        variant={"secondary"}
+                        onClick={() => handleDeleteBudget(budget.id)}
+                        className="flex-1 cursor-pointer bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors duration-200"
+                      >
+                        Delete
+                      </Button>
                     </div>
                   </div>
                 </div>

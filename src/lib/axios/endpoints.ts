@@ -37,5 +37,6 @@ export const endpoints = {
   resetPassword: "/auth/reset-password",
 
   createBudget: "/budget",
-  getBudget: "/budget/",
+  getBudget: "/budget",
+  deleteBudget: "/budget/:id",
 };
