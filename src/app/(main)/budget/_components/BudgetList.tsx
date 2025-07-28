@@ -49,6 +49,10 @@ const BudgetList: React.FC<BudgetListProps> = ({
     setEditBudgetData(item);
     setIsCreateBudget(true);
   };
+  const handleAddNewBudget = () => {
+    setEditBudgetData(null);
+    setIsCreateBudget(true);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-6 lg:p-8">
@@ -66,7 +70,7 @@ const BudgetList: React.FC<BudgetListProps> = ({
           <div className="text-center">
             <Button
               type="button"
-              onClick={() => setIsCreateBudget(true)}
+              onClick={() => handleAddNewBudget()}
               variant={"outline"}
               className="bg-gradient-to-r cursor-pointer from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
             >
@@ -209,67 +213,135 @@ const BudgetList: React.FC<BudgetListProps> = ({
           {/* Budget Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {budgetData?.budgets?.length &&
-              budgetData?.budgets?.map((budget: any) => (
-                <div
-                  key={budget.id}
-                  className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        budget.type === "monthly"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-purple-100 text-purple-800"
-                      }`}
-                    >
-                      {budget.type}
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm text-gray-500">
-                        {budget.type === "monthly" && budget.month
-                          ? `${getMonthName(budget.month)} ${budget.year}`
-                          : budget.year}
-                      </p>
-                    </div>
-                  </div>
+              budgetData?.budgets?.map((budget: any) => {
+                // Calculate budget utilization
+                const usedAmount = budget.usedAmount || 0;
+                const totalAmount = budget.amount || 0;
+                const remainingAmount = totalAmount - usedAmount;
+                const utilizationPercentage =
+                  totalAmount > 0 ? (usedAmount / totalAmount) * 100 : 0;
 
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 truncate">
-                    {budget.title}
-                  </h3>
+                // Determine progress bar color based on utilization
+                const getProgressColor = (percentage: number) => {
+                  if (percentage >= 90) return "bg-red-500";
+                  if (percentage >= 75) return "bg-yellow-500";
+                  if (percentage >= 50) return "bg-blue-500";
+                  return "bg-green-500";
+                };
 
-                  <div className="mb-4">
-                    <p className="text-2xl font-bold text-gray-900">
-                      {formatCurrency(budget.amount)}
-                    </p>
-                  </div>
+                const getProgressBgColor = (percentage: number) => {
+                  if (percentage >= 90) return "bg-red-100";
+                  if (percentage >= 75) return "bg-yellow-100";
+                  if (percentage >= 50) return "bg-blue-100";
+                  return "bg-green-100";
+                };
 
-                  <div className="flex items-center justify-between text-sm text-gray-500">
-                    <span>Created</span>
-                    <span>
-                      {new Date(budget.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex space-x-2">
-                      <Button
-                        onClick={() => handleEditBudget(budget)}
-                        variant={"outline"}
-                        className="bg-gradient-to-r w-1/2 cursor-pointer from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                return (
+                  <div
+                    key={budget.id}
+                    className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          budget.type === "monthly"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-purple-100 text-purple-800"
+                        }`}
                       >
-                        Edit
-                      </Button>
-                      <Button
-                        variant={"secondary"}
-                        onClick={() => handleDeleteBudget(budget.id)}
-                        className="flex-1 cursor-pointer bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors duration-200"
+                        {budget.type}
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-gray-500">
+                          {budget.type === "monthly" && budget.month
+                            ? `${getMonthName(budget.month)} ${budget.year}`
+                            : budget.year}
+                        </p>
+                      </div>
+                    </div>
+
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3 truncate">
+                      {budget.title}
+                    </h3>
+
+                    {/* Budget Amount and Usage */}
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {formatCurrency(budget.amount)}
+                        </p>
+                        <span className="text-sm font-medium text-gray-600">
+                          {utilizationPercentage.toFixed(1)}%
+                        </span>
+                      </div>
+
+                      {/* Progress Bar */}
+                      <div
+                        className={`w-full ${getProgressBgColor(
+                          utilizationPercentage
+                        )} rounded-full h-2.5 mb-3`}
                       >
-                        Delete
-                      </Button>
+                        <div
+                          className={`${getProgressColor(
+                            utilizationPercentage
+                          )} h-2.5 rounded-full transition-all duration-500 ease-out`}
+                          style={{
+                            width: `${Math.min(utilizationPercentage, 100)}%`,
+                          }}
+                        ></div>
+                      </div>
+
+                      {/* Used and Remaining Amounts */}
+                      <div className="flex justify-between text-sm">
+                        <div className="text-center">
+                          <p className="text-gray-500 mb-1">Used</p>
+                          <p className="font-semibold text-gray-900">
+                            {formatCurrency(usedAmount)}
+                          </p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-gray-500 mb-1">Remaining</p>
+                          <p
+                            className={`font-semibold ${
+                              remainingAmount >= 0
+                                ? "text-green-600"
+                                : "text-red-600"
+                            }`}
+                          >
+                            {formatCurrency(remainingAmount)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                      <span>Created</span>
+                      <span>
+                        {new Date(budget.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+
+                    <div className="pt-4 border-t border-gray-200">
+                      <div className="flex space-x-2">
+                        <Button
+                          onClick={() => handleEditBudget(budget)}
+                          variant={"outline"}
+                          className="bg-gradient-to-r w-1/2 cursor-pointer from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant={"secondary"}
+                          onClick={() => handleDeleteBudget(budget.id)}
+                          className="flex-1 cursor-pointer bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors duration-200"
+                        >
+                          Delete
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
           </div>
         </div>
       </div>

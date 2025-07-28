@@ -15,4 +15,5 @@ export type BudgetFormValues = {
   month: string | null;
   year: string;
   amount: string;
+  usedAmount?: number;
 };
