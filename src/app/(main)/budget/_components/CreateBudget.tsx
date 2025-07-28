@@ -42,6 +42,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({
           : null,
       year: editBudgetData?.year?.toString() || currentYear.toString(),
       amount: editBudgetData?.amount?.toString() || "",
+      usedAmount: 0,
     },
     validationSchema: createBudgetDto,
     enableReinitialize: true,
