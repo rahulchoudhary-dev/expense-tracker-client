@@ -40,4 +40,5 @@ export const endpoints = {
   getBudget: "/budget",
   updateBudget: "/budget",
   deleteBudget: "/budget/:id",
+  budgetQuickStates: "/budget/quick-states",
 };

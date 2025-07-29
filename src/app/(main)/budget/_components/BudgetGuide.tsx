@@ -1,6 +1,11 @@
+import useBudgetQuickStates from "@/query/budget/useQuickStates";
+import formatCurrency from "@/utils/formateCurrency";
 import { AlertCircle, Calendar, Target } from "lucide-react";
 
 const BudgetGuide = () => {
+  const { data, isLoading, isError } = useBudgetQuickStates();
+  console.log("data", data);
+
   return (
     <>
       <div className="lg:col-span-1 ">
@@ -65,7 +70,7 @@ const BudgetGuide = () => {
                   Active Budgets:
                 </span>
                 <span className="font-medium text-blue-900 dark:text-blue-100 transition-colors duration-300">
-                  3
+                  {data?.totalActiveBudgets}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -73,7 +78,7 @@ const BudgetGuide = () => {
                   This Month:
                 </span>
                 <span className="font-medium text-blue-900 dark:text-blue-100 transition-colors duration-300">
-                  $2,450
+                  {formatCurrency(data?.currentMonthBudgetAmount)}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -81,7 +86,7 @@ const BudgetGuide = () => {
                   Remaining:
                 </span>
                 <span className="font-medium text-green-600 dark:text-green-400 transition-colors duration-300">
-                  $550
+                  {formatCurrency(data?.remainingAmount)}
                 </span>
               </div>
             </div>
