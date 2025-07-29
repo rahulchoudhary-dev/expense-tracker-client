@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const BudgetHeader = () => {
   return (
     <div className="text-center">
@@ -10,4 +12,4 @@ const BudgetHeader = () => {
   );
 };
 
-export default BudgetHeader;
+export default memo(BudgetHeader);

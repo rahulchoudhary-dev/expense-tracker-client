@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { FormikProps } from "formik";
 import { Button } from "@/components/ui/button";
 
@@ -74,4 +74,4 @@ const FormButtons: React.FC<FormButtonsProps> = ({
   );
 };
 
-export default FormButtons;
+export default memo(FormButtons);
