@@ -97,21 +97,21 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({
       {editBudgetData && (
         <div className="mb-6 w-full px-6 py-3 border-l-4 border-blue-500 bg-blue-50 text-blue-700 rounded shadow-sm">
           <strong>Editing Budget:</strong> You are now editing the budget titled
-          "<span className="font-semibold">{editBudgetData.title}</span>". Make
+          "<span className="font-semibold">{editBudgetData?.title}</span>". Make
           your changes and click "Update".
         </div>
       )}
 
       <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center relative overflow-hidden">
         {/* Background decorative pulses */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden dark:bg-gray-900">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" />
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000" />
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-br from-green-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-4000" />
         </div>
 
         {/* Form and Guide */}
-        <div className="flex flex-col lg:flex-row gap-10 items-start justify-between w-full max-w-5xl z-10">
+        <div className="flex flex-col lg:flex-row gap-10 items-start justify-between w-full max-w-5xl z-10 ">
           <BudgetForm isEditing={isEditing} formik={formik} />
           <BudgetGuide />
         </div>

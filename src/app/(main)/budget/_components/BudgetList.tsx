@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import useDeleteBudget from "@/query/budget/useDeleteBudget";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import { TOAST_MESSAGES } from "@/constant";
+import { BarChart, Calendar, DollarSign } from "lucide-react";
 
 type BudgetListProps = {
   setIsCreateBudget: React.Dispatch<React.SetStateAction<boolean>>;
@@ -55,15 +56,15 @@ const BudgetList: React.FC<BudgetListProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4 md:p-2 lg:p-0 transition-colors duration-300">
+      <div className="">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-sm md:text-4xl font-extrabold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent mb-4 leading-tight">
               Budget Dashboard
             </h1>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 dark:text-gray-300 text-lg transition-colors duration-300">
               Manage and track your financial budgets
             </p>
           </div>
@@ -72,7 +73,7 @@ const BudgetList: React.FC<BudgetListProps> = ({
               type="button"
               onClick={() => handleAddNewBudget()}
               variant={"outline"}
-              className="bg-gradient-to-r cursor-pointer from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+              className="bg-gradient-to-r cursor-pointer from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 border-0 dark:shadow-gray-900/50"
             >
               + Add New Budget
             </Button>
@@ -81,128 +82,118 @@ const BudgetList: React.FC<BudgetListProps> = ({
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+          <div className="bg-white dark:bg-gray-800 backdrop-blur-sm rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-900/70 transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-700">
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-300">
                 Total Budget
               </h3>
-              <div className="p-3 bg-blue-100 rounded-full">
-                <svg
-                  className="w-6 h-6 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              <div className="p-3 bg-blue-100 dark:bg-blue-900/50 rounded-full transition-colors duration-300">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="relative hover:shadow-lg border-0 cursor-pointer h-6 w-6 rounded-full transform group-hover/icon:scale-110 transition-all duration-300 hover:rotate-12 bg-transparent dark:bg-transparent"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                  <DollarSign
+                    size={30}
+                    className="text-blue-600 dark:text-white"
                   />
-                </svg>
+                </Button>
               </div>
             </div>
-            <p className="text-3xl font-bold text-gray-900">
+            <p className="text-3xl font-bold text-gray-900 dark:text-white transition-colors duration-300">
               {formatCurrency(budgetData?.summary?.sums?.total)}
             </p>
-            <p className="text-sm text-gray-500 mt-4">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 transition-colors duration-300">
               {budgetData?.summary?.counts?.total} total budgets
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-900/70 transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-700">
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-300">
                 Monthly Budgets
               </h3>
-              <div className="p-3 bg-green-100 rounded-full">
-                <svg
-                  className="w-6 h-6 text-green-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              <div className="p-3 bg-green-100 dark:bg-green-900/50 rounded-full transition-colors duration-300">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="relative hover:shadow-lg border-0 cursor-pointer h-6 w-6 rounded-full transform group-hover/icon:scale-110 transition-all duration-300 hover:rotate-12 bg-transparent dark:bg-transparent"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  <Calendar
+                    size={30}
+                    className="text-green-600 dark:text-white"
                   />
-                </svg>
+                </Button>
               </div>
             </div>
-            <p className="text-3xl font-bold text-gray-900">
+            <p className="text-3xl font-bold text-gray-900 dark:text-white transition-colors duration-300">
               {formatCurrency(budgetData?.summary?.sums?.monthly)}
             </p>
-            <p className="text-sm text-gray-500 mt-4">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 transition-colors duration-300">
               {budgetData?.summary?.counts?.monthly} Active monthly budgets
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-900/70 transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-700">
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-300">
                 Yearly Budgets
               </h3>
-              <div className="p-3 bg-purple-100 rounded-full">
-                <svg
-                  className="w-6 h-6 text-purple-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              <div className="p-3 bg-purple-100 dark:bg-purple-900/50 rounded-full transition-colors duration-300">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="relative hover:shadow-lg border-0 cursor-pointer h-6 w-6 rounded-full transform group-hover/icon:scale-110 transition-all duration-300 hover:rotate-12 bg-transparent dark:bg-transparent"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                  <BarChart
+                    size={30}
+                    className="text-purple-600 dark:text-white"
                   />
-                </svg>
+                </Button>
               </div>
             </div>
-            <p className="text-3xl font-bold text-gray-900">
+            <p className="text-3xl font-bold text-gray-900 dark:text-white transition-colors duration-300">
               {formatCurrency(budgetData?.summary?.sums?.yearly)}
             </p>
-            <p className="text-sm text-gray-500 mt-4">
-              {" "}
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 transition-colors duration-300">
               {budgetData?.summary?.counts?.yearly} Active yearly budgets
             </p>
           </div>
         </div>
 
         {/* Filter Tabs */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-gray-100">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 mb-8 border border-gray-100 dark:border-gray-700 transition-all duration-300">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 sm:mb-0">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-0 transition-colors duration-300">
               Budget Overview
             </h2>
-            <div className="flex space-x-1 bg-gray-100 rounded-lg p-1">
+            <div className="flex space-x-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1 transition-colors duration-300">
               <button
                 onClick={() => setFilter("all")}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                   filter === "all"
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm"
+                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 }`}
               >
                 All
               </button>
               <button
                 onClick={() => setFilter("monthly")}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                   filter === "monthly"
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm"
+                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 }`}
               >
                 Monthly
               </button>
               <button
                 onClick={() => setFilter("yearly")}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                   filter === "yearly"
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm"
+                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 }`}
               >
                 Yearly
@@ -223,36 +214,39 @@ const BudgetList: React.FC<BudgetListProps> = ({
 
                 // Determine progress bar color based on utilization
                 const getProgressColor = (percentage: number) => {
-                  if (percentage >= 90) return "bg-red-500";
-                  if (percentage >= 75) return "bg-yellow-500";
-                  if (percentage >= 50) return "bg-blue-500";
-                  return "bg-green-500";
+                  if (percentage >= 90) return "bg-red-500 dark:bg-red-600";
+                  if (percentage >= 75)
+                    return "bg-yellow-500 dark:bg-yellow-600";
+                  if (percentage >= 50) return "bg-blue-500 dark:bg-blue-600";
+                  return "bg-green-500 dark:bg-green-600";
                 };
 
                 const getProgressBgColor = (percentage: number) => {
-                  if (percentage >= 90) return "bg-red-100";
-                  if (percentage >= 75) return "bg-yellow-100";
-                  if (percentage >= 50) return "bg-blue-100";
-                  return "bg-green-100";
+                  if (percentage >= 90) return "bg-red-100 dark:bg-red-900/30";
+                  if (percentage >= 75)
+                    return "bg-yellow-100 dark:bg-yellow-900/30";
+                  if (percentage >= 50)
+                    return "bg-blue-100 dark:bg-blue-900/30";
+                  return "bg-green-100 dark:bg-green-900/30";
                 };
 
                 return (
                   <div
                     key={budget.id}
-                    className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105"
+                    className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg dark:hover:shadow-gray-900/70 transition-all duration-300 hover:scale-105"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <div
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        className={`px-3 py-1 rounded-full text-xs font-medium transition-colors duration-300 ${
                           budget.type === "monthly"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-purple-100 text-purple-800"
+                            ? "bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300"
+                            : "bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300"
                         }`}
                       >
                         {budget.type}
                       </div>
                       <div className="text-right">
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">
                           {budget.type === "monthly" && budget.month
                             ? `${getMonthName(budget.month)} ${budget.year}`
                             : budget.year}
@@ -260,17 +254,17 @@ const BudgetList: React.FC<BudgetListProps> = ({
                       </div>
                     </div>
 
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3 truncate">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 truncate transition-colors duration-300">
                       {budget.title}
                     </h3>
 
                     {/* Budget Amount and Usage */}
                     <div className="mb-4">
                       <div className="flex items-center justify-between mb-2">
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-2xl font-bold text-gray-900 dark:text-white transition-colors duration-300">
                           {formatCurrency(budget.amount)}
                         </p>
-                        <span className="text-sm font-medium text-gray-600">
+                        <span className="text-sm font-medium text-gray-600 dark:text-gray-400 transition-colors duration-300">
                           {utilizationPercentage.toFixed(1)}%
                         </span>
                       </div>
@@ -279,7 +273,7 @@ const BudgetList: React.FC<BudgetListProps> = ({
                       <div
                         className={`w-full ${getProgressBgColor(
                           utilizationPercentage
-                        )} rounded-full h-2.5 mb-3`}
+                        )} rounded-full h-2.5 mb-3 transition-colors duration-300`}
                       >
                         <div
                           className={`${getProgressColor(
@@ -294,18 +288,22 @@ const BudgetList: React.FC<BudgetListProps> = ({
                       {/* Used and Remaining Amounts */}
                       <div className="flex justify-between text-sm">
                         <div className="text-center">
-                          <p className="text-gray-500 mb-1">Used</p>
-                          <p className="font-semibold text-gray-900">
+                          <p className="text-gray-500 dark:text-gray-400 mb-1 transition-colors duration-300">
+                            Used
+                          </p>
+                          <p className="font-semibold text-gray-900 dark:text-white transition-colors duration-300">
                             {formatCurrency(usedAmount)}
                           </p>
                         </div>
                         <div className="text-center">
-                          <p className="text-gray-500 mb-1">Remaining</p>
+                          <p className="text-gray-500 dark:text-gray-400 mb-1 transition-colors duration-300">
+                            Remaining
+                          </p>
                           <p
-                            className={`font-semibold ${
+                            className={`font-semibold transition-colors duration-300 ${
                               remainingAmount >= 0
-                                ? "text-green-600"
-                                : "text-red-600"
+                                ? "text-green-600 dark:text-green-400"
+                                : "text-red-600 dark:text-red-400"
                             }`}
                           >
                             {formatCurrency(remainingAmount)}
@@ -314,26 +312,26 @@ const BudgetList: React.FC<BudgetListProps> = ({
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4 transition-colors duration-300">
                       <span>Created</span>
                       <span>
                         {new Date(budget.createdAt).toLocaleDateString()}
                       </span>
                     </div>
 
-                    <div className="pt-4 border-t border-gray-200">
+                    <div className="pt-4 border-t border-gray-200 dark:border-gray-600 transition-colors duration-300">
                       <div className="flex space-x-2">
                         <Button
                           onClick={() => handleEditBudget(budget)}
                           variant={"outline"}
-                          className="bg-gradient-to-r w-1/2 cursor-pointer from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                          className="bg-gradient-to-r w-1/2 cursor-pointer from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl dark:shadow-gray-900/50 transition-all duration-200 border-0"
                         >
                           Edit
                         </Button>
                         <Button
                           variant={"secondary"}
                           onClick={() => handleDeleteBudget(budget.id)}
-                          className="flex-1 cursor-pointer bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors duration-200"
+                          className="flex-1 cursor-pointer bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 border-0"
                         >
                           Delete
                         </Button>

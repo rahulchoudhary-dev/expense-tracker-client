@@ -8,7 +8,7 @@ const BudgetDashBoard = () => {
   const [isCreateBudget, setIsCreateBudget] = useState<boolean>(false);
   const [editBudgetData, setEditBudgetData] = useState<Budget>();
   return (
-    <div className="p-6">
+    <div className="">
       <div className="mt-4">
         {isCreateBudget ? (
           <CreateBudget

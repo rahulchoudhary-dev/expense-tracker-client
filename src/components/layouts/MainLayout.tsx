@@ -39,7 +39,7 @@ const LayoutBody = ({ children }: { children: React.ReactNode }) => {
           <div className="flex flex-1 flex-col">
             <div className="@container/main flex flex-1 flex-col gap-2">
               <div className="flex flex-col gap-4 md:gap-6 ">
-                <section className="flex-1 p-6 px-6 bg-gray-50 ">
+                <section className="flex-1 p-6 px-6 bg-gray-50 dark:bg-gray-900">
                   {children}
                 </section>
               </div>

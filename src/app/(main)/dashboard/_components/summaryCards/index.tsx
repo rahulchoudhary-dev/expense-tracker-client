@@ -63,7 +63,7 @@ const SummaryCards: React.FC<SummaryCardsProps> = ({ data, isLoading }) => {
         : memoizedData?.map((item, index: number) => (
             <Card
               key={item.lable}
-              className="group relative overflow-hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 hover:shadow-2xl hover:shadow-black/10 dark:hover:shadow-black/20 transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-1"
+              className="group relative overflow-hidden bg-white/80 dark:bg-gray-800 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 hover:shadow-2xl hover:shadow-black/10 dark:hover:shadow-black/20 transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-1"
               style={{
                 animationDelay: `${index * 100}ms`,
               }}
