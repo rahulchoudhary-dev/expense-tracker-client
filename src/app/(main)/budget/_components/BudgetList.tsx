@@ -11,6 +11,13 @@ import formatCurrency from "@/utils/formateCurrency";
 import BudgetHeader from "./BudgetListHeader";
 import BudgetDataSummaryCards from "./BudgetSummaryCards";
 import BudgetFilterTabs from "./BudgetFilterTabs";
+import {
+  Calendar,
+  DollarSign,
+  Target,
+  TrendingDown,
+  TrendingUp,
+} from "lucide-react";
 
 type BudgetListProps = {
   setIsCreateBudget: React.Dispatch<React.SetStateAction<boolean>>;
@@ -61,10 +68,11 @@ const BudgetList: React.FC<BudgetListProps> = ({
         {/* Filter Tabs */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 mb-8 border border-gray-100 dark:border-gray-700 transition-all duration-300">
           <BudgetFilterTabs filter={filter} setFilter={setFilter} />
-          {/* Budget Grid */}
+
+          {/* Enhanced Budget Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {budgetData?.budgets?.length &&
-              budgetData?.budgets?.map((budget: any) => {
+              budgetData?.budgets?.map((budget: any, index: number) => {
                 // Calculate budget utilization
                 const usedAmount = budget.usedAmount || 0;
                 const totalAmount = budget.amount || 0;
@@ -90,27 +98,41 @@ const BudgetList: React.FC<BudgetListProps> = ({
                   return "bg-green-100 dark:bg-green-900/30";
                 };
 
+                const getStatusIcon = (percentage: number) => {
+                  if (percentage >= 90)
+                    return <TrendingDown className="w-4 h-4 text-red-500" />;
+                  if (percentage >= 75)
+                    return <Target className="w-4 h-4 text-yellow-500" />;
+                  return <TrendingUp className="w-4 h-4 text-green-500" />;
+                };
+
                 return (
                   <div
                     key={budget.id}
-                    className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg dark:hover:shadow-gray-900/70 transition-all duration-300 hover:scale-105"
+                    className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 rounded-xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-xl dark:hover:shadow-gray-900/70 transition-all duration-300 hover:scale-105 hover:border-blue-300 dark:hover:border-blue-600"
                   >
                     <div className="flex items-center justify-between mb-4">
-                      <div
-                        className={`px-3 py-1 rounded-full text-xs font-medium transition-colors duration-300 ${
-                          budget.type === "monthly"
-                            ? "bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300"
-                            : "bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300"
-                        }`}
-                      >
-                        {budget.type}
+                      <div className="flex items-center space-x-2">
+                        <div
+                          className={`px-3 py-1 rounded-full text-xs font-medium transition-colors duration-300 ${
+                            budget.type === "monthly"
+                              ? "bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300"
+                              : "bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300"
+                          }`}
+                        >
+                          {budget.type}
+                        </div>
+                        {getStatusIcon(utilizationPercentage)}
                       </div>
                       <div className="text-right">
-                        <p className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">
-                          {budget.type === "monthly" && budget.month
-                            ? `${getMonthName(budget.month)} ${budget.year}`
-                            : budget.year}
-                        </p>
+                        <div className="flex items-center space-x-1 text-sm text-gray-500 dark:text-gray-400">
+                          <Calendar className="w-3 h-3" />
+                          <span>
+                            {budget.type === "monthly" && budget.month
+                              ? `${getMonthName(budget.month)} ${budget.year}`
+                              : budget.year}
+                          </span>
+                        </div>
                       </div>
                     </div>
 
@@ -118,45 +140,55 @@ const BudgetList: React.FC<BudgetListProps> = ({
                       {budget.title}
                     </h3>
 
-                    {/* Budget Amount and Usage */}
+                    {/* Enhanced Budget Amount and Usage */}
                     <div className="mb-4">
                       <div className="flex items-center justify-between mb-2">
-                        <p className="text-2xl font-bold text-gray-900 dark:text-white transition-colors duration-300">
-                          {formatCurrency(budget.amount)}
-                        </p>
-                        <span className="text-sm font-medium text-gray-600 dark:text-gray-400 transition-colors duration-300">
-                          {utilizationPercentage.toFixed(1)}%
-                        </span>
+                        <div className="flex items-center space-x-2">
+                          <DollarSign className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                          <p className="text-2xl font-bold text-gray-900 dark:text-white transition-colors duration-300">
+                            {formatCurrency(budget.amount)}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-sm font-medium text-gray-600 dark:text-gray-400 transition-colors duration-300">
+                            {utilizationPercentage.toFixed(1)}%
+                          </span>
+                          <div className="text-xs text-gray-500 dark:text-gray-500">
+                            utilized
+                          </div>
+                        </div>
                       </div>
 
-                      {/* Progress Bar */}
+                      {/* Enhanced Progress Bar */}
                       <div
                         className={`w-full ${getProgressBgColor(
                           utilizationPercentage
-                        )} rounded-full h-2.5 mb-3 transition-colors duration-300`}
+                        )} rounded-full h-3 mb-3 transition-colors duration-300 overflow-hidden`}
                       >
                         <div
                           className={`${getProgressColor(
                             utilizationPercentage
-                          )} h-2.5 rounded-full transition-all duration-500 ease-out`}
+                          )} h-3 rounded-full transition-all duration-1000 ease-out relative`}
                           style={{
                             width: `${Math.min(utilizationPercentage, 100)}%`,
                           }}
-                        ></div>
+                        >
+                          <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+                        </div>
                       </div>
 
-                      {/* Used and Remaining Amounts */}
-                      <div className="flex justify-between text-sm">
-                        <div className="text-center">
-                          <p className="text-gray-500 dark:text-gray-400 mb-1 transition-colors duration-300">
+                      {/* Enhanced Used and Remaining Amounts */}
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 text-center">
+                          <p className="text-gray-500 dark:text-gray-400 mb-1 transition-colors duration-300 text-xs">
                             Used
                           </p>
-                          <p className="font-semibold text-gray-900 dark:text-white transition-colors duration-300">
+                          <p className="font-semibold text-blue-600 dark:text-blue-400 transition-colors duration-300">
                             {formatCurrency(usedAmount)}
                           </p>
                         </div>
-                        <div className="text-center">
-                          <p className="text-gray-500 dark:text-gray-400 mb-1 transition-colors duration-300">
+                        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3 text-center">
+                          <p className="text-gray-500 dark:text-gray-400 mb-1 transition-colors duration-300 text-xs">
                             Remaining
                           </p>
                           <p
