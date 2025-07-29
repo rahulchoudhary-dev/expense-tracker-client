@@ -8,6 +8,7 @@ import useDeleteBudget from "@/query/budget/useDeleteBudget";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import { TOAST_MESSAGES } from "@/constant";
 import { BarChart, Calendar, DollarSign } from "lucide-react";
+import formatCurrency from "@/utils/formateCurrency";
 
 type BudgetListProps = {
   setIsCreateBudget: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,13 +35,6 @@ const BudgetList: React.FC<BudgetListProps> = ({
         showErrorToast(error.message || TOAST_MESSAGES.ERROR_GENERIC);
       },
     });
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount);
   };
 
   const getMonthName = (month: number | null) => {
