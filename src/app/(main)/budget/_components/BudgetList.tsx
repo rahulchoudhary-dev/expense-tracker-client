@@ -7,8 +7,10 @@ import React, { useState } from "react";
 import useDeleteBudget from "@/query/budget/useDeleteBudget";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import { TOAST_MESSAGES } from "@/constant";
-import { BarChart, Calendar, DollarSign } from "lucide-react";
 import formatCurrency from "@/utils/formateCurrency";
+import BudgetHeader from "./BudgetListHeader";
+import BudgetDataSummaryCards from "./BudgetSummaryCards";
+import BudgetFilterTabs from "./BudgetFilterTabs";
 
 type BudgetListProps = {
   setIsCreateBudget: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,148 +55,12 @@ const BudgetList: React.FC<BudgetListProps> = ({
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4 md:p-2 lg:p-0 transition-colors duration-300">
       <div className="">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-sm md:text-4xl font-extrabold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent mb-4 leading-tight">
-              Budget Dashboard
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300 text-lg transition-colors duration-300">
-              Manage and track your financial budgets
-            </p>
-          </div>
-          <div className="text-center">
-            <Button
-              type="button"
-              onClick={() => handleAddNewBudget()}
-              variant={"outline"}
-              className="bg-gradient-to-r cursor-pointer from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 border-0 dark:shadow-gray-900/50"
-            >
-              + Add New Budget
-            </Button>
-          </div>
-        </div>
-
+        <BudgetHeader onAddNew={handleAddNewBudget} />
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white dark:bg-gray-800 backdrop-blur-sm rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-900/70 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-300">
-                Total Budget
-              </h3>
-              <div className="p-3 bg-blue-100 dark:bg-blue-900/50 rounded-full transition-colors duration-300">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="relative hover:shadow-lg border-0 cursor-pointer h-6 w-6 rounded-full transform group-hover/icon:scale-110 transition-all duration-300 hover:rotate-12 bg-transparent dark:bg-transparent"
-                >
-                  <DollarSign
-                    size={30}
-                    className="text-blue-600 dark:text-white"
-                  />
-                </Button>
-              </div>
-            </div>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white transition-colors duration-300">
-              {formatCurrency(budgetData?.summary?.sums?.total)}
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 transition-colors duration-300">
-              {budgetData?.summary?.counts?.total} total budgets
-            </p>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-900/70 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-300">
-                Monthly Budgets
-              </h3>
-              <div className="p-3 bg-green-100 dark:bg-green-900/50 rounded-full transition-colors duration-300">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="relative hover:shadow-lg border-0 cursor-pointer h-6 w-6 rounded-full transform group-hover/icon:scale-110 transition-all duration-300 hover:rotate-12 bg-transparent dark:bg-transparent"
-                >
-                  <Calendar
-                    size={30}
-                    className="text-green-600 dark:text-white"
-                  />
-                </Button>
-              </div>
-            </div>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white transition-colors duration-300">
-              {formatCurrency(budgetData?.summary?.sums?.monthly)}
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 transition-colors duration-300">
-              {budgetData?.summary?.counts?.monthly} Active monthly budgets
-            </p>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl dark:hover:shadow-gray-900/70 transition-all duration-300">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-300">
-                Yearly Budgets
-              </h3>
-              <div className="p-3 bg-purple-100 dark:bg-purple-900/50 rounded-full transition-colors duration-300">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="relative hover:shadow-lg border-0 cursor-pointer h-6 w-6 rounded-full transform group-hover/icon:scale-110 transition-all duration-300 hover:rotate-12 bg-transparent dark:bg-transparent"
-                >
-                  <BarChart
-                    size={30}
-                    className="text-purple-600 dark:text-white"
-                  />
-                </Button>
-              </div>
-            </div>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white transition-colors duration-300">
-              {formatCurrency(budgetData?.summary?.sums?.yearly)}
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 transition-colors duration-300">
-              {budgetData?.summary?.counts?.yearly} Active yearly budgets
-            </p>
-          </div>
-        </div>
-
+        <BudgetDataSummaryCards budgetData={budgetData?.summary} />
         {/* Filter Tabs */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 mb-8 border border-gray-100 dark:border-gray-700 transition-all duration-300">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-0 transition-colors duration-300">
-              Budget Overview
-            </h2>
-            <div className="flex space-x-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1 transition-colors duration-300">
-              <button
-                onClick={() => setFilter("all")}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                  filter === "all"
-                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm"
-                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                }`}
-              >
-                All
-              </button>
-              <button
-                onClick={() => setFilter("monthly")}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                  filter === "monthly"
-                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm"
-                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                }`}
-              >
-                Monthly
-              </button>
-              <button
-                onClick={() => setFilter("yearly")}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                  filter === "yearly"
-                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm"
-                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                }`}
-              >
-                Yearly
-              </button>
-            </div>
-          </div>
-
+          <BudgetFilterTabs filter={filter} setFilter={setFilter} />
           {/* Budget Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {budgetData?.budgets?.length &&

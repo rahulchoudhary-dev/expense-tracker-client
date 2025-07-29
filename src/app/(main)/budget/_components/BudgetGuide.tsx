@@ -1,11 +1,10 @@
 import useBudgetQuickStates from "@/query/budget/useQuickStates";
 import formatCurrency from "@/utils/formateCurrency";
 import { AlertCircle, Calendar, Target } from "lucide-react";
+import { memo } from "react";
 
 const BudgetGuide = () => {
   const { data, isLoading, isError } = useBudgetQuickStates();
-  console.log("data", data);
-
   return (
     <>
       <div className="lg:col-span-1 ">
@@ -97,4 +96,4 @@ const BudgetGuide = () => {
   );
 };
 
-export default BudgetGuide;
+export default memo(BudgetGuide);

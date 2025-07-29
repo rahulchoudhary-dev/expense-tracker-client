@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import { useFormik } from "formik";
 import createBudgetDto from "@/validations/createBudget.dto";
 import BudgetHeader from "./CreateBudgetFormHeader";
@@ -89,7 +89,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({
             setEditBudgetData(null);
           }}
           variant="outline"
-          className="bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+          className="cursor-pointer bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
         >
           Show Budget List
         </Button>
@@ -120,4 +120,4 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({
   );
 };
 
-export default CreateBudget;
+export default memo(CreateBudget);
