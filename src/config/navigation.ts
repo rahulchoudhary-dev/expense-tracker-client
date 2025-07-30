@@ -38,7 +38,7 @@ export const mainMenuItems = [
 export const settingsItems = [
   {
     title: "Settings",
-    url: "#",
+    url: "/setting",
     icon: Settings,
   },
 ];
