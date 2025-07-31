@@ -21,6 +21,8 @@ export const TOAST_MESSAGES = {
   EXPENSE_UPLOAD_LOADING: "Uploading expenses...",
   BUDGET_CREATED: "Budget Created Successfully",
   BUDGET_UPDATED: "Budget Updated Successfully",
+  SUPPORT_REQUEST_CREATED: "Support Request Created Successfully",
+  SUPPORT_REQUEST_FAILED: "Failed to Create Support Request",
 };
 
 export const RADIAN = Math.PI / 180;

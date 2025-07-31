@@ -4,10 +4,15 @@ import * as Yup from "yup";
 import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
 import { categories } from "../_data";
-import { useShowSuccess } from "@/app/toastProvider";
+import { useShowError, useShowSuccess } from "@/app/toastProvider";
+import useCreateSupportRequest from "@/query/contact-support/useCreateSupportRequest";
+import { TOAST_MESSAGES } from "@/constant";
 
 const ContactForm = () => {
+  const { mutate } = useCreateSupportRequest();
+
   const showSuccessToast = useShowSuccess();
+  const showErrorToast = useShowError();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -22,10 +27,20 @@ const ContactForm = () => {
       message: Yup.string().required("Required"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log("Form submitted:", values);
-      showSuccessToast("Query Successfullty submited");
+      mutate(values, {
+        onSuccess: () => {
+          showSuccessToast(TOAST_MESSAGES.SUPPORT_REQUEST_CREATED);
+        },
+
+        onError: (err) => {
+          showErrorToast(
+            TOAST_MESSAGES.SUPPORT_REQUEST_FAILED ||
+              TOAST_MESSAGES.ERROR_GENERIC
+          );
+        },
+      });
+
       resetForm();
-      // TODO: handle submission logic (e.g., API call)
     },
   });
 

@@ -41,4 +41,11 @@ export const endpoints = {
   updateBudget: "/budget",
   deleteBudget: "/budget/:id",
   budgetQuickStates: "/budget/quick-states",
+
+  createSupportRequest: "contact-support",
+  getAllSupportRequests: "contact-support",
+  getSupportRequestByUser: "contact-support/user/:userId",
+  getSupportRequestById: "contact-support/:id",
+  updateSupportRequest: "contact-support/:id",
+  deleteSupportRequest: "contact-support/:id",
 };
