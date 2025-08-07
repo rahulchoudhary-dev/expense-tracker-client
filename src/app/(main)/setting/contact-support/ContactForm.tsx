@@ -7,25 +7,35 @@ import { categories } from "../_data";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import useCreateSupportRequest from "@/query/contact-support/useCreateSupportRequest";
 import { TOAST_MESSAGES } from "@/constant";
+import { supportRequestDto } from "@/validations/supportRequest.dto";
+import InputFiled from "@/components/InputFiled";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import FormErrorMessage from "@/components/FormErrorMessage";
+import { useAppSelector } from "@/hooks/useRedux";
 
 const ContactForm = () => {
+  const { user } = useAppSelector((state) => state.user);
   const { mutate } = useCreateSupportRequest();
 
   const showSuccessToast = useShowSuccess();
   const showErrorToast = useShowError();
   const formik = useFormik({
     initialValues: {
-      email: "",
+      email: user?.email,
       category: categories[0]?.id || "",
       subject: "",
       message: "",
     },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email").required("Required"),
-      category: Yup.string().required("Required"),
-      subject: Yup.string().required("Required"),
-      message: Yup.string().required("Required"),
-    }),
+    validationSchema: supportRequestDto,
+    enableReinitialize: true,
     onSubmit: (values, { resetForm }) => {
       mutate(values, {
         onSuccess: () => {
@@ -55,59 +65,71 @@ const ContactForm = () => {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Your Email
             </label>
-            <input
+            <InputFiled
               type="email"
-              {...formik.getFieldProps("email")}
-              className="w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent border-gray-300 dark:border-gray-600"
-              placeholder="your.email@example.com"
+              name="email"
+              placeholder="Enter your Email Address"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+              className="w-full px-4 py-4 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+              onError={formik.touched.email && formik.errors.email}
             />
-            {formik.touched.email && formik.errors.email && (
-              <p className="text-sm text-red-500 mt-1">{formik.errors.email}</p>
-            )}
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Category
-            </label>
-            <select
-              {...formik.getFieldProps("category")}
-              className="w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent border-gray-300 dark:border-gray-600"
+
+          <div className="space-y-4 h-full">
+            <Label htmlFor="category">category</Label>
+            <Select
+              name="category"
+              value={formik.values.category}
+              onValueChange={(value) => formik.setFieldValue("category", value)}
             >
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.label}
-                </option>
-              ))}
-            </select>
-            {formik.touched.category && formik.errors.category && (
-              <p className="text-sm text-red-500 mt-1">
-                {formik.errors.category}
-              </p>
-            )}
+              <SelectTrigger className="w-full h-full cursor-pointer py-7 rounded-xl">
+                <SelectValue placeholder="Select a category h-full ">
+                  {categories?.find(
+                    (items: any) => items?.id == formik.values?.category
+                  )?.label || "Select category"}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent className="shadow-sm">
+                {categories?.map((category: any) => (
+                  <SelectItem
+                    className="text-slate-700 dark:text-slate-200 hover:bg-orange-50 hover:text-red-500  dark:hover:bg-orange-900/20 focus:bg-orange-50 dark:focus:bg-orange-900/20 cursor-pointer transition-colors"
+                    key={category.id}
+                    value={category.id}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full "></div>
+                      <span>{category.label} </span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormErrorMessage name="paymentMethodId" formik={formik} />
           </div>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Subject
           </label>
-          <input
-            type="text"
-            {...formik.getFieldProps("subject")}
-            className="w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent border-gray-300 dark:border-gray-600"
-            placeholder="Brief description of your issue"
+          <InputFiled
+            type="subject"
+            name="subject"
+            placeholder="Enter your Subject "
+            onChange={formik.handleChange}
+            value={formik.values.subject}
+            className="w-full px-4 py-4 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+            onError={formik.touched.subject && formik.errors.subject}
           />
-          {formik.touched.subject && formik.errors.subject && (
-            <p className="text-sm text-red-500 mt-1">{formik.errors.subject}</p>
-          )}
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Message
           </label>
-          <textarea
-            rows={6}
+          <Textarea
+            rows={15}
             {...formik.getFieldProps("message")}
-            className="w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent border-gray-300 dark:border-gray-600"
+            className="w-full px-3 py-2 border rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent border-gray-300 dark:border-gray-600"
             placeholder="Please provide as much detail as possible about your issue..."
           />
           {formik.touched.message && formik.errors.message && (
