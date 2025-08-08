@@ -4,21 +4,12 @@ import React, { useState } from "react";
 import {
   Settings,
   User,
-  Globe,
   Moon,
   Sun,
-  DollarSign,
-  Tag,
-  Bell,
   Download,
   Shield,
   HelpCircle,
   ChevronRight,
-  Plus,
-  Trash2,
-  Edit,
-  Save,
-  X,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -391,12 +382,15 @@ const SettingsPage: React.FC = () => {
               <ChevronRight size={20} className="text-gray-400" />
             </Link>
 
-            <button className="flex items-center justify-between w-full p-3 text-left bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            <Link
+              href="/setting/app-rating"
+              className="flex items-center justify-between w-full p-3 text-left bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+            >
               <span className="text-gray-900 dark:text-white">
                 Rate This App
               </span>
               <ChevronRight size={20} className="text-gray-400" />
-            </button>
+            </Link>
 
             <button className="flex items-center justify-between w-full p-3 text-left bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
               <span className="text-gray-900 dark:text-white">
