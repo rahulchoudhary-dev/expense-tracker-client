@@ -48,4 +48,7 @@ export const endpoints = {
   getSupportRequestById: "contact-support/:id",
   updateSupportRequest: "contact-support/:id",
   deleteSupportRequest: "contact-support/:id",
+
+  faqs: "/faq/",
+  faqCategories: "/faq/faq-categories",
 };

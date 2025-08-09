@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   HelpCircle,
   Mail,
@@ -12,9 +12,11 @@ import {
 } from "lucide-react";
 import BackButton from "../_components/BackButton";
 import ContactMethod from "./ContactMethod";
-import { categories, faqs } from "../_data";
 import SupportHours from "./SupportHours";
 import ContactForm from "./ContactForm";
+import useFaqs from "@/query/faqs/useGetFAQs";
+import useFaqCategories from "@/query/faqs/useFAQCategories";
+import { getIconBySlug } from "../_data";
 
 interface FAQ {
   id: string;
@@ -24,17 +26,28 @@ interface FAQ {
 }
 
 const ContactSupport = () => {
-  const [selectedCategory, setSelectedCategory] = useState("general");
+  const { data: faqCategory } = useFaqCategories();
+  const [filteredFAQs, setFilteredFAQs] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(
+    (faqCategory && faqCategory[0]?.name) || ""
+  );
+  const { data: faqs } = useFaqs();
 
   const [expandedFAQ, setExpandedFAQ] = useState<string | null>(null);
 
-  const filteredFAQs = faqs.filter((faq) => faq.category === selectedCategory);
+  useEffect(() => {
+    setExpandedFAQ(null);
+    const result = faqs?.filter(
+      (faq: any) => faq.category.name == selectedCategory
+    );
+    setFilteredFAQs(result);
+  }, [selectedCategory]);
 
   const FAQItem: React.FC<{ faq: FAQ }> = ({ faq }) => (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg">
       <button
         className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-        onClick={() => setExpandedFAQ(expandedFAQ === faq.id ? null : faq.id)}
+        onClick={() => setExpandedFAQ(faq.id)}
       >
         <span className="font-medium text-gray-900 dark:text-white">
           {faq.question}
@@ -127,30 +140,30 @@ const ContactSupport = () => {
 
           {/* FAQ Categories */}
           <div className="flex flex-wrap gap-2 mb-6">
-            {categories.map((category) => (
+            {faqCategory?.map((category: any) => (
               <button
                 key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
+                onClick={() => setSelectedCategory(category.name)}
                 className={`flex items-center px-4 py-2 rounded-lg border transition-colors ${
-                  selectedCategory === category.id
+                  selectedCategory === category.name
                     ? "bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-300"
                     : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-600"
                 }`}
               >
-                <span className="mr-2">{category.icon}</span>
-                {category.label}
+                <span className="mr-2">{getIconBySlug(category.slug)}</span>
+                {category.name}
               </button>
             ))}
           </div>
 
           {/* FAQ Items */}
           <div className="space-y-4">
-            {filteredFAQs.map((faq) => (
-              <FAQItem key={faq.id} faq={faq} />
+            {filteredFAQs?.map((faq: any, index) => (
+              <FAQItem key={faq.question} faq={faq} />
             ))}
           </div>
 
-          {filteredFAQs.length === 0 && (
+          {faqs?.length === 0 && (
             <div className="text-center py-8">
               <p className="text-gray-500 dark:text-gray-400">
                 No FAQs available for this category yet.

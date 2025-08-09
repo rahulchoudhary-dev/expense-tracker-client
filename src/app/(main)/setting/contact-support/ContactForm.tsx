@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
-import { categories } from "../_data";
 import { useShowError, useShowSuccess } from "@/app/toastProvider";
 import useCreateSupportRequest from "@/query/contact-support/useCreateSupportRequest";
 import { TOAST_MESSAGES } from "@/constant";
@@ -20,17 +19,20 @@ import {
 } from "@/components/ui/select";
 import FormErrorMessage from "@/components/FormErrorMessage";
 import { useAppSelector } from "@/hooks/useRedux";
+import useFaqCategories from "@/query/faqs/useFAQCategories";
 
 const ContactForm = () => {
   const { user } = useAppSelector((state) => state.user);
+  const { data: faqCategory } = useFaqCategories();
   const { mutate } = useCreateSupportRequest();
 
   const showSuccessToast = useShowSuccess();
   const showErrorToast = useShowError();
   const formik = useFormik({
     initialValues: {
+      userId: user?.id,
       email: user?.email,
-      category: categories[0]?.id || "",
+      categoryId: (faqCategory && faqCategory[0]?.id) || "",
       subject: "",
       message: "",
     },
@@ -80,18 +82,20 @@ const ContactForm = () => {
             <Label htmlFor="category">category</Label>
             <Select
               name="category"
-              value={formik.values.category}
-              onValueChange={(value) => formik.setFieldValue("category", value)}
+              value={formik.values.categoryId.toString()}
+              onValueChange={(value) =>
+                formik.setFieldValue("categoryId", value)
+              }
             >
               <SelectTrigger className="w-full h-full cursor-pointer py-7 rounded-xl">
                 <SelectValue placeholder="Select a category h-full ">
-                  {categories?.find(
-                    (items: any) => items?.id == formik.values?.category
-                  )?.label || "Select category"}
+                  {faqCategory?.find(
+                    (items: any) => items?.id == formik.values?.categoryId
+                  )?.name || "Select category"}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent className="shadow-sm">
-                {categories?.map((category: any) => (
+                {faqCategory?.map((category: any) => (
                   <SelectItem
                     className="text-slate-700 dark:text-slate-200 hover:bg-orange-50 hover:text-red-500  dark:hover:bg-orange-900/20 focus:bg-orange-50 dark:focus:bg-orange-900/20 cursor-pointer transition-colors"
                     key={category.id}
@@ -99,7 +103,7 @@ const ContactForm = () => {
                   >
                     <div className="flex items-center space-x-2">
                       <div className="w-2 h-2 bg-orange-500 rounded-full "></div>
-                      <span>{category.label} </span>
+                      <span>{category.name} </span>
                     </div>
                   </SelectItem>
                 ))}
