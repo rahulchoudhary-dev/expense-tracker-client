@@ -24,7 +24,9 @@ import appLogo from "../../public/app-logo-1.jpeg";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open, toggleSidebar, isMobile } = useSidebar();
-  const pathName = usePathname();
+  const pathname = usePathname();
+  const basePath = "/" + pathname.split("/")[1]; // → "/settings"
+  console.log(basePath);
 
   // on mobile, toggle the sidebar when a menu item is clicked
   const toggleSidebarOnMobie = () => {
@@ -78,7 +80,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       onClick={() => toggleSidebarOnMobie()}
                       href={item.url}
                       className={`flex  ${
-                        pathName == item.url
+                        basePath == item.url
                           ? "bg-gray-200 dark:text-black"
                           : ""
                       } items-center gap-3 text-sm text-muted hover:text-primary`}
@@ -100,8 +102,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link
+                      className={`flex  ${
+                        basePath == item.url
+                          ? "bg-gray-200 dark:text-black"
+                          : ""
+                      } items-center gap-3 text-sm text-muted hover:text-primary`}
                       href={item.url}
-                      className="flex items-center h-full w-full gap-3 text-sm text-muted hover:text-primary"
+                      // className="flex items-center h-full w-full gap-3 text-sm text-muted hover:text-primary"
                     >
                       <item.icon size={20} className="w-15 h-20" />
                       <span>{item.title}</span>
