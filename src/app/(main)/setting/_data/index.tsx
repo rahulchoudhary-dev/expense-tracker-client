@@ -21,3 +21,25 @@ export function getIconBySlug(slug: string) {
       return null; // or a default icon if you prefer
   }
 }
+
+export const currencies = [
+  "USD",
+  "EUR",
+  "GBP",
+  "JPY",
+  "CAD",
+  "AUD",
+  "CHF",
+  "CNY",
+  "INR",
+];
+export const languages = [
+  "English",
+  "Spanish",
+  "French",
+  "German",
+  "Italian",
+  "Portuguese",
+  "Chinese",
+  "Japanese",
+];
