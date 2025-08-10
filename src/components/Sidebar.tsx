@@ -29,7 +29,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   console.log(basePath);
 
   // on mobile, toggle the sidebar when a menu item is clicked
-  const toggleSidebarOnMobie = () => {
+  const toggleSidebarOnMobile = () => {
     if (isMobile) {
       toggleSidebar();
     }
@@ -77,7 +77,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link
-                      onClick={() => toggleSidebarOnMobie()}
+                      onClick={() => toggleSidebarOnMobile()}
                       href={item.url}
                       className={`flex  ${
                         basePath == item.url

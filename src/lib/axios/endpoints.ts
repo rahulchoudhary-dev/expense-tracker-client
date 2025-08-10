@@ -51,4 +51,7 @@ export const endpoints = {
 
   faqs: "/faq/",
   faqCategories: "/faq/faq-categories",
+
+  addRatings: "/ratings", // POST for adding
+  getRatings: "/ratings", // GET for listing
 };

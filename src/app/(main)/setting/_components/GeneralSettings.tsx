@@ -61,9 +61,9 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({}) => {
             <SelectValue placeholder="Select a currency" />
           </SelectTrigger>
           <SelectContent>
-            {currencies.map((currency) => (
-              <SelectItem key={currency} value={currency}>
-                {currency}
+            {currencies.map((currency, index) => (
+              <SelectItem key={index} value={currency.value}>
+                {currency.value}
               </SelectItem>
             ))}
           </SelectContent>
@@ -80,9 +80,9 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({}) => {
             <SelectValue placeholder="Select a language" />
           </SelectTrigger>
           <SelectContent>
-            {languages.map((language) => (
-              <SelectItem key={language} value={language}>
-                {language}
+            {languages.map((language, index) => (
+              <SelectItem key={index} value={language.value}>
+                {language.value}
               </SelectItem>
             ))}
           </SelectContent>
