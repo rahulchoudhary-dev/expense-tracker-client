@@ -33,6 +33,11 @@ export const mainMenuItems = [
     url: "/profile",
     icon: User,
   },
+  {
+    title: "Lend-Borrow",
+    url: "/Lend-Borrow",
+    icon: User,
+  },
 ];
 
 export const settingsItems = [

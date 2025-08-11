@@ -59,11 +59,6 @@ const SettingsPage: React.FC = () => {
             Manage your expense tracker preferences and configurations
           </p>
         </div>
-        <div className="mt-8 flex justify-end">
-          <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-            Save All Changes
-          </button>
-        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
