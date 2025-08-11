@@ -30,7 +30,8 @@
     "src/app/aboute",
     "src/constant/index.ts",
     "src/app/(main)/budget/page.tsx",
-    "src/app/(main)/dashboard/_components/ExpenseFullCalender.tsx"
+    "src/app/(main)/dashboard/_components/ExpenseFullCalender.tsx",
+    "src/app/(main)/Lend-Borrow/page.jsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -57,12 +57,16 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({}) => {
           Currency
         </label>
         <Select value={currency} onValueChange={(val) => setCurrency(val)}>
-          <SelectTrigger className="w-full p-6">
+          <SelectTrigger className="w-full p-6 ">
             <SelectValue placeholder="Select a currency" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-lg rounded-lg">
             {currencies.map((currency, index) => (
-              <SelectItem key={index} value={currency.value}>
+              <SelectItem
+                className="text-slate-700 dark:text-slate-200 hover:bg-gray-300 dark:hover:bg-orange-900/20 focus:bg-gray-200 focus:text-black dark:focus:bg-orange-900/20 cursor-pointer transition-colors"
+                key={index}
+                value={currency.value}
+              >
                 {currency.value}
               </SelectItem>
             ))}
@@ -79,9 +83,13 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({}) => {
           <SelectTrigger className="w-full p-6">
             <SelectValue placeholder="Select a language" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-lg rounded-lg">
             {languages.map((language, index) => (
-              <SelectItem key={index} value={language.value}>
+              <SelectItem
+                className="text-slate-700 dark:text-slate-200 hover:bg-gray-300 dark:hover:bg-orange-900/20 focus:bg-gray-200 focus:text-black dark:focus:bg-orange-900/20 cursor-pointer transition-colors"
+                key={index}
+                value={language.value}
+              >
                 {language.value}
               </SelectItem>
             ))}
