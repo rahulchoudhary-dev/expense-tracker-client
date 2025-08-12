@@ -3,7 +3,6 @@
 import React from "react";
 import {
   Shield,
-  ArrowLeft,
   Mail,
   Calendar,
   Lock,
@@ -11,14 +10,11 @@ import {
   Users,
   FileText,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import BackButton from "../_components/BackButton";
 
-interface PrivacyPolicyProps {
-  onBack?: () => void;
-}
 
-const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
+
+const PrivacyPolicy = () => {
   const lastUpdated = "December 15, 2024";
 
   const PolicySection: React.FC<{

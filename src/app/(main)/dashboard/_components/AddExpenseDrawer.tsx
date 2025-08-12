@@ -119,7 +119,7 @@ const AddExpenseDrawer: React.FC<AddExpenseDrawerProps> = ({
       try {
         if (isEditMode) {
           updateExpenseMutation(
-            { ...values, id: expenseData.id },
+            { ...values, id: expenseData?.id },
             {
               onSuccess: () => {
                 showSuccessToast(TOAST_MESSAGES.EXPENSE_UPDATE_SUCCESS);

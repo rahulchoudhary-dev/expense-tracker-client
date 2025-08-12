@@ -1,10 +1,9 @@
-import { iExpenseParams } from "@/interfaces/expense";
 import React from "react";
 import ResponsivePagination from "react-responsive-pagination";
 import "./cutomeStyles/TableStyle.css";
 interface TablePaginationProps {
   count: number;
-  pageData: iExpenseParams;
+  pageData: any;
   setPageData: React.Dispatch<
     React.SetStateAction<{
       page: number;
@@ -16,6 +15,8 @@ interface TablePaginationProps {
 
 const TablePagination: React.FC<TablePaginationProps> = React.memo(
   ({ count, pageData, setPageData }) => {
+
+    
     return (
       <ResponsivePagination
         current={pageData.page}
