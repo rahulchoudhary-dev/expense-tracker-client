@@ -44,7 +44,7 @@ export type ExpenseDataTable = {
 export type AddExpenseDrawerProps = {
   open: boolean;
   onOpenChange: () => void;
-  expenseData: Expense;
+  expenseData?: Expense;
   isEditMode: boolean;
 };
 export type ExpenseFormData = {
