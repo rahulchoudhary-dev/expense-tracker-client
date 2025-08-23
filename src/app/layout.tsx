@@ -2,6 +2,8 @@ import ClientProviders from "./ClientProviders";
 import "./globals.css";
 import type { Metadata } from "next";
 
+import { Inter, Akatab, Zilla_Slab } from "next/font/google";
+
 export const metadata: Metadata = {
   title: "Expendo - Financial Manager",
   icons: {
@@ -39,6 +41,10 @@ export const metadata: Metadata = {
   },
 };
 
+const akatab = Zilla_Slab({
+  weight: "600",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -46,7 +52,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased">
+      <body className={akatab.className}>
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

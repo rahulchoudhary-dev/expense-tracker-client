@@ -1,5 +1,3 @@
-"use client";
-
 import AuthImageCard from "../_components/AuthImageCard";
 import SignInCardHeader from "./_components/SignInCardHeader";
 import SignInForm from "./_components/SignInForm";
