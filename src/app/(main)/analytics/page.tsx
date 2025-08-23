@@ -1,5 +1,4 @@
 "use client";
-
 import withAuth from "@/hoc/withAuth";
 import React, { useMemo, useState } from "react";
 
@@ -297,4 +296,4 @@ const Analytics = () => {
   );
 };
 
-export default withAuth(Analytics);
+export default Analytics;

@@ -133,4 +133,4 @@ const ExpenseDashBoard = () => {
   );
 };
 
-export default withAuth(ExpenseDashBoard);
+export default ExpenseDashBoard;

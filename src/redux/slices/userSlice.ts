@@ -1,5 +1,7 @@
+import { ACCESS_TOKEN_KEY } from "@/constant";
 import { UserData } from "@/interfaces/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "js-cookie"; // <-- import this
 
 interface UserState {
   user: UserData | null;
@@ -21,12 +23,14 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<UserData>) {
-      console.log("action.payload", action.payload);
       state.user = action.payload;
     },
     setAuthTokens(state, action: PayloadAction<AuthToken>) {
       state.access_token = action.payload.access_token || "";
       state.refresh_token = action.payload.refresh_token || "";
+      Cookies.set(ACCESS_TOKEN_KEY, action.payload.access_token || "", {
+        secure: true,
+      });
     },
     setProfileUrl(state, action: PayloadAction<string>) {
       if (state.user) {
@@ -41,6 +45,7 @@ export const userSlice = createSlice({
       state.user = null;
       state.access_token = "";
       state.refresh_token = "";
+      Cookies.remove(ACCESS_TOKEN_KEY);
     },
   },
 });

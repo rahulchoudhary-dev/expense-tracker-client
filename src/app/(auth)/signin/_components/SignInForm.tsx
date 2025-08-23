@@ -31,8 +31,8 @@ const SignInForm = () => {
   const { mutate, isPending: isSigningIn } = useSignIn();
 
   const [initialValues, setInitialValues] = useState<SignInFormValues>({
-    email: "",
-    password: "",
+    email: "Travise@gmail.com",
+    password: "Pass@1234",
   });
 
   useEffect(() => {
