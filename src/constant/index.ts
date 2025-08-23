@@ -106,3 +106,5 @@ export const budgetYears = [
   { label: "2029", value: "2029" },
   { label: "2030", value: "2030" },
 ];
+export const PUBLIC_ROUTES = ["/signin", "/signup"];
+export const ACCESS_TOKEN_KEY = "access_token";
